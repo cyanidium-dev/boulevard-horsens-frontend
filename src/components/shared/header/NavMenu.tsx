@@ -4,10 +4,31 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
+/**
+ * Next.js інколи змінює hash без події hashchange. Додатково слухаємо popstate
+ * і після кліку по посиланню з # перечитуємо hash у наступному кадрі.
+ */
 function subscribeToHash(onStoreChange: () => void) {
   if (typeof window === "undefined") return () => {};
-  window.addEventListener("hashchange", onStoreChange);
-  return () => window.removeEventListener("hashchange", onStoreChange);
+  const notify = () => onStoreChange();
+  const notifyAfterNav = () =>
+    requestAnimationFrame(() => {
+      onStoreChange();
+    });
+  window.addEventListener("hashchange", notify);
+  window.addEventListener("popstate", notify);
+  const onClickCapture = (e: MouseEvent) => {
+    const a = (e.target as Element | null)?.closest?.("a");
+    const href = a?.getAttribute("href");
+    if (!href?.includes("#")) return;
+    notifyAfterNav();
+  };
+  document.addEventListener("click", onClickCapture, true);
+  return () => {
+    window.removeEventListener("hashchange", notify);
+    window.removeEventListener("popstate", notify);
+    document.removeEventListener("click", onClickCapture, true);
+  };
 }
 
 function getHashSnapshot() {
@@ -35,15 +56,15 @@ export const navMenuList: NavMenuItem[] = [
   { title: "Om os", slug: "/#about" },
 ];
 
-/** Визначає активний пункт десктоп-меню за pathname і hash (для якорів на головній). */
+/** Визначає активний пункт десктоп-меню за pathname і hash (якорі як у `navMenuList` і `id` секцій). */
 export function getActiveIndex(pathname: string, hash: string): number {
   if (pathname === "/services" || pathname.startsWith("/services/")) {
     return 1;
   }
   if (pathname === "/" || pathname === "") {
     const h = hash && !hash.startsWith("#") ? `#${hash}` : hash;
-    if (h === "#abningstider") return 2;
-    if (h === "#om-os") return 3;
+    if (h === "#opening-hours") return 2;
+    if (h === "#about") return 3;
     return 0;
   }
   return 0;
