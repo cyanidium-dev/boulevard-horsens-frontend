@@ -7,6 +7,7 @@ import NavMenu from "./NavMenu";
 import StarIcon from "../icons/StarIcon";
 import Button from "../buttons/Button";
 import BurgerMenu from "./burgerMenu/BurgerMenu";
+import Link from "next/link";
 
 export default function Header() {
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
@@ -23,11 +24,11 @@ export default function Header() {
         {scrollPosition > 20 && (
           <>
             <div
-              className="md:hidden absolute w-[calc(100%-8px)] h-[calc(100%+8px)] -top-1 left-1 px-4 -z-10 rounded-full bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
+              className=" absolute w-[calc(100%-8px)] h-[calc(100%+8px)] -top-1 left-1 px-4 -z-10 rounded-full bg-black/60 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
               aria-hidden
             />
             <div
-              className="md:hidden absolute w-[calc(100%-8px)] h-[calc(100%+8px)] -top-1 left-1 -z-10 rounded-full pointer-events-none"
+              className="absolute w-[calc(100%-8px)] h-[calc(100%+8px)] -top-1 left-1 -z-10 rounded-full pointer-events-none"
               style={{
                 background:
                   "linear-gradient(270.67deg, #F2F2F2 -9.58%, #C7C7C7 103.45%)",
@@ -42,37 +43,17 @@ export default function Header() {
             />
           </>
         )}
-        <div className={`relative z-50 py-2 lg:ml-7`}>
-          <p
+        <div className={`relative z-50 py-2`}>
+          <Link
+            href="/#hero"
             className={`relative z-50 ${isOpenBurgerMenu ? "text-black" : "text-beige"} transition duration-300 ease-in-out font-evolenta text-[18px] lg:text-[24px] leading-[120%] font-normal uppercase`}
           >
             Boulevard
-          </p>
-          {scrollPosition > 20 && (
-            <>
-              <div
-                className="hidden md:block absolute w-[calc(100%+16px)] h-[calc(100%+8px)] top-2 -left-2 p-4 -z-10 rounded-full bg-[linear-gradient(90.95deg,rgba(231,231,231,0.8)_52.25%,rgba(255,255,255,0.8)_99.18%)] shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
-                aria-hidden
-              />
-              <div
-                className="hidden md:block absolute w-[calc(100%+16px)] h-[calc(100%+8px)] top-2 -left-2 -z-10 rounded-full pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(270.67deg, #F2F2F2 -9.58%, #C7C7C7 103.45%)",
-                  padding: "1px",
-                  WebkitMask:
-                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                  WebkitMaskComposite: "xor",
-                  maskComposite: "exclude",
-                }}
-                aria-hidden
-              />
-            </>
-          )}
+          </Link>
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <div className="reltive z-50 flex items-center gap-5 lg:gap-8 xl:gap-[78px]">
+        <div className="flex items-center gap-1.5">
+          <div className="reltive z-50 flex items-center gap-4 lg:gap-8 xl:gap-[78px]">
             <NavMenu />
             <StarIcon
               className={`${isOpenBurgerMenu ? "text-black" : "text-beige"} transition duration-300 ease-in-out size-[21px] lg:size-[37px] `}

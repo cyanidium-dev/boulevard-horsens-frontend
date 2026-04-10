@@ -2,7 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
+function subscribeToHash(onStoreChange: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener("hashchange", onStoreChange);
+  return () => window.removeEventListener("hashchange", onStoreChange);
+}
+
+function getHashSnapshot() {
+  return typeof window !== "undefined" ? window.location.hash : "";
+}
 
 export type NavSubmenuItem = {
   title: string;
@@ -16,96 +26,51 @@ export type NavMenuItem = {
 };
 
 export const navMenuList: NavMenuItem[] = [
-  { title: "Hjem", slug: "/" },
+  { title: "Hjem", slug: "/#hero" },
   { title: "Services", slug: "/services" },
   {
     title: "Åbningstider",
-    slug: "/#abningstider",
+    slug: "/#opening-hours",
   },
-  { title: "Om os", slug: "/#om-os" },
+  { title: "Om os", slug: "/#about" },
 ];
 
-export function getActiveIndex(pathname: string): number {
-  if (pathname === "/") return 0;
-  if (pathname === "/supply") return 1;
-  if (pathname.startsWith("/solutions")) return 2;
-  if (pathname === "/about") return 3;
-  if (pathname === "/contacts") return 4;
+/** Визначає активний пункт десктоп-меню за pathname і hash (для якорів на головній). */
+export function getActiveIndex(pathname: string, hash: string): number {
+  if (pathname === "/services" || pathname.startsWith("/services/")) {
+    return 1;
+  }
+  if (pathname === "/" || pathname === "") {
+    const h = hash && !hash.startsWith("#") ? `#${hash}` : hash;
+    if (h === "#abningstider") return 2;
+    if (h === "#om-os") return 3;
+    return 0;
+  }
   return 0;
 }
 
 export default function NavMenu() {
   const pathname = usePathname();
-  const activeIndex = getActiveIndex(pathname);
+  const urlHash = useSyncExternalStore(
+    subscribeToHash,
+    getHashSnapshot,
+    () => "",
+  );
+  const activeIndex = getActiveIndex(pathname, urlHash);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
-  const itemRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [pillStyle, setPillStyle] = useState<{
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  } | null>(null);
-  const [pillScale, setPillScale] = useState(0);
-  const hasAnimatedInitial = useRef(false);
 
-  // When Solutions is open, pill stays on Solutions; otherwise follows pathname
-  const pillActiveIndex = solutionsOpen ? 2 : activeIndex;
+  const pillActiveIndex = activeIndex;
 
-  const updatePill = useCallback(() => {
-    const el = itemRefs.current[pillActiveIndex];
-    const nav = navRef.current;
-    if (!el || !nav) return;
-    const navRect = nav.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    if (elRect.width <= 0 || elRect.height <= 0) return;
-    setPillStyle({
-      left: elRect.left - navRect.left,
-      top: elRect.top - navRect.top,
-      width: elRect.width,
-      height: elRect.height,
-    });
-  }, [pillActiveIndex]);
-
-  // Перше оновлення + ретраї для надійного показу при завантаженні
-  useEffect(() => {
-    const run = () => updatePill();
-    run();
-    const nav = navRef.current;
-    const ro = nav ? new ResizeObserver(run) : null;
-    if (nav) ro?.observe(nav);
-    const t1 = setTimeout(run, 50);
-    const t2 = setTimeout(run, 150);
-    const t3 = setTimeout(run, 400);
-    const onLoad = () => run();
-    window.addEventListener("load", onLoad);
-    const t4 = setTimeout(run, 500);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
-      window.removeEventListener("load", onLoad);
-      ro?.disconnect();
-    };
-  }, [pillActiveIndex, updatePill]);
-
-  // Після першого отримання позиції — анімація «виростання» з центру (scale 0 → 1)
-  useEffect(() => {
-    if (!pillStyle || hasAnimatedInitial.current) return;
-    hasAnimatedInitial.current = true;
-    const raf = requestAnimationFrame(() => setPillScale(1));
-    return () => cancelAnimationFrame(raf);
-  }, [pillStyle]);
-
-  // Close dropdown: on pathname change, Escape, or click outside
   const prevPathname = useRef(pathname);
   useEffect(() => {
-    if (prevPathname.current !== pathname) {
-      prevPathname.current = pathname;
-      setSolutionsOpen(false);
-    }
+    if (prevPathname.current === pathname) return;
+    prevPathname.current = pathname;
+    queueMicrotask(() => setSolutionsOpen(false));
+  }, [pathname]);
+
+  useEffect(() => {
     if (!solutionsOpen) return;
     const close = () => setSolutionsOpen(false);
     const onKeyDown = (e: KeyboardEvent) => e.key === "Escape" && close();
@@ -124,7 +89,7 @@ export default function NavMenu() {
       window.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("mousedown", onMouseDown);
     };
-  }, [pathname, solutionsOpen]);
+  }, [solutionsOpen]);
 
   const solutionsItem = navMenuList[2];
   const isSolutionsActive = pillActiveIndex === 2;
@@ -132,7 +97,7 @@ export default function NavMenu() {
   return (
     <nav
       ref={navRef}
-      className="hidden lg:flex relative my-2 p-2 rounded-full linear-gradient(270.67deg, #F2F2F2 -9.58%, #C7C7C7 103.45%) backdrop-blur-[10px]"
+      className="hidden lg:flex relative my-2 p-2 rounded-full bg-[linear-gradient(270.67deg,_#F2F2F2_-9.58%,_#C7C7C7_103.45%)_1] backdrop-blur-[10px]"
     >
       <div
         className="absolute inset-0 rounded-full pointer-events-none"
@@ -147,21 +112,6 @@ export default function NavMenu() {
         }}
       />
 
-      {/* Sliding active pill: при першому показі з’являється з центру (scale 0→1), далі їздить по пунктах */}
-      {pillStyle && (
-        <div
-          className="absolute rounded-full bg-beige origin-center pointer-events-none z-0 transition-[left,width,top,height,transform] duration-300 ease-out"
-          style={{
-            left: pillStyle.left,
-            top: pillStyle.top,
-            width: pillStyle.width,
-            height: pillStyle.height,
-            transform: `scale(${pillScale})`,
-          }}
-          aria-hidden
-        />
-      )}
-
       <ul className="relative z-10 flex items-center gap-3 list-none">
         {navMenuList.map((item, i) => (
           <li
@@ -170,24 +120,19 @@ export default function NavMenu() {
           >
             {item.slug ? (
               <Link
-                ref={(el) => {
-                  itemRefs.current[i] = el;
-                }}
                 href={item.slug}
                 onClick={() => setSolutionsOpen(false)}
-                className={`relative z-10 px-4.5 py-3 rounded-full font-montserrat text-[14px] font-normal leading-[120%] border border-transparent transition-[color,border] focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-transparent xl:hover:border-beige ${pillActiveIndex === i ? "text-black" : "text-beige xl:hover:brightness-125"}`}
+                aria-current={pillActiveIndex === i ? "page" : undefined}
+                className={`relative z-10 px-4.5 py-3 rounded-full font-montserrat text-[14px] font-normal leading-[120%] outline-none border border-transparent transition-[color,border,background-color] duration-300 ease-out focus:outline-none focus-visible:border-beige xl:hover:border-beige ${pillActiveIndex === i ? "bg-beige text-black" : "bg-transparent text-beige xl:hover:brightness-125"}`}
               >
                 {item.title}
               </Link>
             ) : (
               <>
                 <button
-                  ref={(el) => {
-                    itemRefs.current[i] = el;
-                  }}
                   type="button"
                   onClick={() => setSolutionsOpen((prev) => !prev)}
-                  className={`cursor-pointer relative z-10 flex items-center px-4.5 py-3 rounded-full text-[14px] font-medium leading-[120%] border border-transparent transition-[color,border] focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-transparent xl:hover:border-black ${isSolutionsActive ? "text-white" : "text-black xl:hover:brightness-125 xl:hover:text-black"}`}
+                  className={`cursor-pointer relative z-10 flex items-center px-4.5 py-3 rounded-full text-[14px] font-medium leading-[120%] border border-transparent transition-[color,border,background-color] duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-transparent xl:hover:border-black text-black ${isSolutionsActive ? "bg-beige" : "bg-transparent"} ${!isSolutionsActive ? "xl:hover:brightness-125" : ""}`}
                   aria-expanded={solutionsOpen}
                   aria-haspopup="true"
                 >
