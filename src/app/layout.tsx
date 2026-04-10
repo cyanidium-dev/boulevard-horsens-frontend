@@ -13,7 +13,7 @@ const montserrat = Montserrat({
 });
 
 const evolenta = localFont({
-  src: "../../fonts/evolenta-regular.ttf",
+  src: "../../public/fonts/evolenta-regular.ttf",
   variable: "--font-evolenta",
   display: "swap",
   preload: true,
