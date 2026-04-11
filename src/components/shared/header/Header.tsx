@@ -46,7 +46,7 @@ export default function Header() {
         <div className={`relative z-50 py-2`}>
           <Link
             href="/#hero"
-            className={`relative z-50 ${isOpenBurgerMenu ? "text-black" : "text-beige"} transition duration-300 ease-in-out font-evolenta text-[18px] lg:text-[24px] leading-[120%] font-normal uppercase`}
+            className={`relative z-50 ${isOpenBurgerMenu ? "text-black" : "text-beige"} outline-none transition duration-300 ease-in-out font-evolenta text-[18px] lg:text-[24px] leading-[120%] font-normal uppercase`}
           >
             Boulevard
           </Link>

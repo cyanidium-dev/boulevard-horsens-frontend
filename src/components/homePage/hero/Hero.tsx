@@ -12,6 +12,8 @@ export default function Hero() {
           src="/images/homePage/hero/imageOne.webp"
           alt="Hero"
           fill
+          priority
+          fetchPriority="high"
           className="object-cover"
         />
       </div>
