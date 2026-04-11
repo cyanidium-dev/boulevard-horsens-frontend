@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredstrategy: "pseudoelements";
+}
 
 @theme inline {
   --breakpoint-xs: 27rem;
@@ -6,6 +10,7 @@
   --color-beige: #ffefe2;
   --color-black: #15100d;
   --color-brown: #906059;
+  --color-white: #ffffff;
 
   --font-montserrat: var(--font-montserrat);
   --font-evolenta: var(--font-evolenta);
@@ -49,5 +54,12 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  }
+}
+
+@layer utilities {
+  .popup-scroll::-webkit-scrollbar-track {
+    margin-top: 9px;
+    margin-bottom: 9px;
   }
 }
