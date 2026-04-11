@@ -19,17 +19,18 @@ export default function MobileNavMenu({
 
   return (
     <nav aria-label="Mobile menu">
-      <ul className="flex flex-col gap-8">
+      <ul className="flex flex-col gap-2">
         {navMenuList.map((item) =>
           item.slug ? (
             <li key={item.title}>
               <Link
                 href={item.slug}
                 onClick={closeBurger}
-                className="block text-[24px] font-medium leading-[120%] uppercase hover:opacity-80 transition-opacity"
+                className="block py-[18px] text-[16px] font-light leading-[120%] uppercase hover:opacity-80 transition-opacity"
               >
                 {item.title}
               </Link>
+              <div className="h-[1.5px] bg-[linear-gradient(90deg,_#906059_23.92%,_#15100D_99.51%)]" />
             </li>
           ) : (
             <li key={item.title} className="flex flex-col">

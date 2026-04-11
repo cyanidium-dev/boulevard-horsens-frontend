@@ -8,6 +8,7 @@ import {
 } from "@/utils/animationVariants";
 import MobileNavMenu from "./MobileNavMenu";
 import Container from "../../container/Container";
+import Button from "../../buttons/Button";
 
 interface BurgerMenuContentProps {
   isOpen: boolean;
@@ -22,15 +23,15 @@ export default function BurgerMenuContent({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="lg:hidden fixed right-0 top-0 z-40 pt-[71px] w-full h-dvh max-h-dvh bg-beige overflow-hidden no-doc-scroll"
+          className="lg:hidden fixed right-0 top-0 z-40 pt-20 pb-4 w-full h-dvh max-h-dvh bg-beige overflow-hidden no-doc-scroll"
           initial="hidden"
           animate="visible"
           exit="exit"
           variants={burgerMenuVariants}
         >
           <Container
-            className="flex flex-col justify-between h-full pt-24 pb-[93px] overflow-y-auto scrollbar scrollbar-w-[3px] scrollbar-thumb-rounded-full 
-          scrollbar-track-rounded-full scrollbar-thumb-black/50 scrollbar-track-transparent"
+            className="flex flex-col justify-between gap-15 h-full pt-[39px] overflow-y-auto scrollbar scrollbar-w-[2px] scrollbar-thumb-rounded-full 
+          scrollbar-track-rounded-full scrollbar-thumb-brown/60 scrollbar-track-transparent"
           >
             {/* Меню */}
             <motion.div
@@ -40,6 +41,16 @@ export default function BurgerMenuContent({
               exit="exit"
             >
               <MobileNavMenu setIsOpenBurgerMenu={setIsOpenBurgerMenu} />
+            </motion.div>
+            <motion.div
+              variants={burgerListVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <Button className="w-full h-12 max-w-[320px] mx-auto">
+                Kontakt os
+              </Button>
             </motion.div>
           </Container>
         </motion.div>
