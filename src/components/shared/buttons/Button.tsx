@@ -27,16 +27,16 @@ export default function Button({
       disabled={disabled}
       onClick={onClick}
       className={twMerge(
-        "group flex w-full h-12 lg:h-[57px] p-[5px] items-center justify-center overflow-hidden outline-none rounded-full text-[12px] lg:text-[14px] font-normal leading-[120%] uppercase enabled:cursor-pointer disabled:opacity-60 enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out enabled:focus-visible:brightness-125 xl:enabled:hover:brightness-125",
+        "group relative flex w-full h-12 lg:h-[57px] p-[5px] items-center justify-center overflow-hidden outline-none rounded-full border text-[12px] lg:text-[14px] font-normal leading-[120%] uppercase enabled:cursor-pointer disabled:opacity-60 enabled:active:scale-[98%] will-change-transform transition-[color,transform] duration-300 ease-in-out before:content-[''] before:absolute before:z-0 before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:transition-[width] before:duration-700 before:ease-in-out enabled:focus-visible:before:w-full xl:enabled:hover:before:w-full",
         variant === "black"
-          ? "bg-black text-white"
+          ? "border-black bg-black text-white before:bg-white enabled:focus-visible:text-black xl:enabled:hover:text-black"
           : variant === "beige"
-            ? "bg-beige text-black"
-            : "bg-brown text-white",
+            ? "border-beige bg-beige text-black before:bg-black enabled:focus-visible:text-beige xl:enabled:hover:text-beige"
+            : "border-brown bg-brown text-white before:bg-beige enabled:focus-visible:text-black xl:enabled:hover:text-black",
         className,
       )}
     >
-      {isLoading ? loadingText : children}
+      <span className="relative z-10">{isLoading ? loadingText : children}</span>
     </button>
   );
 }
