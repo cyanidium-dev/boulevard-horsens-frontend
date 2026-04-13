@@ -1,14 +1,18 @@
 import Image from "next/image";
 import type { SanityImageSource } from "@sanity/image-url";
+import * as motion from "motion/react-client";
 import Button from "@/components/shared/buttons/Button";
 import Container from "@/components/shared/container/Container";
 import { urlForImage } from "@/lib/sanityClient";
 import type { Service, ServiceImage } from "@/types/service";
+import { fadeInAnimation } from "@/utils/animationVariants";
 import { twMerge } from "tailwind-merge";
 import DecorativeEllipsis from "./DecorativeEllipsis";
 
 const LAYOUT_FALLBACK_W = 2400;
 const LAYOUT_FALLBACK_H = 1600;
+
+const VIEWPORT = { once: true, amount: 0.15 } as const;
 
 function serviceImageUrl(source: ServiceImage | undefined) {
   if (!source?.asset) return null;
@@ -77,50 +81,98 @@ export default function ServiceSection({ service }: ServiceSectionProps) {
               uniqueKey={`service-${service._id}`}
               className="mb-4 sm:mb-9"
             />
-            <h2 className="mb-4 font-evolenta text-[24px] font-normal uppercase leading-[120%] text-black lg:mb-9 lg:text-[48px]">
+            <motion.h2
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={VIEWPORT}
+              variants={fadeInAnimation({ y: 20, delay: 0 })}
+              className="mb-4 font-evolenta text-[24px] font-normal uppercase leading-[120%] text-black lg:mb-9 lg:text-[48px]"
+            >
               {service.title}
-            </h2>
+            </motion.h2>
             {mobileSrc ? (
-              <Image
-                src={mobileSrc}
-                alt={mobileAlt}
-                width={mobileLayout.width}
-                height={mobileLayout.height}
-                sizes="100vw"
-                className="mb-8 w-full rounded-[12px] sm:hidden"
-              />
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={VIEWPORT}
+                variants={fadeInAnimation({ y: 16, delay: 0.08 })}
+                className="mb-8 sm:hidden"
+              >
+                <Image
+                  src={mobileSrc}
+                  alt={mobileAlt}
+                  width={mobileLayout.width}
+                  height={mobileLayout.height}
+                  sizes="100vw"
+                  className="w-full rounded-[12px]"
+                />
+              </motion.div>
             ) : null}
             {service.description ? (
-              <p className="mb-10 whitespace-pre-line lg:mb-9">
+              <motion.p
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={VIEWPORT}
+                variants={fadeInAnimation({ y: 16, delay: 0.14 })}
+                className="mb-10 whitespace-pre-line lg:mb-9"
+              >
                 {service.description}
-              </p>
+              </motion.p>
             ) : null}
             {btn?.url && btn.label ? (
-              <Button href={btn.url} variant="black" className="w-full">
-                {btn.label}
-              </Button>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={VIEWPORT}
+                variants={fadeInAnimation({ y: 12, delay: 0.2 })}
+              >
+                <Button href={btn.url} variant="black" className="w-full">
+                  {btn.label}
+                </Button>
+              </motion.div>
             ) : null}
           </div>
 
           {desktopSrc && mobileSrc ? (
             <>
-              {" "}
-              <Image
-                src={mobileSrc}
-                alt={mobileAlt}
-                width={mobileLayout.width}
-                height={mobileLayout.height}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="hidden sm:block lg:hidden h-auto w-[calc(50%-18px)] object-cover rounded-[12px]"
-              />
-              <Image
-                src={desktopSrc}
-                alt={desktopAlt}
-                width={desktopLayout.width}
-                height={desktopLayout.height}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="hidden lg:block h-auto w-[calc(50%-18px)] object-cover rounded-[12px]"
-              />
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={VIEWPORT}
+                variants={fadeInAnimation({ y: 20, delay: 0.1 })}
+                className="hidden h-auto w-[calc(50%-18px)] sm:block lg:hidden"
+              >
+                <Image
+                  src={mobileSrc}
+                  alt={mobileAlt}
+                  width={mobileLayout.width}
+                  height={mobileLayout.height}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="h-auto w-full rounded-[12px] object-cover"
+                />
+              </motion.div>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={VIEWPORT}
+                variants={fadeInAnimation({ y: 20, delay: 0.14 })}
+                className="hidden h-auto w-[calc(50%-18px)] lg:block"
+              >
+                <Image
+                  src={desktopSrc}
+                  alt={desktopAlt}
+                  width={desktopLayout.width}
+                  height={desktopLayout.height}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="h-auto w-full rounded-[12px] object-cover"
+                />
+              </motion.div>
             </>
           ) : null}
         </div>
