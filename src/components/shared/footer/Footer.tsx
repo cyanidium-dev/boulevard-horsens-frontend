@@ -1,3 +1,9 @@
+import MarqueeLine from "../marquee/MarqueeLine";
+
 export default function Footer() {
-  return <footer></footer>;
+  return (
+    <footer>
+      <MarqueeLine className="" />
+    </footer>
+  );
 }
