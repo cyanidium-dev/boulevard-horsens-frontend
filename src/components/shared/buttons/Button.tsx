@@ -24,13 +24,30 @@ export default function Button({
   loadingText = "Sender...",
   onClick,
 }: ButtonProps) {
-  const mergedClassName = twMerge(
-    "group relative flex w-full h-12 lg:h-[57px] p-[5px] items-center justify-center overflow-hidden outline-none rounded-full border text-[12px] lg:text-[14px] font-normal leading-[120%] uppercase enabled:cursor-pointer disabled:opacity-60 enabled:active:scale-[98%] will-change-transform transition-[color,transform] duration-300 ease-in-out before:content-[''] before:absolute before:z-0 before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:transition-[width] before:duration-700 before:ease-in-out enabled:focus-visible:before:w-full xl:enabled:hover:before:w-full",
+  const asLink = Boolean(href && !disabled && !isLoading);
+
+  /* :enabled у CSS не застосовується до <a>, тому для Link — hover/focus без префікса enabled: */
+  const stateClasses = asLink
+    ? "cursor-pointer active:scale-[98%] focus-visible:before:w-full xl:hover:before:w-full"
+    : "enabled:cursor-pointer disabled:opacity-60 enabled:active:scale-[98%] enabled:focus-visible:before:w-full xl:enabled:hover:before:w-full";
+
+  const variantClasses =
     variant === "black"
-      ? "border-black bg-black text-white before:bg-white enabled:focus-visible:text-black xl:enabled:hover:text-black"
+      ? asLink
+        ? "border-black bg-black text-white before:bg-white focus-visible:text-black xl:hover:text-black"
+        : "border-black bg-black text-white before:bg-white enabled:focus-visible:text-black xl:enabled:hover:text-black"
       : variant === "beige"
-        ? "border-beige bg-beige text-black before:bg-black enabled:focus-visible:text-beige xl:enabled:hover:text-beige"
-        : "border-brown bg-brown text-white before:bg-beige enabled:focus-visible:text-black xl:enabled:hover:text-black",
+        ? asLink
+          ? "border-beige bg-beige text-black before:bg-black focus-visible:text-beige xl:hover:text-beige"
+          : "border-beige bg-beige text-black before:bg-black enabled:focus-visible:text-beige xl:enabled:hover:text-beige"
+        : asLink
+          ? "border-brown bg-brown text-white before:bg-beige focus-visible:text-black xl:hover:text-black"
+          : "border-brown bg-brown text-white before:bg-beige enabled:focus-visible:text-black xl:enabled:hover:text-black";
+
+  const mergedClassName = twMerge(
+    "group relative flex w-full h-12 lg:h-[57px] p-[5px] items-center justify-center overflow-hidden outline-none rounded-full border text-[12px] lg:text-[14px] font-normal leading-[120%] uppercase will-change-transform transition-[color,transform] duration-300 ease-in-out before:content-[''] before:absolute before:z-0 before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:transition-[width] before:duration-700 before:ease-in-out",
+    stateClasses,
+    variantClasses,
     className,
   );
 
@@ -38,9 +55,9 @@ export default function Button({
     <span className="relative z-10">{isLoading ? loadingText : children}</span>
   );
 
-  if (href && !disabled && !isLoading) {
+  if (asLink) {
     return (
-      <Link href={href} className={mergedClassName} onClick={onClick}>
+      <Link href={href!} className={mergedClassName} onClick={onClick}>
         {content}
       </Link>
     );
