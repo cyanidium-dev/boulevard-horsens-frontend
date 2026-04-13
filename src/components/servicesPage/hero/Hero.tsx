@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Container from "@/components/shared/container/Container";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function Hero() {
   return (
@@ -26,13 +28,27 @@ export default function Hero() {
       </div>
       <Container>
         {" "}
-        <h1 className="max-w-[239px] lg:max-w-[497px] mb-6 lg:mb-9 font-evolenta text-[24px] lg:text-[48px] leading-[120%] font-normal uppercase text-beige">
+        <motion.h1
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, delay: 0.3, x: 70 })}
+          className="max-w-[239px] lg:max-w-[497px] mb-6 lg:mb-9 font-evolenta text-[24px] lg:text-[48px] leading-[120%] font-normal uppercase text-beige"
+        >
           Boulevard Beauty Salon i Horsens
-        </h1>
-        <p className="max-w-[239px] lg:max-w-[325px] mb-6 lg:mb-9 text-[14px] lg:text-[16px] leading-[120%] font-light text-beige">
+        </motion.h1>
+        <motion.p
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, delay: 0.4, x: -70 })}
+          className="max-w-[239px] lg:max-w-[325px] mb-6 lg:mb-9 text-[14px] lg:text-[16px] leading-[120%] font-light text-beige"
+        >
           Book din behandling online og vælg den service, der passer bedst til
           dig
-        </p>
+        </motion.p>
       </Container>
     </section>
   );
