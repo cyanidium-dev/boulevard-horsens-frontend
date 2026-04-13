@@ -1,7 +1,7 @@
 export const fadeInAnimation = ({
   scale = 1,
   delay = 0,
-  duration = 0.7,
+  duration = 1,
   opacity = 0,
   y = 0,
   x = 0,

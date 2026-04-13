@@ -17,7 +17,7 @@ function Breadcrumbs({ steps, className = "" }: BreadcrumbsProps) {
   const parents = steps.slice(0, -1);
   const current = steps[steps.length - 1]!;
 
-  const navClass = `relative z-10 pt-5.5 lg:pt-10 pt-25 lg:pb-[127px] min-w-0 font-montserrat font-light leading-[120%] text-[12px] lg:text-[16px] ${className}`;
+  const navClass = `relative z-10 pt-5 lg:pt-10 pb-25 lg:pb-[127px] font-montserrat font-light leading-[120%] text-[12px] lg:text-[16px] ${className}`;
   const sep = (
     <span className="mx-2 shrink-0 select-none" aria-hidden="true">
       /
@@ -49,7 +49,7 @@ function Breadcrumbs({ steps, className = "" }: BreadcrumbsProps) {
             );
           })}
 
-          <li className="flex min-w-0 w-full basis-full items-baseline sm:w-auto sm:flex-1 sm:basis-0">
+          <li className="flex items-baseline">
             <span
               aria-current="page"
               className="min-w-0 flex-1 text-left break-words font-light [overflow-wrap:anywhere]"

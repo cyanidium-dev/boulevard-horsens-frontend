@@ -37,7 +37,7 @@ export default function RootLayout({
       lang="da"
       className={`${montserrat.variable} ${evolenta.variable} antialiased`}
     >
-      <body className="flex min-h-dvh flex-col text-[14px] font-light leading-[120%]">
+      <body className="flex min-h-dvh flex-col text-[14px] lg:text-[16px] font-light leading-[120%]">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
