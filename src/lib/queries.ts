@@ -9,11 +9,15 @@ export const SERVICES_QUERY = `*[_type == "service"] | order(_createdAt asc){
   },
   "servicesPageImageMobile": servicesPageImageMobile{
     ...,
-    "alt": alt
+    "alt": alt,
+    "dimensions": asset->metadata.dimensions,
+    "assetUrl": asset->url
   },
   "servicesPageImageDesktop": servicesPageImageDesktop{
     ...,
-    "alt": alt
+    "alt": alt,
+    "dimensions": asset->metadata.dimensions,
+    "assetUrl": asset->url
   },
   button{
     label,
