@@ -62,6 +62,7 @@ export function getActiveIndex(pathname: string, hash: string): number {
     return 1;
   }
   if (pathname === "/" || pathname === "") {
+    if (hash === "__PENDING_HASH__") return -1;
     const h = hash && !hash.startsWith("#") ? `#${hash}` : hash;
     if (h === "#opening-hours") return 2;
     if (h === "#about") return 3;
@@ -72,12 +73,19 @@ export function getActiveIndex(pathname: string, hash: string): number {
 
 export default function NavMenu() {
   const pathname = usePathname();
+  const [isHashReady, setIsHashReady] = useState(false);
   const urlHash = useSyncExternalStore(
     subscribeToHash,
     getHashSnapshot,
     () => "",
   );
-  const activeIndex = getActiveIndex(pathname, urlHash);
+  useEffect(() => {
+    setIsHashReady(true);
+  }, []);
+  const activeIndex = getActiveIndex(
+    pathname,
+    isHashReady ? urlHash : "__PENDING_HASH__",
+  );
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);

@@ -15,9 +15,13 @@ interface TextRevealCardProps {
     image: SanityImage | { link: string; alt: string };
     link: string;
   };
+  isAboveTheFold?: boolean;
 }
 
-export default function TextRevealCard({ slide }: TextRevealCardProps) {
+export default function TextRevealCard({
+  slide,
+  isAboveTheFold = false,
+}: TextRevealCardProps) {
   const { title, description, image, link } = slide;
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
@@ -49,6 +53,8 @@ export default function TextRevealCard({ slide }: TextRevealCardProps) {
             : image?.alt || title
         }
         fill
+        loading={isAboveTheFold ? "eager" : "lazy"}
+        fetchPriority={isAboveTheFold ? "high" : "auto"}
         className="-z-10 object-cover rounded-[8px]"
       />
       {link ? (

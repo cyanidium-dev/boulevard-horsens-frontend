@@ -42,7 +42,7 @@ export default function TextRevealCardsSlider({
     >
       {slides.map((slide, idx) => (
         <SwiperSlide key={idx}>
-          <TextRevealCard slide={slide} />
+          <TextRevealCard slide={slide} isAboveTheFold={idx === 0} />
         </SwiperSlide>
       ))}
     </SwiperWrapper>
