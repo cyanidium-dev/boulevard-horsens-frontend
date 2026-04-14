@@ -34,8 +34,8 @@ export default function Button({
   const variantClasses =
     variant === "black"
       ? asLink
-        ? "border-black bg-black text-white before:bg-white focus-visible:text-black xl:hover:text-black"
-        : "border-black bg-black text-white before:bg-white enabled:focus-visible:text-black xl:enabled:hover:text-black"
+        ? "border-black bg-black text-beige before:bg-beige focus-visible:text-black xl:hover:text-black"
+        : "border-black bg-black text-beige before:bg-beige enabled:focus-visible:text-black xl:enabled:hover:text-black"
       : variant === "beige"
         ? asLink
           ? "border-beige bg-beige text-black before:bg-black focus-visible:text-beige xl:hover:text-beige"
