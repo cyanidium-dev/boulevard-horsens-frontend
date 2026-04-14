@@ -2,6 +2,8 @@ import Button from "@/components/shared/buttons/Button";
 import HeroGallerySlider from "./HeroGallerySlider";
 import { HERO_GALLERY_IMAGES } from "./heroImages";
 import Container from "@/components/shared/container/Container";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function Hero() {
   return (
@@ -21,24 +23,63 @@ export default function Hero() {
       </div>
 
       <Container className="pt-[134px] lg:pt-[151px]">
-        <h1 className="max-w-[517px] mb-9 font-evolenta text-[40px] lg:text-[72px] leading-[120%] font-normal uppercase text-beige">
+        <motion.h1
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({
+            delay: 0.2,
+            x: -70,
+
+            duration: 1.5,
+          })}
+          className="max-w-[517px] mb-9 font-evolenta text-[40px] lg:text-[72px] leading-[120%] font-normal uppercase text-beige"
+        >
           Beauty Salon Boulevard i Horsens
-        </h1>
-        <p className="mb-20 lg:mb-[54px] max-w-[270px] text-beige">
+        </motion.h1>
+        <motion.p
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({
+            delay: 0.6,
+            x: 70,
+
+            duration: 1.5,
+          })}
+          className="mb-20 lg:mb-[54px] max-w-[270px] text-beige"
+        >
           Ansigtsbehandlinger, lash lift, brow lamination, manicure, pedicure og
           voks
-        </p>
+        </motion.p>
         {/* <p>
           Professionelle behandlinger med fokus på kvalitet, naturlige
           resultater og individuel tilgang
         </p> */}
-        <Button
-          href="/#services"
-          variant="beige"
-          className="w-full sm:w-[270px] h-15 lg:h-[68px]"
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({
+            delay: 1.2,
+            y: 20,
+            scale: 0.75,
+            duration: 1.2,
+          })}
+          className="w-fit"
         >
-          Vælg behandling
-        </Button>
+          {" "}
+          <Button
+            href="/#services"
+            variant="beige"
+            className="w-full sm:w-[270px] h-15 lg:h-[68px]"
+          >
+            Vælg behandling
+          </Button>
+        </motion.div>
       </Container>
     </section>
   );

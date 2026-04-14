@@ -23,15 +23,29 @@ export default function Services({ services }: ServicesProps) {
     <section id="services" className="pb-20 lg:pb-[116px]">
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:justify-between md:items-start mb-9 lg:mb-[65px]">
-          <h2 className="md:max-w-[400px] lg:max-w-[600px] xl:max-w-[787px] font-evolenta text-[28px] lg:text-[48px] leading-[120%] font-normal uppercase text-black">
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({ scale: 0.95, delay: 0.3, x: -70 })}
+            className="md:max-w-[400px] lg:max-w-[600px] xl:max-w-[787px] font-evolenta text-[28px] lg:text-[48px] leading-[120%] font-normal uppercase text-black"
+          >
             Ansigtsbehandling, manicure, lash lift, bryn og voks
-          </h2>
-          <div className="flex items-center gap-6 max-w-[199px]">
+          </motion.h2>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({ scale: 0.95, delay: 0.3, x: 70 })}
+            className="flex items-center gap-6 max-w-[199px]"
+          >
             <div className="size-4.5 bg-black rounded-full shrink-0" />{" "}
             <p className="text-[14px] lg:text-[14px] leading-[120%] font-normal text-black">
               Vælg den behandling, der passer til dig
             </p>
-          </div>
+          </motion.div>
         </div>
         <motion.div
           key={`home-page-sevices-text-reveal-card-slider}`}
