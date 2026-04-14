@@ -36,8 +36,9 @@ export default function TextRevealCardsSlider({
       uniqueKey={uniqueKey}
       component={component}
       swiperClassName="text-reveal-cards-slider"
-      buttonsClassName="sm:flex-row sm:items-center sm:justify-between pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
-          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)]"
+      buttonsClassName="pr-5 lg:pr-6 mr-5 sm:mr-[calc(100%-640px+20px)] md:mr-[calc(100%-768px+20px)] 
+          lg:mr-[calc(100%-1024px+24px)] xl:mr-[calc(100%-1280px+24px)]"
+      buttonsPosition="center"
     >
       {slides.map((slide, idx) => (
         <SwiperSlide key={idx}>

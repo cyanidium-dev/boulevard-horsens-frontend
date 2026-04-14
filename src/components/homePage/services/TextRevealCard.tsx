@@ -65,7 +65,7 @@ export default function TextRevealCard({ slide }: TextRevealCardProps) {
         onClick={toggleExpand}
         className={`group relative flex flex-col justify-center min-h-24 px-4 rounded-[8px] bg-white/6 shadow-[inset_0px_4px_12.6px_rgba(255,255,255,0.12)] backdrop-blur-[38px] ${
           !isExpanded ? "max-h-30" : "max-h-full"
-        } cursor-pointer transition-[max-height, padding] duration-500 ease-in-out ${
+        } cursor-pointer transition-[max-height, padding] duration-500 ease-in ${
           isExpanded ? "py-6" : "py-9"
         }`}
       >
