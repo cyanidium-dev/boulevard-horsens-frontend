@@ -5,6 +5,7 @@ interface ButtonProps {
   children: React.ReactNode;
   type?: "button" | "submit";
   href?: string;
+  linkType?: "internal" | "external";
   className?: string;
   variant?: "black" | "beige" | "brown";
   disabled?: boolean;
@@ -17,6 +18,7 @@ export default function Button({
   type = "button",
   children,
   href,
+  linkType = "internal",
   className,
   variant = "black",
   disabled = false,
@@ -56,6 +58,20 @@ export default function Button({
   );
 
   if (asLink) {
+    if (linkType === "external") {
+      return (
+        <a
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+          href={href!}
+          className={mergedClassName}
+          onClick={onClick}
+        >
+          {content}
+        </a>
+      );
+    }
+
     return (
       <Link href={href!} className={mergedClassName} onClick={onClick}>
         {content}
