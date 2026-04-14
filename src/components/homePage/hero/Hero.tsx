@@ -69,13 +69,13 @@ export default function Hero() {
             scale: 0.75,
             duration: 1.2,
           })}
-          className="w-fit"
+          className="xs:w-fit"
         >
           {" "}
           <Button
             href="/#services"
             variant="beige"
-            className="w-full sm:w-[270px] h-15 lg:h-[68px]"
+            className="w-full xs:w-[270px] h-15 lg:h-[68px]"
           >
             Vælg behandling
           </Button>
