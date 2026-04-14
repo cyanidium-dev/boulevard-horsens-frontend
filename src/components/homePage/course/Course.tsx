@@ -57,7 +57,7 @@ export default function Course() {
             </div>
           </div>
 
-          <div className="relative sm:w-[calc(100%-267px-20px)] h-[150px] sm:h-auto rounded-[16px] overflow-hidden">
+          <div className="relative sm:w-[calc(100%-267px-20px)] h-[150px] xs:h-50 sm:h-auto rounded-[16px] overflow-hidden">
             <Image
               src="/images/homePage/course/imageOne.webp"
               alt="Course image"
@@ -106,7 +106,7 @@ export default function Course() {
             </div>
           </div>
 
-          <div className="relative sm:w-[calc(100%-267px-20px)] h-[150px] sm:h-auto rounded-[16px] overflow-hidden">
+          <div className="relative sm:w-[calc(100%-267px-20px)] h-[150px] xs:h-50 sm:h-auto rounded-[16px] overflow-hidden">
             <Image
               src="/images/homePage/course/imageTwo.webp"
               alt="Course image"
