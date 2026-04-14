@@ -3,15 +3,23 @@ export const fadeInAnimation = ({
   delay = 0,
   duration = 1,
   opacity = 0,
+  rotate = 0,
   y = 0,
   x = 0,
 }) => ({
-  hidden: { opacity: opacity, scale: scale, translateY: y, translateX: x },
+  hidden: {
+    opacity: opacity,
+    scale: scale,
+    translateY: y,
+    translateX: x,
+    rotate: rotate,
+  },
   visible: {
     scale: 1,
     opacity: 1,
     translateY: 0,
     translateX: 0,
+    rotate: 0,
     transition: { duration, delay, ease: [0.25, 0.1, 0.25, 1] as const },
   },
   exit: {
@@ -19,6 +27,7 @@ export const fadeInAnimation = ({
     opacity: opacity,
     translateY: y,
     translateX: x,
+    rotate: rotate,
     transition: { duration, ease: [0.42, 0, 1, 1] as const },
   },
 });

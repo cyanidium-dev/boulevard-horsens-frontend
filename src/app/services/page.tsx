@@ -5,15 +5,10 @@ import { Service } from "@/types/service";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import ServiceSection from "@/components/shared/serviceSection/ServiceSection";
 
-async function getServices() {
-  return fetchSanityData<Service[]>(SERVICES_QUERY);
-}
-
 export default async function ServicesPage() {
   const breadcrumbSteps = [{ label: `Hjem`, href: `/` }, { label: "Services" }];
-  const services = await getServices();
 
-  console.log(services);
+  const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
 
   return (
     <>

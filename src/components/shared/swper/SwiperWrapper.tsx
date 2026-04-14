@@ -38,7 +38,7 @@ interface SwiperWrapperProps {
 
 const buttonsPositionClass = {
   right: "sm:justify-end sm:ml-auto",
-  center: "sm:justify-center",
+  center: "justify-center",
   onSlides: "w-full justify-between",
 };
 
@@ -47,7 +47,7 @@ export default function SwiperWrapper({
   breakpoints,
   swiperClassName,
   loop = false,
-  buttonsPosition = "right",
+  buttonsPosition = "center",
   uniqueKey,
   component,
   additionalModules = [],
@@ -168,35 +168,35 @@ export default function SwiperWrapper({
         <div
           key={`${uniqueKey}-buttons`}
           className={twMerge(
-            `flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-10 mb-0.5`,
+            `flex flex-col-reverse gap-10 mb-0.5`,
             buttonsClassName,
           )}
         >
           {component}
           <div
-            className={`flex justify-between sm:gap-3 items-center pointer-events-none ${buttonsPositionClass[buttonsPosition]}`}
+            className={`flex gap-3 items-center pointer-events-none ${buttonsPositionClass[buttonsPosition]}`}
           >
             <button
               type="button"
               ref={prevRef}
               disabled={isBeginning && !loop}
               aria-label="Forrige slide"
-              className="custom-prev relative z-[100] group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
-             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent"
+              className="custom-prev relative z-[100] group size-[54px] rounded-full flex items-center justify-center pointer-events-auto border border-black
+             bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80"
               onClick={handlePrevClick}
             >
-              <ShevronIcon className="relative z-[100] -rotate-90 group-enabled:text-black group-disabled:text-white mr-1 pointer-events-auto" />
+              <ShevronIcon className="relative z-[100] -rotate-90 group-enabled:text-white group-disabled:text-black mr-1 pointer-events-auto" />
             </button>
             <button
               type="button"
               ref={nextRef}
               disabled={isEnd && !loop}
               aria-label="Næste slide"
-              className="custom-next group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto z-[100] transition 
-          duration-300 xl:enabled:hover:opacity-85 disabled:bg-transparent"
+              className="custom-next group size-[54px] rounded-full flex items-center justify-center pointer-events-auto z-[100]
+          border border-black bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80"
               onClick={handleNextClick}
             >
-              <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1 pointer-events-auto" />
+              <ShevronIcon className="rotate-90 group-enabled:text-white group-disabled:text-black ml-1 pointer-events-auto" />
             </button>
           </div>
         </div>

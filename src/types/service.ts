@@ -1,35 +1,32 @@
-import type { SanityImageObject } from "@sanity/image-url";
+import type {
+  SanityImageCrop,
+  SanityImageHotspot,
+  SanityReference,
+} from "@sanity/image-url";
 
 export type DesktopImageSide = "left" | "right";
 
-/** Розміри оригіналу з Sanity `asset.metadata.dimensions`. */
-export interface SanityImageDimensions {
-  width?: number;
-  height?: number;
-  aspectRatio?: number;
-}
-
-export type ServiceImage = SanityImageObject & {
-  alt?: string | null;
-  _type?: "image";
-  dimensions?: SanityImageDimensions | null;
-  /** Пряме посилання на оригінал файлу в CDN (без ресайзу Sanity Image API). */
-  assetUrl?: string | null;
+export type SanityImage = {
+  _type: "image";
+  asset: SanityReference;
+  crop?: SanityImageCrop;
+  hotspot?: SanityImageHotspot;
+  alt?: string;
 };
 
 export interface ServiceButton {
-  label?: string;
-  url?: string;
+  label: string;
+  url: string;
 }
 
 export interface Service {
   _id: string;
   title: string;
   slug: string;
-  description?: string;
-  homePageImage?: ServiceImage;
-  servicesPageImageMobile?: ServiceImage;
-  servicesPageImageDesktop?: ServiceImage;
-  button?: ServiceButton;
+  description: string;
+  homePageImage: SanityImage;
+  servicesPageImageMobile: SanityImage;
+  servicesPageImageDesktop: SanityImage;
+  button: ServiceButton;
   desktopImageSide: DesktopImageSide;
 }

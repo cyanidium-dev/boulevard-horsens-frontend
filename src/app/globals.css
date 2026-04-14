@@ -62,4 +62,18 @@
     margin-top: 9px;
     margin-bottom: 9px;
   }
+
+  /* Swiper */
+
+  .swiper.text-reveal-cards-slider {
+    padding: 12px 0px 24px 0px !important;
+
+    @media screen and (min-width: 1024px) {
+      padding: 12px 3px 34px 0px !important;
+    }
+  }
+
+  .text-reveal-cards-slider .swiper-slide {
+    max-width: 275px !important;
+  }
 }
