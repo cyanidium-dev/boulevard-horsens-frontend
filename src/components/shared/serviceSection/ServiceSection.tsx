@@ -4,7 +4,7 @@ import * as motion from "motion/react-client";
 import Button from "@/components/shared/buttons/Button";
 import Container from "@/components/shared/container/Container";
 import { urlForImage } from "@/lib/sanityClient";
-import type { Service, ServiceImage } from "@/types/service";
+import type { SanityImage, Service } from "@/types/service";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import { twMerge } from "tailwind-merge";
 import DecorativeEllipsis from "./DecorativeEllipsis";
@@ -14,32 +14,13 @@ const LAYOUT_FALLBACK_H = 1600;
 
 const VIEWPORT = { once: true, amount: 0.15 } as const;
 
-function serviceImageUrl(source: ServiceImage | undefined) {
+function serviceImageUrl(source: SanityImage | undefined) {
   if (!source?.asset) return null;
-  const direct = source.assetUrl?.trim();
-  if (direct) return direct;
-  const w = source.dimensions?.width;
-  if (w && w > 0) {
-    return urlForImage(source as SanityImageSource)
-      .width(w)
-      .quality(100)
-      .url();
-  }
-  return urlForImage(source as SanityImageSource)
-    .quality(100)
-    .url();
+  return urlForImage(source as SanityImageSource).quality(100).url();
 }
 
-function imageLayoutBox(source: ServiceImage | undefined) {
-  const d = source?.dimensions;
-  const width = d?.width && d.width > 0 ? d.width : LAYOUT_FALLBACK_W;
-  const height =
-    d?.height && d.height > 0
-      ? d.height
-      : d?.aspectRatio && d.aspectRatio > 0
-        ? Math.round(width / d.aspectRatio)
-        : LAYOUT_FALLBACK_H;
-  return { width, height };
+function imageLayoutBox() {
+  return { width: LAYOUT_FALLBACK_W, height: LAYOUT_FALLBACK_H };
 }
 
 export interface ServiceSectionProps {
@@ -56,8 +37,8 @@ export default function ServiceSection({ service }: ServiceSectionProps) {
 
   const mobileSrc = serviceImageUrl(mobileRef);
   const desktopSrc = serviceImageUrl(desktopRef);
-  const mobileLayout = imageLayoutBox(mobileRef);
-  const desktopLayout = imageLayoutBox(desktopRef);
+  const mobileLayout = imageLayoutBox();
+  const desktopLayout = imageLayoutBox();
 
   const mobileAlt = mobileRef?.alt ?? service.title;
   const desktopAlt = desktopRef?.alt ?? service.title;
