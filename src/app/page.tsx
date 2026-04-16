@@ -45,10 +45,10 @@ export default async function HomePage() {
         <Team teamMembers={teamMembers} />
       </Suspense>
       <Reviews />
+      <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Faq faq={homeFaq?.faq} />
       </Suspense>
-      <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
     </>
   );
 }
