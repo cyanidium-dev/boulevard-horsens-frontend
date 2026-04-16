@@ -15,14 +15,6 @@ export default function MarqueeLine({
   variant = "brown",
 }: MarqueeLineProps) {
   return (
-    // <motion.div
-    //   initial="hidden"
-    //   whileInView="visible"
-    //   exit="exit"
-    //   viewport={{ once: true, amount: 0.2 }}
-    //   variants={headerVariants}
-    //   className={className}
-    // >
     <Marquee
       autoFill={true}
       speed={70}
@@ -39,6 +31,5 @@ export default function MarqueeLine({
       <span className="inline-block mx-[7.15px] lg:mx-[13px]">Boulevard</span>
       <span className="inline-block mx-[7.15px] lg:mx-[13px]">Boulevard</span>
     </Marquee>
-    // </motion.div>
   );
 }
