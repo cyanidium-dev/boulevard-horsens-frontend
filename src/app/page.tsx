@@ -14,6 +14,7 @@ import { fetchSanityData } from "@/utils/fetchSanityData";
 import Course from "@/components/homePage/course/Course";
 import Results from "@/components/homePage/results/Results";
 import Team from "@/components/homePage/team/Team";
+import { Suspense } from "react";
 
 interface WorkingHours {
   from?: string;
@@ -28,13 +29,19 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <Services services={services} />
+      <Suspense>
+        <Services services={services} />
+      </Suspense>
       <Results />
       <MarqueeLine variant="black" className="mb-14" />
       <Course />
-      <Prices from={workingHours?.from} to={workingHours?.to} />
+      <Suspense>
+        <Prices from={workingHours?.from} to={workingHours?.to} />
+      </Suspense>
       <About />
-      <Team teamMembers={teamMembers} />
+      <Suspense>
+        <Team teamMembers={teamMembers} />
+      </Suspense>
       <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
     </>
   );

@@ -31,7 +31,7 @@ export default function Hero() {
           variants={fadeInAnimation({
             delay: 0.2,
             x: -70,
-
+            opacity: 0.01,
             duration: 1.5,
           })}
           className="max-w-[517px] mb-9 font-evolenta text-[40px] lg:text-[72px] leading-[120%] font-normal uppercase text-beige"
@@ -46,7 +46,7 @@ export default function Hero() {
           variants={fadeInAnimation({
             delay: 0.6,
             x: 70,
-
+            opacity: 0.01,
             duration: 1.5,
           })}
           className="mb-20 lg:mb-[54px] max-w-[270px] text-beige"
@@ -68,6 +68,7 @@ export default function Hero() {
             y: 20,
             scale: 0.75,
             duration: 1.2,
+            opacity: 0.01,
           })}
           className="xs:w-fit"
         >
