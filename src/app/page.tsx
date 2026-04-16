@@ -8,6 +8,7 @@ import { Service } from "@/types/service";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import Course from "@/components/homePage/course/Course";
 import Results from "@/components/homePage/results/Results";
+import Team from "@/components/homePage/team/Team";
 
 interface WorkingHours {
   from?: string;
@@ -27,6 +28,7 @@ export default async function HomePage() {
       <Course />
       <Prices from={workingHours?.from} to={workingHours?.to} />
       <About />
+      <Team />
       <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
     </>
   );
