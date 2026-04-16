@@ -29,8 +29,9 @@ export const WORKING_HOURS_QUERY = `*[_type == "workingHours"][0]{
   to
 }`;
 
-export const TEAM_MEMBERS_QUERY = `*[_type == "teamMember"] | order(_createdAt asc){
+export const TEAM_MEMBERS_QUERY = `*[_type == "teamMember"] | order(order asc){
   _id,
+  order,
   name,
   position,
   "photo": photo{
