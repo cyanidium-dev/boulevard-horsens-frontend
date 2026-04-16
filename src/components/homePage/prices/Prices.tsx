@@ -4,13 +4,9 @@ import Button from "@/components/shared/buttons/Button";
 import StarIcon from "@/components/shared/icons/StarIcon";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import type { WorkingHours } from "@/types/workingHours";
 
-interface PricesProps {
-  from?: string;
-  to?: string;
-}
-
-export default function Prices({ from, to }: PricesProps) {
+export default function Prices({ from, to }: WorkingHours) {
   const workingHours = from && to ? `${from} - ${to}` : "09:00 - 18:00";
 
   return (
@@ -29,7 +25,6 @@ export default function Prices({ from, to }: PricesProps) {
           className="hidden lg:block -z-10 object-cover lg:object-[right_59%] rounded-[36px] lg:scale-102"
         />
         <div className="pt-15 pb-5 lg:pb-[65px]">
-          {" "}
           <div className="flex flex-col lg:flex-row gap-20">
             <motion.div
               initial="hidden"

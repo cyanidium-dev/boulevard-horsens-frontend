@@ -181,18 +181,18 @@ export default function SwiperWrapper({
               ref={prevRef}
               disabled={isBeginning && !loop}
               aria-label="Forrige slide"
-              className="custom-prev relative z-[100] group size-[54px] rounded-full flex items-center justify-center pointer-events-auto border border-black
+              className="custom-prev relative z-[30] group size-[54px] rounded-full flex items-center justify-center pointer-events-auto border border-black
              bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80"
               onClick={handlePrevClick}
             >
-              <ShevronIcon className="relative z-[100] -rotate-90 group-enabled:text-white group-disabled:text-black mr-1 pointer-events-auto" />
+              <ShevronIcon className="relative z-[30] -rotate-90 group-enabled:text-white group-disabled:text-black mr-1 pointer-events-auto" />
             </button>
             <button
               type="button"
               ref={nextRef}
               disabled={isEnd && !loop}
               aria-label="Næste slide"
-              className="custom-next group size-[54px] rounded-full flex items-center justify-center pointer-events-auto z-[100]
+              className="custom-next group size-[54px] rounded-full flex items-center justify-center pointer-events-auto z-[30]
           border border-black bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80"
               onClick={handleNextClick}
             >
