@@ -2,12 +2,26 @@ import Container from "@/components/shared/container/Container";
 import Image from "next/image";
 import Button from "@/components/shared/buttons/Button";
 import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function About() {
   return (
     <section id="about" className="pb-20 lg:pb-30">
       <Container className="lg:flex lg:flex-row-reverse lg:gap-6">
-        <div className="relative overflow-visible lg:w-[calc(35%-12px)] xl:w-[calc(50%-12px)] lg:h-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({
+            delay: 0.2,
+            x: 30,
+
+            duration: 1,
+          })}
+          className="relative overflow-visible lg:w-[calc(35%-12px)] xl:w-[calc(50%-12px)] lg:h-auto"
+        >
           <div className="relative p-6 rounded-[20px] overflow-hidden lg:h-full">
             <div
               className="absolute inset-0 -z-10"
@@ -36,10 +50,22 @@ export default function About() {
             variant="black"
             className="w-dvw absolute bottom-[70px] lg:bottom-[96px]"
           />
-        </div>
+        </motion.div>
 
         <div className="flex flex-col xs:flex-row xs:flex-wrap gap-5 xs:gap-6 lg:w-[calc(65%-12px)] xl:w-[calc(50%-12px)]">
-          <div className="flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-brown">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({
+              delay: 0.2,
+              y: 30,
+
+              duration: 1,
+            })}
+            className="flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-brown"
+          >
             <p className="mb-12 font-montserrat text-[14px] leading-[120%] font-light text-beige">
               Boulevard Beauty Salon i Horsens er et moderne skønhedssalon, hvor
               du kan få flere kosmetiske behandlinger samlet ét sted. Vi
@@ -50,9 +76,21 @@ export default function About() {
             <p className="font-evolenta text-[24px] leading-[120%] font-normal uppercase text-beige text-right">
               01
             </p>
-          </div>
+          </motion.div>
 
-          <div className="relative flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({
+              delay: 0.4,
+              y: 30,
+
+              duration: 1,
+            })}
+            className="relative flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
+          >
             <div
               className="absolute inset-0 rounded-[28px] pointer-events-none"
               style={{
@@ -78,9 +116,21 @@ export default function About() {
             <p className="font-evolenta text-[24px] leading-[120%] font-normal uppercase text-right">
               02
             </p>
-          </div>
+          </motion.div>
 
-          <div className="relative flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({
+              delay: 0.6,
+              y: 30,
+
+              duration: 1,
+            })}
+            className="relative flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
+          >
             <div
               className="absolute inset-0 rounded-[28px] pointer-events-none"
               style={{
@@ -102,9 +152,19 @@ export default function About() {
             <p className="font-evolenta text-[24px] leading-[120%] font-normal uppercase text-right">
               03
             </p>
-          </div>
+          </motion.div>
 
-          <a
+          <motion.a
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({
+              delay: 0.8,
+              y: 30,
+
+              duration: 1,
+            })}
             href="https://maps.app.goo.gl/pJZxv9hHeH65WZ8L9"
             target="_blank"
             rel="noopener noreferrer nofollow"
@@ -116,7 +176,7 @@ export default function About() {
               fill
               className="object-cover xl:group-hover:scale-105 transition duration-1200 ease-in-out"
             />
-          </a>
+          </motion.a>
         </div>
       </Container>
     </section>
