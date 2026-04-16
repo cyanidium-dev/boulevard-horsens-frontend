@@ -21,3 +21,10 @@ export const SERVICES_QUERY = `*[_type == "service"] | order(_createdAt asc){
   },
   desktopImageSide
 }`;
+
+export const WORKING_HOURS_QUERY = `*[_type == "workingHours"][0]{
+  _id,
+  title,
+  from,
+  to
+}`;
