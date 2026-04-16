@@ -8,7 +8,14 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 export default function About() {
   return (
     <section id="about" className="pb-20 lg:pb-30">
-      <Container className="lg:flex lg:flex-row-reverse lg:gap-6">
+      <Container className="relative lg:flex lg:flex-row-reverse lg:gap-6">
+        <Image
+          src="/images/homePage/about/decor.webp"
+          alt="Decor"
+          width={270}
+          height={116}
+          className="absolute -z-30 bottom-[-65px] lg:bottom-[-50px] right-0 lg:right-auto lg:left-[-66px] -z-10"
+        />
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -89,7 +96,7 @@ export default function About() {
 
               duration: 1,
             })}
-            className="relative flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
+            className="relative flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[3px]"
           >
             <div
               className="absolute inset-0 rounded-[28px] pointer-events-none"
@@ -129,7 +136,7 @@ export default function About() {
 
               duration: 1,
             })}
-            className="relative flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
+            className="relative flex flex-col justify-between xs:w-[calc(50%-12px)] p-5 rounded-[20px] bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[3px]"
           >
             <div
               className="absolute inset-0 rounded-[28px] pointer-events-none"

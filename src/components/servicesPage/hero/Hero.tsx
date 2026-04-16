@@ -33,7 +33,12 @@ export default function Hero() {
           whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({ scale: 0.95, delay: 0.3, x: 70 })}
+          variants={fadeInAnimation({
+            scale: 0.95,
+            delay: 0.3,
+            x: 70,
+            opacity: 0.01,
+          })}
           className="max-w-[239px] lg:max-w-[497px] mb-6 lg:mb-9 font-evolenta text-[24px] lg:text-[48px] leading-[120%] font-normal uppercase text-beige"
         >
           Boulevard Beauty Salon i Horsens
@@ -43,7 +48,12 @@ export default function Hero() {
           whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({ scale: 0.95, delay: 0.4, x: -70 })}
+          variants={fadeInAnimation({
+            scale: 0.95,
+            delay: 0.4,
+            x: -70,
+            opacity: 0.01,
+          })}
           className="max-w-[239px] lg:max-w-[325px] mb-6 lg:mb-9 text-[14px] lg:text-[16px] leading-[120%] font-light text-beige"
         >
           Book din behandling online og vælg den service, der passer bedst til

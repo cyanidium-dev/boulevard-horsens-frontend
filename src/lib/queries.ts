@@ -28,3 +28,14 @@ export const WORKING_HOURS_QUERY = `*[_type == "workingHours"][0]{
   from,
   to
 }`;
+
+export const TEAM_MEMBERS_QUERY = `*[_type == "teamMember"] | order(order asc){
+  _id,
+  order,
+  name,
+  position,
+  "photo": photo{
+    ...,
+    "alt": alt
+  }
+}`;

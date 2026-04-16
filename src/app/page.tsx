@@ -3,11 +3,19 @@ import Prices from "@/components/homePage/prices/Prices";
 import About from "@/components/homePage/about/About";
 import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
 import Services from "@/components/homePage/services/Services";
-import { SERVICES_QUERY, WORKING_HOURS_QUERY } from "@/lib/queries";
+import {
+  SERVICES_QUERY,
+  TEAM_MEMBERS_QUERY,
+  WORKING_HOURS_QUERY,
+} from "@/lib/queries";
 import { Service } from "@/types/service";
+import type { TeamMember } from "@/types/team";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import Course from "@/components/homePage/course/Course";
 import Results from "@/components/homePage/results/Results";
+import Team from "@/components/homePage/team/Team";
+import Loader from "@/components/shared/loader/Loader";
+import { Suspense } from "react";
 
 interface WorkingHours {
   from?: string;
@@ -17,16 +25,24 @@ interface WorkingHours {
 export default async function HomePage() {
   const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
   const workingHours = await fetchSanityData<WorkingHours>(WORKING_HOURS_QUERY);
+  const teamMembers = await fetchSanityData<TeamMember[]>(TEAM_MEMBERS_QUERY);
 
   return (
     <>
       <Hero />
-      <Services services={services} />
+      <Suspense fallback={<Loader className="h-[680px]" />}>
+        <Services services={services} />
+      </Suspense>
       <Results />
       <MarqueeLine variant="black" className="mb-14" />
       <Course />
-      <Prices from={workingHours?.from} to={workingHours?.to} />
+      <Suspense fallback={<Loader className="h-[780px] lg:h-[425px]" />}>
+        <Prices from={workingHours?.from} to={workingHours?.to} />
+      </Suspense>
       <About />
+      <Suspense fallback={<Loader className="h-[425px]" />}>
+        <Team teamMembers={teamMembers} />
+      </Suspense>
       <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
     </>
   );
