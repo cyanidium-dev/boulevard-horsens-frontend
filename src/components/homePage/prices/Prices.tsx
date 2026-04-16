@@ -10,7 +10,7 @@ export default function Prices({ from, to }: WorkingHours) {
   const workingHours = from && to ? `${from} - ${to}` : "09:00 - 18:00";
 
   return (
-    <section id="prices" className="pb-20 lg:pb-[116px]">
+    <section id="opening-hours" className="pb-20 lg:pb-[116px] scroll-mt-30">
       <Container className="relative rounded-[36px] overflow-hidden">
         <Image
           src="/images/homePage/price/image-mob.webp"

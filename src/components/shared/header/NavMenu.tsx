@@ -48,7 +48,7 @@ export type NavMenuItem = {
 
 export const navMenuList: NavMenuItem[] = [
   { title: "Hjem", slug: "/#hero" },
-  { title: "Services", slug: "/services" },
+  { title: "Services", slug: "services" },
   {
     title: "Åbningstider",
     slug: "/#opening-hours",

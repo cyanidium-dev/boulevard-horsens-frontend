@@ -15,3 +15,9 @@ export interface HomeFaq {
   title?: string;
   faq?: FaqSection;
 }
+
+export interface ServicesFaq {
+  _id?: string;
+  title?: string;
+  faq?: FaqSection;
+}

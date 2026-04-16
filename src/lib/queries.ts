@@ -50,3 +50,14 @@ export const HOME_FAQ_QUERY = `*[_type == "homeFaq"][0]{
     }
   }
 }`;
+
+export const SERVICES_FAQ_QUERY = `*[_type == "servicesFaq"][0]{
+  _id,
+  title,
+  "faq": faqSection{
+    ...,
+    items[]{
+      ...
+    }
+  }
+}`;
