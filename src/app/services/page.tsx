@@ -6,6 +6,7 @@ import { fetchSanityData } from "@/utils/fetchSanityData";
 import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
 import Services from "@/components/servicesPage/services/Services";
 import { Suspense } from "react";
+import Loader from "@/components/shared/loader/Loader";
 
 export default async function ServicesPage() {
   const breadcrumbSteps = [{ label: `Hjem`, href: `/` }, { label: "Services" }];
@@ -16,7 +17,7 @@ export default async function ServicesPage() {
     <>
       <Hero />
       <Breadcrumbs steps={breadcrumbSteps} />
-      <Suspense>
+      <Suspense fallback={<Loader />}>
         <Services services={services} />
       </Suspense>
       <MarqueeLine variant="black" className="mb-14" />
