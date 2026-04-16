@@ -4,6 +4,8 @@ import { SERVICES_QUERY } from "@/lib/queries";
 import { Service } from "@/types/service";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import ServiceSection from "@/components/shared/serviceSection/ServiceSection";
+import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
+import { Suspense } from "react";
 
 export default async function ServicesPage() {
   const breadcrumbSteps = [{ label: `Hjem`, href: `/` }, { label: "Services" }];
@@ -17,8 +19,11 @@ export default async function ServicesPage() {
       {!services || !services.length
         ? null
         : services.map((service) => (
-            <ServiceSection key={service._id} service={service} />
+            <Suspense>
+              <ServiceSection key={service._id} service={service} />
+            </Suspense>
           ))}
+      <MarqueeLine variant="black" className="mb-14" />
     </>
   );
 }
