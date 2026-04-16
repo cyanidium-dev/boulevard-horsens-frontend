@@ -17,10 +17,16 @@ export default function Prices({ from, to }: PricesProps) {
     <section id="prices" className="pb-20 lg:pb-[116px]">
       <Container className="relative rounded-[36px] overflow-hidden">
         <Image
+          src="/images/homePage/price/image-mob.webp"
+          alt="Price"
+          fill
+          className="lg:hidden -z-10 object-cover lg:object-[right_59%] rounded-[36px]"
+        />
+        <Image
           src="/images/homePage/price/image.webp"
           alt="Price"
           fill
-          className="-z-10 object-cover object-left rounded-[36px]"
+          className="hidden lg:block -z-10 object-cover lg:object-[right_59%] rounded-[36px] lg:scale-102"
         />
         <div className="pt-15 pb-5 lg:pb-[65px]">
           {" "}
