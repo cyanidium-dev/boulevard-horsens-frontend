@@ -1,5 +1,7 @@
 import Container from "@/components/shared/container/Container";
 import Image from "next/image";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function Reviews() {
   return (
@@ -18,16 +20,29 @@ export default function Reviews() {
           className="hidden md:block -z-10 object-cover rounded-[28px]"
         />
         <div className="flex flex-col gap-6 md:flex-row md:justify-between">
-          {" "}
-          <h2 className="font-evolenta text-[36px] lg:text-[64px] leading-[120%] font-normal uppercase text-black">
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({ delay: 0.2, duration: 1, x: -30 })}
+            className="font-evolenta text-[36px] lg:text-[64px] leading-[120%] font-normal uppercase text-black"
+          >
             Anmeldelser
-          </h2>
-          <div className="flex items-center gap-6 max-w-[173px]">
+          </motion.h2>
+          <motion.div
+            className="flex items-center gap-6 max-w-[173px]"
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({ delay: 0.4, duration: 1, x: 30 })}
+          >
             <div className="size-4.5 rounded-full bg-black shrink-0" />
             <p className="text-[14px] leading-[120%] font-light text-black">
               Hvad vores kunder siger om os
             </p>
-          </div>
+          </motion.div>
         </div>
       </Container>
     </section>
