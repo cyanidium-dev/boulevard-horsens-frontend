@@ -2,6 +2,8 @@ import Container from "@/components/shared/container/Container";
 import Image from "next/image";
 import Button from "@/components/shared/buttons/Button";
 import StarIcon from "@/components/shared/icons/StarIcon";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 interface PricesProps {
   from?: string;
@@ -23,7 +25,18 @@ export default function Prices({ from, to }: PricesProps) {
         <div className="pt-15 pb-5 lg:pb-[65px]">
           {" "}
           <div className="flex flex-col lg:flex-row gap-20">
-            <div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={fadeInAnimation({
+                delay: 0.2,
+                y: 40,
+
+                duration: 1.5,
+              })}
+            >
               <h2 className="mb-7 lg:mb-[54px] font-evolenta text-[36px] lg:text-[64px] leading-[120%] font-normal uppercase text-beige">
                 Priser på behandlinger
               </h2>
@@ -34,7 +47,7 @@ export default function Prices({ from, to }: PricesProps) {
               >
                 Se priser
               </Button>
-            </div>
+            </motion.div>
 
             <div className="relative">
               <StarIcon className="hidden lg:block absolute -z-10 top-[-25px] right-[-22px] lg:size-[67px] text-beige" />
