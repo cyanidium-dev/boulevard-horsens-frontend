@@ -15,6 +15,7 @@ import Course from "@/components/homePage/course/Course";
 import Results from "@/components/homePage/results/Results";
 import Team from "@/components/homePage/team/Team";
 import Loader from "@/components/shared/loader/Loader";
+import Reviews from "@/components/homePage/reviews/Reviews";
 import { Suspense } from "react";
 
 interface WorkingHours {
@@ -43,6 +44,7 @@ export default async function HomePage() {
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Team teamMembers={teamMembers} />
       </Suspense>
+      <Reviews />
       <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
     </>
   );
