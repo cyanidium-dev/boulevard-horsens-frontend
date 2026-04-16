@@ -8,7 +8,7 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function About() {
   return (
-    <section id="about" className="pb-20 lg:pb-30">
+    <section id="about" className="pb-20 lg:pb-30 scroll-mt-30">
       <Container className="relative lg:flex lg:flex-row-reverse lg:gap-6">
         <motion.div
           initial="hidden"
