@@ -34,7 +34,6 @@ export default function Prices({ from, to }: WorkingHours) {
               variants={fadeInAnimation({
                 delay: 0.2,
                 y: 40,
-
                 duration: 1.5,
               })}
             >
