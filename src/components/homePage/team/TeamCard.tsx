@@ -17,9 +17,9 @@ export default function TeamCard({ teamMember }: TeamCardProps) {
         fill
         className="-z-10 object-cover"
       />
-      <div className="w-fit mb-1.5 rounded-full bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[3px]">
+      <div className="relative mb-1.5 inline-flex w-fit max-w-full overflow-hidden rounded-[999px] bg-white/10 px-6 py-4 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]">
         <div
-          className="absolute inset-0 rounded-[28px] pointer-events-none"
+          className="absolute inset-0 rounded-[999px] pointer-events-none"
           style={{
             background:
               "linear-gradient(270.67deg, #F2F2F2 -9.58%, #C7C7C7 103.45%)",
@@ -30,7 +30,7 @@ export default function TeamCard({ teamMember }: TeamCardProps) {
             maskComposite: "exclude",
           }}
         />
-        <p className="w-fit font-evolenta text-[14px] leading-[120%] font-light uppercase text-beige rounded-full px-6 py-4">
+        <p className="relative z-10 max-w-full font-evolenta text-[14px] leading-[120%] font-light uppercase text-beige">
           {teamMember.position}
         </p>
       </div>
