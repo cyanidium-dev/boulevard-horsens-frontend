@@ -137,6 +137,9 @@ export default function SwiperWrapper({
             ? {
                 prevEl: ".custom-prev",
                 nextEl: ".custom-next",
+                // Swiper за замовчуванням додає клас `.swiper-button-lock` (у navigation.css — `display: none`).
+                // Він застосовується до будь-якого елемента; при короткому `isLocked` на старті кнопки зникають.
+                lockClass: "bh-swiper-nav-lock",
               }
             : false
         }
