@@ -7,9 +7,10 @@ export function getDefaultMetadata(path: string = "/"): Metadata {
   const canonicalUrl = getCanonicalUrl(path);
 
   return {
-    title: "Nbyg – Tagfirma i København | Tagrenovering & Træterrasser",
+    title:
+      "Boulevard Beauty Salon i Horsens | Hudpleje, manicure, pedicure & bryn",
     description:
-      "Professionelt tagfirma i København med speciale i tagrenovering, nyt tag og opbygning af træterrasser. Få et gratis og uforpligtende tilbud fra Nbyg i dag.",
+      "Boulevard Beauty Salon i Horsens tilbyder professionelle skønhedsbehandlinger: hudpleje, manicure, pedicure, lash lamination og bryn. Book din tid i dag.",
     alternates: {
       canonical: canonicalUrl,
       languages: {
@@ -18,20 +19,21 @@ export function getDefaultMetadata(path: string = "/"): Metadata {
       },
     },
     openGraph: {
-      title: "Nbyg – Tagfirma i København | Tagrenovering & Træterrasser",
+      title:
+        "Boulevard Beauty Salon i Horsens | Hudpleje, manicure, pedicure & bryn",
       description:
-        "Professionelt tagfirma i København med speciale i tagrenovering, nyt tag og opbygning af træterrasser. Få et gratis og uforpligtende tilbud fra Nbyg i dag.",
+        "Boulevard Beauty Salon i Horsens tilbyder professionelle skønhedsbehandlinger: hudpleje, manicure, pedicure, lash lamination og bryn. Book din tid i dag.",
       images: [
         {
           url: `${SITE_URL}/opengraph-image.jpg`,
           width: 1200,
           height: 630,
-          alt: "Nbyg",
+          alt: "Boulevard Beauty Salon",
         },
       ],
       type: "website",
       locale: "da_DK",
-      siteName: "Nbyg",
+      siteName: "Boulevard Beauty Salon",
     },
   };
 }
