@@ -10,3 +10,7 @@ export const INSTAGRAM_URL =
   "https://www.instagram.com/boulevard.beauty_salon_/";
 
 export const FACEBOOK_URL = "";
+
+export const CODE_SITE_URL = "https://www.code-site.art/";
+
+export const WEB_BOND_URL = "https://webbond.dk/";
