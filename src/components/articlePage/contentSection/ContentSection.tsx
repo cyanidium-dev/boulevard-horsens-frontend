@@ -8,7 +8,7 @@ interface ContentSectionProps {
 
 export default function ContentSection({ article }: ContentSectionProps) {
   return (
-    <section className="py-25 lg:pt-20 lg:pb-0">
+    <section className="">
       <div className="prose prose-lg max-w-none">
         <PortableText
           value={

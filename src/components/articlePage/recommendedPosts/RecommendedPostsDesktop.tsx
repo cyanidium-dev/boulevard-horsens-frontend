@@ -18,7 +18,7 @@ export default function RecommendedPostsDesktop({
   const recommendedPosts = posts.slice(0, 10);
 
   return (
-    <section className="pt-20">
+    <section>
       <SectionTitle className="lg:text-[24px] font-light leading-[120%] mb-8">
         Læs også
       </SectionTitle>

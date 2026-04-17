@@ -36,11 +36,15 @@ export async function generateMetadata({
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { article } = await params;
 
-  const currentArticle = await fetchSanityData<BlogPost>(BLOG_POST_BY_SLUG_QUERY, {
-    slug: article,
-  });
+  const currentArticle = await fetchSanityData<BlogPost>(
+    BLOG_POST_BY_SLUG_QUERY,
+    {
+      slug: article,
+    },
+  );
 
-  const blogPosts = await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
+  const blogPosts =
+    await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
 
   if (!currentArticle) {
     return null;
@@ -70,10 +74,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <Suspense fallback={<Loader />}>
         <Hero article={currentArticle} />
         <Breadcrumbs steps={breadcrumbSteps} />
-        <Container className="lg:flex gap-8">
+        <Container className="lg:flex gap-8 lg:pb-30">
           <div>
-            {currentArticle.content && <ContentSection article={currentArticle} />}
-            {currentArticle.faq && <Faq faq={currentArticle.faq} />}
+            {currentArticle.content && (
+              <ContentSection article={currentArticle} />
+            )}
           </div>
           <div className="hidden lg:block w-80 shrink-0">
             <RecommendedPostsDesktop
@@ -88,6 +93,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             uniqueKey={`blog-${currentArticle.slug}-recommended-posts-mobile`}
           />
         </div>
+        {currentArticle.faq && <Faq faq={currentArticle.faq} />}
       </Suspense>
     </>
   );
