@@ -2,8 +2,7 @@ import type { PortableTextComponents } from "@portabletext/react";
 import SectionTitle from "@/components/shared/titles/SectionTitle";
 import Image from "next/image";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
-import Link from "next/link";
-import MainButton from "@/components/shared/buttons/MainButton";
+import Button from "@/components/shared/buttons/Button";
 import type {
   BlogPostContentImage,
   BlogPostContentTable,
@@ -146,16 +145,14 @@ export const getBlogPortableTextComponents = (
       const blank = value?.blank || false;
 
       return (
-        <Link
+        <Button
           href={href}
-          target={blank ? "_blank" : undefined}
-          rel={blank ? "noopener noreferrer" : undefined}
-          className="inline-block min-w-[235px] mb-8"
+          linkType={blank ? "external" : "internal"}
+          variant="black"
+          className="inline-flex w-fit min-w-[235px] mb-8 h-12 px-8"
         >
-          <MainButton variant="outline" className="h-12 px-8">
-            {children}
-          </MainButton>
-        </Link>
+          {children}
+        </Button>
       );
     },
   },

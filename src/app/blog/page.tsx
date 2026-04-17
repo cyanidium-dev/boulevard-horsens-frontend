@@ -1,13 +1,25 @@
 import Hero from "@/components/blogPage/hero/Hero";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs/Breadcrumbs";
+import { Suspense } from "react";
+import Loader from "@/components/shared/loader/Loader";
+import BlogList from "@/components/blogPage/blogList/BlogList";
+import { ALL_BLOG_POSTS_QUERY } from "@/lib/queries";
+import { fetchSanityData } from "@/utils/fetchSanityData";
+import { BlogPostPreview } from "@/types/blogPost";
 
-export default function BlogPage() {
+export default async function BlogPage() {
   const breadcrumbSteps = [{ label: `Hjem`, href: `/` }, { label: "Blog" }];
+
+  const blogPosts =
+    await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
 
   return (
     <>
       <Hero />
       <Breadcrumbs steps={breadcrumbSteps} />
+      <Suspense fallback={<Loader />}>
+        <BlogList blogPosts={blogPosts} />
+      </Suspense>
     </>
   );
 }
