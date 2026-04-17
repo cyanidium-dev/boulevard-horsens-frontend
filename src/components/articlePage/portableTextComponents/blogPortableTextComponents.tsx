@@ -161,6 +161,20 @@ export const getBlogPortableTextComponents = (
       const imageUrl = urlForSanityImage(value).url();
       const alt = value?.alt || "Blog indlæg billede";
       const key = `${slug}-${value?._key || `image-${Math.random()}`}`;
+      const dimensions = (
+        value as BlogPostContentImage & {
+          asset?: {
+            metadata?: {
+              dimensions?: {
+                width?: number;
+                height?: number;
+              };
+            };
+          };
+        }
+      )?.asset?.metadata?.dimensions;
+      const width = dimensions?.width ?? 1200;
+      const height = dimensions?.height ?? 800;
 
       return (
         <motion.div
@@ -170,9 +184,15 @@ export const getBlogPortableTextComponents = (
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ scale: 0.95, y: 20, delay: 0.2 })}
-          className="relative w-full h-30 lg:h-60 rounded-[12px] overflow-hidden my-4 lg:my-6"
+          className="w-full my-4 lg:my-6"
         >
-          <Image src={imageUrl} fill alt={alt} className="object-cover" />
+          <Image
+            src={imageUrl}
+            width={width}
+            height={height}
+            alt={alt}
+            className="block w-auto h-auto max-w-full rounded-[12px]"
+          />
         </motion.div>
       );
     },
