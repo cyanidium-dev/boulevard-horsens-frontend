@@ -48,47 +48,49 @@ export default function SmallHeroSlider({
           resultater og individuel tilgang
         </p>
       </div>
-      <SwiperWrapper
-        loop={true}
-        breakpoints={{
-          0: {
-            spaceBetween: 20,
-            slidesPerView: 1,
-          },
-        }}
-        swiperClassName="h-[222px] w-full xs:w-[222px]"
-        showNavigation
-        buttonsPosition="onSlides"
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={image.url ?? index}>
-            <div
-              role="button"
-              tabIndex={0}
-              className="relative h-full w-full cursor-pointer rounded-[18px] overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-beige focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-              onClick={() => handleSlideImageClick(index)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  handleSlideImageClick(index);
-                }
-              }}
-            >
-              <Image
-                src={image.url}
-                alt={image.alt}
-                fill
-                className="object-cover rounded-[18px]"
-                sizes="100vw"
-                priority
-                fetchPriority="high"
-                placeholder="blur"
-                blurDataURL={image.blurDataURL}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </SwiperWrapper>
+      <div className="rounded-[18px] overflow-hidden">
+        <SwiperWrapper
+          loop={true}
+          breakpoints={{
+            0: {
+              spaceBetween: 20,
+              slidesPerView: 1,
+            },
+          }}
+          swiperClassName="h-[222px] w-full xs:w-[222px]"
+          showNavigation
+          buttonsPosition="onSlides"
+        >
+          {images.map((image, index) => (
+            <SwiperSlide key={image.url ?? index}>
+              <div
+                role="button"
+                tabIndex={0}
+                className="relative h-full w-full cursor-pointer rounded-[18px] overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-beige focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                onClick={() => handleSlideImageClick(index)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSlideImageClick(index);
+                  }
+                }}
+              >
+                <Image
+                  src={image.url}
+                  alt={image.alt}
+                  fill
+                  className="object-cover rounded-[18px]"
+                  sizes="100vw"
+                  priority
+                  fetchPriority="high"
+                  placeholder="blur"
+                  blurDataURL={image.blurDataURL}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </SwiperWrapper>
+      </div>
 
       <AppLightbox
         open={lightboxOpen && lightboxSlides.length > 0}

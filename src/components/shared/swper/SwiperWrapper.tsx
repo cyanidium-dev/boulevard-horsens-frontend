@@ -39,8 +39,7 @@ interface SwiperWrapperProps {
 const buttonsPositionClass = {
   right: "sm:justify-end sm:ml-auto",
   center: "justify-center",
-  onSlides:
-    "absolute bottom-20 left-0 w-full xs:w-[222px] mx-auto justify-between",
+  onSlides: "absolute bottom-20 left-0 z-30 w-full justify-between",
 };
 
 export default function SwiperWrapper({
@@ -138,6 +137,9 @@ export default function SwiperWrapper({
             ? {
                 prevEl: ".custom-prev",
                 nextEl: ".custom-next",
+                // Swiper за замовчуванням додає клас `.swiper-button-lock` (у navigation.css — `display: none`).
+                // Він застосовується до будь-якого елемента; при короткому `isLocked` на старті кнопки зникають.
+                lockClass: "bh-swiper-nav-lock",
               }
             : false
         }
@@ -213,7 +215,7 @@ export default function SwiperWrapper({
               disabled={isEnd && !loop}
               aria-label="Næste slide"
               className={twMerge(
-                `custom-prev relative z-[30] group size-[54px] rounded-full flex items-center justify-center pointer-events-auto border border-black
+                `custom-next relative z-[30] group size-[54px] rounded-full flex items-center justify-center pointer-events-auto border border-black
              bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80`,
                 buttonsPosition === "onSlides"
                   ? "scale-60 border-transparent enabled:bg-white/10 enabled:shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
