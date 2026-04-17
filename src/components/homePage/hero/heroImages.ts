@@ -36,3 +36,80 @@ export const HERO_GALLERY_IMAGES: HeroGalleryImage[] = [
       "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAQCdASoKAAoAA4BaJZwAAlaFzPAA4jVSqf+4tfpS67fGEQ3//6tnkBtneq/XYgQ19uceKQiIixqcp8Rqn3mrfxmCC6znAgAAAA==",
   },
 ];
+
+const SLIDE_BLUR_PLACEHOLDER =
+  "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoKAAoAA4BaJZQC7AD8JgL+MoAA/I7x8o1tZ25wNA1ghl4riA3ZbtRxlzeae/qQAK+ICj7XcTRsWttn1Idx+MlrgAA=";
+
+/** Slides slideOne … slideFourteen (порядок 1–14). */
+export const SMALL_HERO_SLIDER_IMAGES: HeroGalleryImage[] = [
+  {
+    url: "/images/homePage/hero/slideOne.webp",
+    alt: "Hero slide 1",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideTwo.webp",
+    alt: "Hero slide 2",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideThree.webp",
+    alt: "Hero slide 3",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideFour.webp",
+    alt: "Hero slide 4",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideFive.webp",
+    alt: "Hero slide 5",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideSix.webp",
+    alt: "Hero slide 6",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideSeven.webp",
+    alt: "Hero slide 7",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideEight.webp",
+    alt: "Hero slide 8",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideNine.webp",
+    alt: "Hero slide 9",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideTen.webp",
+    alt: "Hero slide 10",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideEleven.webp",
+    alt: "Hero slide 11",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideTwelve.webp",
+    alt: "Hero slide 12",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideThirteen.webp",
+    alt: "Hero slide 13",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+  {
+    url: "/images/homePage/hero/slideFourteen.webp",
+    alt: "Hero slide 14",
+    blurDataURL: SLIDE_BLUR_PLACEHOLDER,
+  },
+];

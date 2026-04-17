@@ -4,6 +4,7 @@ import { HERO_GALLERY_IMAGES } from "./heroImages";
 import Container from "@/components/shared/container/Container";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import SmallHeroSlider from "./SmallHeroSlider";
 
 export default function Hero() {
   return (
@@ -72,7 +73,6 @@ export default function Hero() {
           })}
           className="xs:w-fit"
         >
-          {" "}
           <Button
             href="/#services"
             variant="beige"
@@ -81,6 +81,7 @@ export default function Hero() {
             Vælg behandling
           </Button>
         </motion.div>
+        <SmallHeroSlider />
       </Container>
     </section>
   );

@@ -1,6 +1,6 @@
 import { BlogPost } from "@/types/blogPost";
 import Image from "next/image";
-import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
+import { getBlogPostCardImageUrl } from "@/utils/getBlogPostImageUrl";
 import Link from "next/link";
 import EstimatedReadingTime from "@/components/shared/estReadingTime/EstimatedReadingTime";
 
@@ -9,7 +9,7 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ post }: BlogCardProps) {
-  const { heroMobileImage, heroTitle, heroDescription, slug } = post;
+  const { heroTitle, heroDescription, slug } = post;
 
   return (
     <Link
@@ -30,9 +30,9 @@ export default function BlogCard({ post }: BlogCardProps) {
       />
       <div className="relative w-full h-45 rounded-[8px] overflow-hidden">
         <Image
-          src={urlForSanityImage(heroMobileImage).url()}
+          src={getBlogPostCardImageUrl(post)}
           fill
-          alt={heroMobileImage?.alt || "Blog indlæg billede"}
+          alt={post.heroMobileImage?.alt || post.heroDesktopImage?.alt || "Blog indlæg billede"}
           sizes="(max-width: 440px) 100vw, 328px"
           className="object-cover xl:group-hover:scale-105 transition duration-1200 ease-in-out"
         />
