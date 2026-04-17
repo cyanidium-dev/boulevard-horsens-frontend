@@ -1,10 +1,10 @@
 import Container from "@/components/shared/container/Container";
 import SectionTitle from "@/components/shared/titles/SectionTitle";
 import RecommendedPostsSlider from "./RecommendedPostsSlider";
-import { BlogPostPreview } from "@/types/blogPost";
+import { BlogPost } from "@/types/blogPost";
 
 interface RecommendedPostsMobileProps {
-  posts: BlogPostPreview[];
+  posts: BlogPost[];
   uniqueKey: string;
 }
 

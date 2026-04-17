@@ -21,6 +21,7 @@ import Loader from "@/components/shared/loader/Loader";
 import Reviews from "@/components/homePage/reviews/Reviews";
 import { Suspense } from "react";
 import Faq from "@/components/shared/faq/Faq";
+import Blog from "@/components/homePage/blog/Blog";
 
 export default async function HomePage() {
   const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
@@ -49,6 +50,7 @@ export default async function HomePage() {
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Faq faq={homeFaq?.faq} />
       </Suspense>
+      <Blog />
     </>
   );
 }

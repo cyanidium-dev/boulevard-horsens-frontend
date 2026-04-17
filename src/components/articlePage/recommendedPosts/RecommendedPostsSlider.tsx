@@ -2,12 +2,12 @@
 import { SwiperSlide } from "swiper/react";
 import SwiperWrapper from "@/components/shared/swiper/SwiperWrapper";
 import BlogCard from "@/components/blogPage/blogList/BlogCard";
-import { BlogPostPreview } from "@/types/blogPost";
+import { BlogPost } from "@/types/blogPost";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
 interface RecommendedPostsSliderProps {
-  posts: BlogPostPreview[];
+  posts: BlogPost[];
   uniqueKey: string;
 }
 

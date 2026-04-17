@@ -1,6 +1,6 @@
 import Hero from "@/components/articlePage/hero/Hero";
 import { BLOG_POST_BY_SLUG_QUERY, ALL_BLOG_POSTS_QUERY } from "@/lib/queries";
-import { BlogPost, BlogPostPreview } from "@/types/blogPost";
+import { BlogPost } from "@/types/blogPost";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import Faq from "@/components/shared/faq/Faq";
 import ContentSection from "@/components/articlePage/contentSection/ContentSection";
@@ -43,8 +43,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     },
   );
 
-  const blogPosts =
-    await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
+  const blogPosts = await fetchSanityData<BlogPost[]>(ALL_BLOG_POSTS_QUERY);
 
   if (!currentArticle) {
     return null;

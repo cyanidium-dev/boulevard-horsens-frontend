@@ -1,10 +1,11 @@
-import { BlogPostPreview } from "@/types/blogPost";
+import { BlogPost } from "@/types/blogPost";
 import Image from "next/image";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import Link from "next/link";
+import EstimatedReadingTime from "@/components/shared/estReadingTime/EstimatedReadingTime";
 
 interface BlogCardProps {
-  post: BlogPostPreview;
+  post: BlogPost;
 }
 
 export default function BlogCard({ post }: BlogCardProps) {
@@ -34,6 +35,10 @@ export default function BlogCard({ post }: BlogCardProps) {
           alt={heroMobileImage?.alt || "Blog indlæg billede"}
           sizes="(max-width: 440px) 100vw, 328px"
           className="object-cover xl:group-hover:scale-105 transition duration-1200 ease-in-out"
+        />
+        <EstimatedReadingTime
+          post={post}
+          className="absolute bottom-4 left-4"
         />
       </div>
       <div className="flex flex-col justify-between flex-1 py-6 px-4">
