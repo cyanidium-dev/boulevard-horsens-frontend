@@ -4,15 +4,16 @@ import Image from "next/image";
 import * as motion from "motion/react-client";
 import { fadeInAnimation, headerVariants } from "@/utils/animationVariants";
 import { BlogPost } from "@/types/blogPost";
-import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
+import { getBlogPostHeroImageSources } from "@/utils/getBlogPostImageUrl";
 
 interface HeroProps {
   article: BlogPost;
 }
 
 export default function Hero({ article }: HeroProps) {
-  const { heroTitle, heroDescription, heroMobileImage, heroDesktopImage } =
-    article;
+  const { heroTitle, heroDescription } = article;
+  const { mobileSrc, desktopSrc, mobileAlt, desktopAlt } =
+    getBlogPostHeroImageSources(article);
 
   return (
     <motion.section
@@ -24,18 +25,18 @@ export default function Hero({ article }: HeroProps) {
       className="relative rounded-b-[18px] overflow-hidden"
     >
       <Image
-        src={urlForSanityImage(heroMobileImage).url()}
+        src={mobileSrc}
         fill
-        alt={heroMobileImage?.alt || "Blog indlæg hero billede"}
+        alt={mobileAlt || "Blog indlæg hero billede"}
         sizes="100vw"
         className="md:hidden object-cover -z-20"
         priority
         fetchPriority="high"
       />
       <Image
-        src={urlForSanityImage(heroDesktopImage).url()}
+        src={desktopSrc}
         fill
-        alt={heroDesktopImage?.alt || "Blog indlæg hero billede"}
+        alt={desktopAlt || "Blog indlæg hero billede"}
         sizes="100vw"
         className="hidden md:block object-cover -z-20"
         priority

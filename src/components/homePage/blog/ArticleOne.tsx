@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
+import { getBlogPostCardImageUrl } from "@/utils/getBlogPostImageUrl";
 import ArrowIcon from "@/components/shared/icons/ArrowIcon";
 
 interface ArticleOneProps {
@@ -12,7 +12,7 @@ interface ArticleOneProps {
 }
 
 export default function ArticleOne({ post }: ArticleOneProps) {
-  const { heroTitle, heroDescription, heroMobileImage, slug } = post;
+  const { heroTitle, heroDescription, slug } = post;
 
   return (
     <motion.div
@@ -43,7 +43,7 @@ export default function ArticleOne({ post }: ArticleOneProps) {
           </div>
           <div className="relative h-[202px] xl:h-[329px] rounded-[20px] overflow-hidden">
             <Image
-              src={urlForSanityImage(heroMobileImage).fit("crop").url()}
+              src={getBlogPostCardImageUrl(post, { fitCrop: true })}
               alt={heroTitle}
               fill
               className="object-cover"

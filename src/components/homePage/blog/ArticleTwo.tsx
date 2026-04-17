@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
+import { getBlogPostCardImageUrl } from "@/utils/getBlogPostImageUrl";
 import EstimatedReadingTime from "@/components/shared/estReadingTime/EstimatedReadingTime";
 
 interface ArticleTwoProps {
@@ -11,7 +11,7 @@ interface ArticleTwoProps {
 }
 
 export default function ArticleTwo({ post }: ArticleTwoProps) {
-  const { heroTitle, heroDescription, heroMobileImage, slug } = post;
+  const { heroTitle, heroDescription, slug } = post;
 
   return (
     <Link
@@ -40,7 +40,7 @@ export default function ArticleTwo({ post }: ArticleTwoProps) {
         />
         <div className="flex-grow relative w-full mb-4 rounded-[12px] overflow-hidden">
           <Image
-            src={urlForSanityImage(heroMobileImage).fit("crop").url()}
+            src={getBlogPostCardImageUrl(post, { fitCrop: true })}
             alt={heroTitle}
             fill
             className="object-cover"
