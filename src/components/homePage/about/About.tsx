@@ -5,6 +5,7 @@ import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
 import StarIcon from "@/components/shared/icons/StarIcon";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import { ADDRESS_URL } from "@/constants/constants";
 
 export default function About() {
   return (
@@ -200,7 +201,7 @@ export default function About() {
 
               duration: 1,
             })}
-            href="https://maps.app.goo.gl/pJZxv9hHeH65WZ8L9"
+            href={ADDRESS_URL}
             target="_blank"
             rel="noopener noreferrer nofollow"
             className="group relative xs:w-[calc(50%-12px)] aspect-square xs:aspect-auto xs:h-auto rounded-[20px] overflow-hidden"
