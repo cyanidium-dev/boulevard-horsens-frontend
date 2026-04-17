@@ -28,7 +28,7 @@ export default function Footer() {
           />
         </div>
 
-        <div className="hidden lg:block absolute bottom-[0px] left-[-11px] w-[1291px] h-[173px]">
+        <div className="hidden lg:block absolute bottom-[0px] left-[-3px] xl:left-[-11px] lg:w-[1024px] lg:h-[137px] xl:w-[1291px] xl:h-[173px]">
           <Image
             src="/images/footer/logo-desk.webp"
             alt="footer background"
@@ -64,7 +64,7 @@ export default function Footer() {
           />
         </div>
 
-        <div className="hidden lg:block absolute bottom-0 left-[0px] w-[666px] h-[522px]">
+        <div className="hidden lg:block absolute left-[-16px] bottom-3 xl:bottom-0 xl:left-[0px] w-[666px] h-[522px]">
           <Image
             src="/images/footer/hand.webp"
             alt="footer background"
@@ -139,7 +139,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 lg:bottom-18 left-5 lg:left-auto lg:right-7">
+        <div className="absolute bottom-8 lg:bottom-13 xl:bottom-18 left-5 lg:left-auto lg:right-4 xl:right-7 lg:scale-85 xl:scale-100">
           <p className="mb-3 text-[8px] leading-[120%] font-medium uppercase">
             Created by:
           </p>
