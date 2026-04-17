@@ -1,11 +1,11 @@
-import { BlogPostPreview } from "@/types/blogPost";
+import { BlogPost } from "@/types/blogPost";
 import SectionTitle from "@/components/shared/titles/SectionTitle";
 import BlogCard from "@/components/blogPage/blogList/BlogCard";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
 interface RecommendedPostsDesktopProps {
-  posts: BlogPostPreview[];
+  posts: BlogPost[];
   uniqueKey: string;
 }
 

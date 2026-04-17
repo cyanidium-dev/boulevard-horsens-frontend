@@ -1,7 +1,7 @@
 "use client";
 import { useRef } from "react";
 import Container from "@/components/shared/container/Container";
-import { BlogPostPreview } from "@/types/blogPost";
+import { BlogPost } from "@/types/blogPost";
 import BlogCard from "./BlogCard";
 import Pagination from "@/components/shared/pagination/Pagination";
 import * as motion from "motion/react-client";
@@ -9,7 +9,7 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 import { useBlogArticlesPerPage } from "@/hooks/useBlogArticlesPerPage";
 
 interface BlogListProps {
-  blogPosts: BlogPostPreview[];
+  blogPosts: BlogPost[];
 }
 
 export default function BlogList({ blogPosts }: BlogListProps) {
