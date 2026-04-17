@@ -1,16 +1,14 @@
 "use client";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/effect-coverflow";
 
 import {
   ReactNode,
   useRef,
-  useLayoutEffect,
   useState,
   type MouseEvent,
 } from "react";
-import { Navigation, EffectCoverflow } from "swiper/modules";
+import { EffectCoverflow } from "swiper/modules";
 import { Swiper } from "swiper/react";
 import { SwiperOptions } from "swiper/types";
 import type { Swiper as SwiperType } from "swiper";
@@ -36,10 +34,16 @@ interface SwiperWrapperProps {
   onSlideChange?: (swiper: SwiperType) => void;
 }
 
+const EMPTY_ADDITIONAL_OPTIONS: Partial<SwiperOptions> = {};
+
+const EMPTY_COVERFLOW_EFFECT: NonNullable<SwiperOptions["coverflowEffect"]> =
+  {};
+
 const buttonsPositionClass = {
   right: "sm:justify-end sm:ml-auto",
   center: "justify-center",
-  onSlides: "absolute bottom-20 left-0 z-30 w-full justify-between",
+  onSlides:
+    "absolute bottom-20 left-0 right-0 z-50 w-full justify-between",
 };
 
 export default function SwiperWrapper({
@@ -51,7 +55,7 @@ export default function SwiperWrapper({
   uniqueKey,
   component,
   additionalModules = [],
-  additionalOptions = {},
+  additionalOptions = EMPTY_ADDITIONAL_OPTIONS,
   showNavigation = true,
   buttonsClassName,
   showCoverflowEffect = false,
@@ -59,36 +63,16 @@ export default function SwiperWrapper({
   onSwiper,
   onSlideChange,
 }: SwiperWrapperProps) {
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
   const swiperInstanceRef = useRef<SwiperType | null>(null);
-  const navigationSetupRef = useRef(false);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  /** Коли true — усі слайди вміщуються (watchOverflow); стрілки ховаємо самі, без класів Swiper. */
+  const [isLocked, setIsLocked] = useState(false);
 
-  // Функція для налаштування навігації
-  const setupNavigation = (swiperInstance: SwiperType) => {
-    if (
-      prevRef.current &&
-      nextRef.current &&
-      swiperInstance.params.navigation &&
-      typeof swiperInstance.params.navigation === "object" &&
-      !navigationSetupRef.current
-    ) {
-      navigationSetupRef.current = true;
-      swiperInstance.params.navigation.prevEl = prevRef.current;
-      swiperInstance.params.navigation.nextEl = nextRef.current;
-      try {
-        swiperInstance.navigation?.destroy();
-      } catch {
-        /* navigation ще не ініціалізований */
-      }
-      swiperInstance.navigation?.init();
-      swiperInstance.navigation?.update();
-
-      setIsBeginning(swiperInstance.isBeginning);
-      setIsEnd(swiperInstance.isEnd);
-    }
+  const syncSlideState = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+    setIsLocked(swiper.isLocked);
   };
 
   const handlePrevClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -107,42 +91,26 @@ export default function SwiperWrapper({
     s.slideNext();
   };
 
-  // Прив'язуємо кнопки навігації після рендеру
-  useLayoutEffect(() => {
-    if (!showNavigation) return;
-    const swiperInstance = swiperInstanceRef.current;
-    if (swiperInstance && prevRef.current && nextRef.current) {
-      setupNavigation(swiperInstance);
-    }
-  });
-
   return (
     <>
       <Swiper
         key={`${uniqueKey}-swiper`}
         onSwiper={(swiper) => {
           swiperInstanceRef.current = swiper;
-          navigationSetupRef.current = false;
+          syncSlideState(swiper);
+          const sync = () => syncSlideState(swiper);
+          swiper.on("lock", sync);
+          swiper.on("unlock", sync);
+          swiper.on("resize", sync);
           onSwiper?.(swiper);
         }}
         onSlideChange={(swiper) => {
-          setIsBeginning(swiper.isBeginning);
-          setIsEnd(swiper.isEnd);
+          syncSlideState(swiper);
           onSlideChange?.(swiper);
         }}
         centeredSlides={centeredSlides}
         breakpoints={breakpoints}
-        navigation={
-          showNavigation
-            ? {
-                prevEl: ".custom-prev",
-                nextEl: ".custom-next",
-                // Swiper за замовчуванням додає клас `.swiper-button-lock` (у navigation.css — `display: none`).
-                // Він застосовується до будь-якого елемента; при короткому `isLocked` на старті кнопки зникають.
-                lockClass: "bh-swiper-nav-lock",
-              }
-            : false
-        }
+        navigation={false}
         loop={loop}
         speed={1000}
         coverflowEffect={
@@ -154,11 +122,10 @@ export default function SwiperWrapper({
                 modifier: 1,
                 slideShadows: false,
               }
-            : {}
+            : EMPTY_COVERFLOW_EFFECT
         }
         effect={showCoverflowEffect ? "coverflow" : ""}
         modules={[
-          ...(showNavigation ? [Navigation] : []),
           ...(showCoverflowEffect ? [EffectCoverflow] : []),
           ...additionalModules,
         ]}
@@ -167,7 +134,7 @@ export default function SwiperWrapper({
       >
         {children}
       </Swiper>
-      {showNavigation && (
+      {showNavigation && !isLocked && (
         <div
           key={`${uniqueKey}-buttons`}
           className={twMerge(
@@ -181,7 +148,6 @@ export default function SwiperWrapper({
           >
             <button
               type="button"
-              ref={prevRef}
               disabled={isBeginning && !loop}
               aria-label="Forrige slide"
               className={twMerge(
@@ -211,7 +177,6 @@ export default function SwiperWrapper({
             </button>
             <button
               type="button"
-              ref={nextRef}
               disabled={isEnd && !loop}
               aria-label="Næste slide"
               className={twMerge(
