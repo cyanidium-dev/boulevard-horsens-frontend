@@ -22,7 +22,6 @@ export default async function ServicesPage() {
       <Suspense fallback={<Loader />}>
         <Services services={services} />
       </Suspense>
-
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Faq faq={servicesFaq?.faq} />
       </Suspense>

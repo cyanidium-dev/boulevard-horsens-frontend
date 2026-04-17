@@ -43,7 +43,7 @@ export const TEAM_MEMBERS_QUERY = `*[_type == "teamMember"] | order(order asc){
 export const HOME_FAQ_QUERY = `*[_type == "homeFaq"][0]{
   _id,
   title,
-  "faq": faq{
+  "faq": faqSection{
     ...,
     items[]{
       ...
