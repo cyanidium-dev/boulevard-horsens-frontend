@@ -61,3 +61,86 @@ export const SERVICES_FAQ_QUERY = `*[_type == "servicesFaq"][0]{
     }
   }
 }`;
+
+export const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(_createdAt desc){
+  heroTitle,
+  heroDescription,
+  "heroMobileImage": heroMobileImage{
+    ...,
+    "alt": alt
+  },
+  "slug": slug.current,
+  _createdAt
+}`;
+
+export const BLOG_POST_BY_SLUG_QUERY = `*[
+  _type == "blogPost" &&
+  slug.current == $slug
+][0]{
+  heroTitle,
+  heroDescription,
+  "heroDesktopImage": heroDesktopImage{
+    ...,
+    "alt": alt
+  },
+  "heroMobileImage": heroMobileImage{
+    ...,
+    "alt": alt
+  },
+  "slug": slug.current,
+  content[]{
+    ...,
+    _type == "block" => {
+      ...,
+      children[]{
+        ...,
+        marks[]
+      }
+    },
+    _type == "image" => {
+      _key,
+      _type,
+      asset,
+      crop,
+      hotspot,
+      alt
+    },
+    _type == "table" => {
+      _key,
+      _type,
+      rows[]{
+        cells[]
+      }
+    },
+    markDefs[]{
+      ...,
+      _type == "link" => {
+        _key,
+        _type,
+        href,
+        blank
+      }
+    }
+  },
+  faq{
+    _type,
+    "type": _type,
+    description,
+    items[]{
+      _key,
+      question,
+      answer,
+      buttons
+    }
+  },
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
