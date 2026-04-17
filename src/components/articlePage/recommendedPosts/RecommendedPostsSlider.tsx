@@ -1,6 +1,6 @@
 "use client";
 import { SwiperSlide } from "swiper/react";
-import SwiperWrapper from "@/components/shared/swiper/SwiperWrapper";
+import SwiperWrapper from "@/components/shared/swper/SwiperWrapper";
 import BlogCard from "@/components/blogPage/blogList/BlogCard";
 import { BlogPost } from "@/types/blogPost";
 import * as motion from "motion/react-client";

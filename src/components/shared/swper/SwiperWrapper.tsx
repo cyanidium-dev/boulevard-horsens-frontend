@@ -39,7 +39,8 @@ interface SwiperWrapperProps {
 const buttonsPositionClass = {
   right: "sm:justify-end sm:ml-auto",
   center: "justify-center",
-  onSlides: "w-full justify-between",
+  onSlides:
+    "absolute bottom-20 left-0 w-full xs:w-[222px] mx-auto justify-between",
 };
 
 export default function SwiperWrapper({
@@ -181,10 +182,29 @@ export default function SwiperWrapper({
               ref={prevRef}
               disabled={isBeginning && !loop}
               aria-label="Forrige slide"
-              className="custom-prev relative z-[30] group size-[54px] rounded-full flex items-center justify-center pointer-events-auto border border-black
-             bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80"
+              className={twMerge(
+                `custom-prev relative z-[30] group size-[54px] rounded-full flex items-center justify-center pointer-events-auto border border-black
+             bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80`,
+                buttonsPosition === "onSlides"
+                  ? "scale-60 border-transparent enabled:bg-white/10 enabled:shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
+                  : "",
+              )}
               onClick={handlePrevClick}
             >
+              {buttonsPosition === "onSlides" ? (
+                <div
+                  className="absolute inset-0 rounded-full pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(270.67deg, #F2F2F2 -9.58%, #C7C7C7 103.45%)",
+                    padding: "1px",
+                    WebkitMask:
+                      "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                  }}
+                />
+              ) : null}
               <ShevronIcon className="relative z-[30] -rotate-90 group-enabled:text-white group-disabled:text-black mr-1 pointer-events-auto" />
             </button>
             <button
@@ -192,10 +212,29 @@ export default function SwiperWrapper({
               ref={nextRef}
               disabled={isEnd && !loop}
               aria-label="Næste slide"
-              className="custom-next group size-[54px] rounded-full flex items-center justify-center pointer-events-auto z-[30]
-          border border-black bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80"
+              className={twMerge(
+                `custom-prev relative z-[30] group size-[54px] rounded-full flex items-center justify-center pointer-events-auto border border-black
+             bg-white disabled:bg-white enabled:bg-black disabled:cursor-default enabled:cursor-pointer transition duration-300 xl:enabled:hover:opacity-80`,
+                buttonsPosition === "onSlides"
+                  ? "scale-60 border-transparent enabled:bg-white/10 enabled:shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px]"
+                  : "",
+              )}
               onClick={handleNextClick}
             >
+              {buttonsPosition === "onSlides" ? (
+                <div
+                  className="absolute inset-0 rounded-full pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(270.67deg, #F2F2F2 -9.58%, #C7C7C7 103.45%)",
+                    padding: "1px",
+                    WebkitMask:
+                      "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                  }}
+                />
+              ) : null}
               <ShevronIcon className="rotate-90 group-enabled:text-white group-disabled:text-black ml-1 pointer-events-auto" />
             </button>
           </div>

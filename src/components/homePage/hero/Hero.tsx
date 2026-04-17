@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[882px] lg:min-h-[779px] mb-25 lg:mb-[116px]"
+      className="relative w-full min-h-[882px] sm:min-h-[610px] lg:min-h-[779px] mb-25 lg:mb-[116px]"
     >
       <div
         className="absolute -z-10 inset-0 w-full h-full rounded-b-[36px]"
@@ -23,7 +23,7 @@ export default function Hero() {
         <HeroGallerySlider images={HERO_GALLERY_IMAGES} />
       </div>
 
-      <Container className="pt-[134px] lg:pt-[151px]">
+      <Container className="relative pt-[134px] lg:pt-[151px]">
         <motion.h1
           initial="hidden"
           whileInView="visible"
@@ -35,7 +35,7 @@ export default function Hero() {
             opacity: 0.01,
             duration: 1.5,
           })}
-          className="max-w-[517px] mb-9 font-evolenta text-[40px] lg:text-[72px] leading-[120%] font-normal uppercase text-beige"
+          className="max-w-[430px] sm:max-w-[517px] mb-9 font-evolenta text-[40px] lg:text-[72px] leading-[120%] font-normal uppercase text-beige"
         >
           Beauty Salon Boulevard i Horsens
         </motion.h1>
@@ -55,10 +55,7 @@ export default function Hero() {
           Ansigtsbehandlinger, lash lift, brow lamination, manicure, pedicure og
           voks
         </motion.p>
-        {/* <p>
-          Professionelle behandlinger med fokus på kvalitet, naturlige
-          resultater og individuel tilgang
-        </p> */}
+
         <motion.div
           initial="hidden"
           whileInView="visible"
