@@ -5,9 +5,10 @@ import StarIcon from "@/components/shared/icons/StarIcon";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import type { WorkingHours } from "@/types/workingHours";
+import { formatWorkingHoursDisplay } from "@/utils/formatWorkingHoursDisplay";
 
 export default function Prices({ from, to }: WorkingHours) {
-  const workingHours = from && to ? `${from} - ${to}` : "09:00 - 18:00";
+  const workingHours = formatWorkingHoursDisplay({ from, to });
 
   return (
     <section id="opening-hours" className="pb-20 lg:pb-[116px] scroll-mt-30">
