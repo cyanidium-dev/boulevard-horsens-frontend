@@ -148,7 +148,7 @@ export const getBlogPortableTextComponents = (
         <Button
           href={href}
           linkType={blank ? "external" : "internal"}
-          variant="beige"
+          variant="black"
           className="inline-flex w-fit min-w-[235px] mb-8 h-12 px-8"
         >
           {children}
