@@ -7,13 +7,12 @@ import {
   HOME_FAQ_QUERY,
   SERVICES_QUERY,
   TEAM_MEMBERS_QUERY,
-  WORKING_HOURS_QUERY,
 } from "@/lib/queries";
 import { Service } from "@/types/service";
 import type { TeamMember } from "@/types/team";
 import type { HomeFaq } from "@/types/faq";
-import type { WorkingHours } from "@/types/workingHours";
 import { fetchSanityData } from "@/utils/fetchSanityData";
+import { getWorkingHours } from "@/utils/getWorkingHours";
 import Course from "@/components/homePage/course/Course";
 import Results from "@/components/homePage/results/Results";
 import Team from "@/components/homePage/team/Team";
@@ -25,7 +24,7 @@ import Blog from "@/components/homePage/blog/Blog";
 
 export default async function HomePage() {
   const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
-  const workingHours = await fetchSanityData<WorkingHours>(WORKING_HOURS_QUERY);
+  const workingHours = await getWorkingHours();
   const teamMembers = await fetchSanityData<TeamMember[]>(TEAM_MEMBERS_QUERY);
   const homeFaq = await fetchSanityData<HomeFaq>(HOME_FAQ_QUERY);
 

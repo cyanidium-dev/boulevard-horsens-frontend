@@ -1,5 +1,7 @@
 import MarqueeLine from "../marquee/MarqueeLine";
 import Container from "../container/Container";
+import { formatWorkingHoursDisplay } from "@/utils/formatWorkingHoursDisplay";
+import { getWorkingHours } from "@/utils/getWorkingHours";
 import {
   ADDRESS,
   ADDRESS_URL,
@@ -14,7 +16,10 @@ import Image from "next/image";
 import WebBondIcon from "../icons/WebbondIcon";
 import CodeSiteIcon from "../icons/CodeSiteIcon";
 
-export default function Footer() {
+export default async function Footer() {
+  const workingHours = await getWorkingHours();
+  const hoursLine = formatWorkingHoursDisplay(workingHours);
+
   return (
     <footer className="relative overflow-hidden">
       <MarqueeLine className="" />
@@ -80,16 +85,7 @@ export default function Footer() {
                 Arbejdsplan
               </h3>
               <p className="text-[12px] font-semibold leading-[120%] uppercase">
-                man-fre{" "}
-              </p>
-              <p className="mb-3 text-[12px] font-semibold leading-[120%] uppercase">
-                10.00-19.00
-              </p>
-              <p className="text-[12px] font-semibold leading-[120%] uppercase">
-                lør-søn
-              </p>
-              <p className="text-[12px] font-semibold leading-[120%] uppercase">
-                12.00-18.00
+                {hoursLine}
               </p>
             </div>
             <div>
