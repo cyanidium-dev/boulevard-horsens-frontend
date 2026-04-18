@@ -12,6 +12,12 @@
   --color-black: #15100d;
   --color-brown: #906059;
   --color-white: #ffffff;
+  --color-gradient-brown-dark: #6d3a0b;
+  --color-red-error: #e85d5d;
+  /* Kontakt-modal (Frame-maket) */
+  --color-modal-surface: #fdf0e4;
+  --color-modal-border: rgba(21, 16, 13, 0.12);
+  --color-modal-input-border: rgba(21, 16, 13, 0.22);
 
   --font-montserrat: var(--font-montserrat);
   --font-evolenta: var(--font-evolenta);

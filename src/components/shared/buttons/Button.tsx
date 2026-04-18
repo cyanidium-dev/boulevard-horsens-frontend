@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { MouseEventHandler } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface ButtonProps {
@@ -10,7 +11,7 @@ interface ButtonProps {
   variant?: "black" | "beige" | "brown";
   disabled?: boolean;
   isLoading?: boolean;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
   loadingText?: string;
 }
 

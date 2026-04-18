@@ -1,6 +1,6 @@
 import Container from "@/components/shared/container/Container";
 import Image from "next/image";
-import Button from "@/components/shared/buttons/Button";
+import FormButton from "@/components/shared/buttons/FormButton";
 import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
 import StarIcon from "@/components/shared/icons/StarIcon";
 import * as motion from "motion/react-client";
@@ -61,12 +61,12 @@ export default function About() {
             <h2 className="mb-11 lg:mb-[53px] font-evolenta text-[32px] leading-[120%] font-normal uppercase text-beige">
               Om Boulevard Beauty Salon i Horsens
             </h2>
-            <Button
+            <FormButton
               variant="beige"
               className="w-full sm:w-[238px] h-[68px] mb-[213px] lg:mb-[365px]"
             >
               Book din tid
-            </Button>
+            </FormButton>
           </div>
           <MarqueeLine
             variant="black"

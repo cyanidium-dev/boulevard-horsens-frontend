@@ -6,11 +6,13 @@ import BurgerMenuContent from "./BurgerMenuContent";
 interface BurgerMenuProps {
   isOpenBurgerMenu: boolean;
   setIsOpenBurgerMenu: Dispatch<SetStateAction<boolean>>;
+  onContactClick?: () => void;
 }
 
 export default function BurgerMenu({
   isOpenBurgerMenu,
   setIsOpenBurgerMenu,
+  onContactClick,
 }: BurgerMenuProps) {
   const toggleHeaderMenuOpen = () => setIsOpenBurgerMenu(!isOpenBurgerMenu);
   return (
@@ -22,6 +24,7 @@ export default function BurgerMenu({
       <BurgerMenuContent
         isOpen={isOpenBurgerMenu}
         setIsOpenBurgerMenu={setIsOpenBurgerMenu}
+        onContactClick={onContactClick}
       />
     </>
   );

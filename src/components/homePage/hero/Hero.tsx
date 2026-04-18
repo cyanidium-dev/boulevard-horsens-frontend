@@ -1,3 +1,8 @@
+"use client";
+
+import type { MouseEventHandler } from "react";
+import { usePathname } from "next/navigation";
+
 import Button from "@/components/shared/buttons/Button";
 import HeroGallerySlider from "./HeroGallerySlider";
 import { HERO_GALLERY_IMAGES } from "./heroImages";
@@ -7,6 +12,18 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 import SmallHeroSlider from "./SmallHeroSlider";
 
 export default function Hero() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/" || pathname === "";
+
+  const scrollToServices: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    if (!isHomePage) return;
+    e.preventDefault();
+    document.getElementById("services")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    window.history.replaceState(null, "", "/#services");
+  };
   return (
     <section
       id="hero"
@@ -74,6 +91,7 @@ export default function Hero() {
             href="/#services"
             variant="beige"
             className="w-full xs:w-[270px] h-15 lg:h-[68px]"
+            onClick={scrollToServices}
           >
             Vælg behandling
           </Button>
