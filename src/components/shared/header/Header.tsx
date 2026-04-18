@@ -8,9 +8,11 @@ import StarIcon from "../icons/StarIcon";
 import Button from "../buttons/Button";
 import BurgerMenu from "./burgerMenu/BurgerMenu";
 import Link from "next/link";
+import ContactFormModal from "../contactFormModal/ContactFormModal";
 
 export default function Header() {
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const { scrollY } = useScroll();
 
@@ -58,16 +60,25 @@ export default function Header() {
             <StarIcon
               className={`${isOpenBurgerMenu ? "text-black" : "text-beige"} transition duration-300 ease-in-out size-[21px] lg:size-[37px] `}
             />
-            <Button className="w-[119px] h-12 lg:w-[200px] lg:h-[57px] shrink-0">
+            <Button
+              type="button"
+              className="w-[119px] h-12 lg:w-[200px] lg:h-[57px] shrink-0"
+              onClick={() => setIsContactModalOpen(true)}
+            >
               Book tid
             </Button>
           </div>
           <BurgerMenu
             isOpenBurgerMenu={isOpenBurgerMenu}
             setIsOpenBurgerMenu={setIsOpenBurgerMenu}
+            onContactClick={() => setIsContactModalOpen(true)}
           />
         </div>
       </Container>
+      <ContactFormModal
+        isModalShown={isContactModalOpen}
+        setIsModalShown={setIsContactModalOpen}
+      />
     </header>
   );
 }

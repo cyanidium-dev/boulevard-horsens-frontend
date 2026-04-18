@@ -13,11 +13,13 @@ import Button from "../../buttons/Button";
 interface BurgerMenuContentProps {
   isOpen: boolean;
   setIsOpenBurgerMenu: Dispatch<SetStateAction<boolean>>;
+  onContactClick?: () => void;
 }
 
 export default function BurgerMenuContent({
   isOpen,
   setIsOpenBurgerMenu,
+  onContactClick,
 }: BurgerMenuContentProps) {
   return (
     <AnimatePresence>
@@ -48,7 +50,14 @@ export default function BurgerMenuContent({
               animate="visible"
               exit="exit"
             >
-              <Button className="w-full h-12 max-w-[320px] mx-auto">
+              <Button
+                type="button"
+                className="w-full h-12 max-w-[320px] mx-auto"
+                onClick={() => {
+                  setIsOpenBurgerMenu(false);
+                  onContactClick?.();
+                }}
+              >
                 Kontakt os
               </Button>
             </motion.div>
