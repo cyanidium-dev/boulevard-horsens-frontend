@@ -18,7 +18,7 @@ export const reviewsData: Review[] = [
   {
     id: "review-2",
     name: "Mia Hansen",
-    rating: 4.7,
+    rating: 4.5,
     text: "Very friendly staff and a calm clinic. Happy with my facial — skin looks clearer after one visit.",
     avatarSrc: "/images/homePage/reviews/review-1.webp",
   },

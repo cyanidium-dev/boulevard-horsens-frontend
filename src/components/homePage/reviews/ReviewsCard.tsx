@@ -1,4 +1,7 @@
 import Image from "next/image";
+import { Rating } from "react-simple-star-rating";
+import ReviewStarEmptyIcon from "@/components/shared/icons/ReviewStarEmptyIcon";
+import ReviewStarFilledIcon from "@/components/shared/icons/ReviewStarFilledIcon";
 import type { Review } from "./reviewsData";
 
 interface ReviewsCardProps {
@@ -29,25 +32,22 @@ export default function ReviewsCard({ review }: ReviewsCardProps) {
             height={52}
             className="size-[52px] shrink-0 rounded-full object-cover"
           />
-          <div>
+          <div className="min-w-0 flex-1">
             <p className="mb-2 text-[16px] leading-[125%] md:text-[18px] md:leading-[111%]">
               {review.name}
             </p>
-            <div className="flex items-center">
-              {Array.from({ length: review.rating }).map((_, index) => (
-                <div
-                  key={index}
-                  className="flex size-[26px] items-center justify-center"
-                >
-                  <Image
-                    src="/images/homePage/reviews/reviewStar.svg"
-                    alt=""
-                    width={20}
-                    height={20}
-                  />
-                </div>
-              ))}
-            </div>
+            <Rating
+              initialValue={review.rating}
+              allowFraction
+              readonly
+              className="flex items-center"
+              emptyIcon={
+                <ReviewStarEmptyIcon className="mx-0.5 inline-block size-5 md:size-[22px]" />
+              }
+              fillIcon={
+                <ReviewStarFilledIcon className="mx-0.5 inline-block size-5 md:size-[22px]" />
+              }
+            />
           </div>
         </div>
         <div className="flex h-full items-center">
