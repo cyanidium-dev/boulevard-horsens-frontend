@@ -1,10 +1,12 @@
 "use client";
 
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import PhoneInput from "react-phone-number-input";
 import { twMerge } from "tailwind-merge";
 
+import "react-phone-number-input/style.css";
+
 import Button from "../buttons/Button";
-import DenmarkFlagIcon from "../icons/DenmarkFlagIcon";
 import ShevronIcon from "../icons/ShevronIcon";
 import { sendContactToTelegram } from "@/utils/sendContactToTelegram";
 import { phoneForTelegram } from "./phoneForTelegram";
@@ -34,15 +36,6 @@ const inputShell = (hasError: boolean) =>
     "relative w-full resize-none rounded-full border bg-beige text-[14px] font-light leading-[121.4%] text-black outline-none transition duration-200 ease-out",
     "placeholder:text-black/40",
     "focus-visible:border-black/35 focus-visible:ring-2 focus-visible:ring-black/8",
-    hasError
-      ? "border-[var(--color-red-error)]"
-      : "border-[var(--color-modal-input-border)]",
-  ].join(" ");
-
-const phoneRowShell = (hasError: boolean) =>
-  [
-    "flex h-[49px] w-full items-stretch overflow-hidden rounded-full border bg-beige transition duration-200 ease-out",
-    "focus-within:border-black/35 focus-within:ring-2 focus-within:ring-black/8",
     hasError
       ? "border-[var(--color-red-error)]"
       : "border-[var(--color-modal-input-border)]",
@@ -167,36 +160,44 @@ export default function ContactForm({
           </label>
         </div>
 
-        <div className={`w-full`}>
+        <div className="relative w-full">
           <span className="sr-only">Telefonnummer</span>
-          <div className="relative">
-            <div className={phoneRowShell(Boolean(showErr("phone")))}>
-              <div
-                className="flex shrink-0 items-center gap-1.5 border-r border-[var(--color-modal-input-border)] px-3 md:px-4"
-                aria-hidden
-              >
-                <DenmarkFlagIcon className="h-[18px] w-[24px] shrink-0 rounded-[2px]" />
+          <PhoneInput
+            international
+            countryCallingCodeEditable={false}
+            country="DK"
+            defaultCountry="DK"
+            value={values.phone || undefined}
+            onChange={(value) => setField("phone")(value ?? "")}
+            numberInputProps={{
+              autoComplete: "tel",
+              onBlur: () => onBlur("phone"),
+            }}
+            countrySelectProps={{
+              arrowComponent: () => (
                 <ShevronIcon
                   decorative
-                  className="size-4 shrink-0 rotate-180 text-black/55"
+                  className="size-6 shrink-0 rotate-180 text-black/55 md:size-[18px] translate-x-3"
                 />
-              </div>
-              <input
-                name="phone"
-                type="tel"
-                autoComplete="tel"
-                inputMode="tel"
-                value={values.phone}
-                onChange={(e) => setField("phone")(e.target.value)}
-                onBlur={() => onBlur("phone")}
-                placeholder="+45"
-                className="min-w-0 flex-1 border-0 bg-transparent px-3 text-[14px] font-light leading-[121.4%] text-black outline-none placeholder:text-black/40 md:px-4"
-              />
-            </div>
-            {showErr("phone") ? (
-              <span {...fieldErrorProps}>{showErr("phone")}</span>
-            ) : null}
-          </div>
+              ),
+            }}
+            className={twMerge(
+              "PhoneInput !flex h-[49px] w-full items-stretch overflow-hidden rounded-full border bg-beige px-0 text-[14px] font-light text-black transition duration-200 ease-out [--PhoneInputCountryFlag-aspectRatio:1.5] [--PhoneInputCountryFlag-height:calc(32px/1.5)]",
+              "focus-within:border-black/35 focus-within:ring-2 focus-within:ring-black/8",
+              showErr("phone")
+                ? "border-[var(--color-red-error)]"
+                : "border-[var(--color-modal-input-border)]",
+              /* Flag + landekode: fast bredde 102px, vertikal skillelinje */
+              "[&_.PhoneInputCountry]:mr-0 [&_.PhoneInputCountry]:box-border [&_.PhoneInputCountry]:w-[102px] [&_.PhoneInputCountry]:min-w-[102px] [&_.PhoneInputCountry]:max-w-[102px] [&_.PhoneInputCountry]:shrink-0 [&_.PhoneInputCountry]:self-stretch [&_.PhoneInputCountry]:items-center [&_.PhoneInputCountry]:border-r [&_.PhoneInputCountry]:border-[var(--color-modal-input-border)] [&_.PhoneInputCountry]:bg-transparent [&_.PhoneInputCountry]:pl-6 [&_.PhoneInputCountry]:pr-2",
+              "[&_.PhoneInputCountryIcon]:!shrink-0",
+              "[&_.PhoneInputCountryIconImg]:!object-contain",
+              "[&_.PhoneInputCountrySelect]:max-h-[49px] [&_.PhoneInputCountrySelect]:border-none [&_.PhoneInputCountrySelect]:bg-transparent [&_.PhoneInputCountrySelect]:text-black",
+              "[&_.PhoneInputInput]:min-h-0 [&_.PhoneInputInput]:min-w-0 [&_.PhoneInputInput]:flex-1 [&_.PhoneInputInput]:border-none [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:px-3 [&_.PhoneInputInput]:text-[14px] [&_.PhoneInputInput]:font-light [&_.PhoneInputInput]:leading-[121.4%] [&_.PhoneInputInput]:text-black [&_.PhoneInputInput]:outline-none md:[&_.PhoneInputInput]:px-4",
+            )}
+          />
+          {showErr("phone") ? (
+            <span {...fieldErrorProps}>{showErr("phone")}</span>
+          ) : null}
         </div>
 
         <div className={`w-full`}>

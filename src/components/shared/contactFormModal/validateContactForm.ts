@@ -1,3 +1,5 @@
+import { isValidPhoneNumber } from "react-phone-number-input";
+
 export type ContactFormFields = {
   name: string;
   email: string;
@@ -16,9 +18,11 @@ export function validateContactForm(v: ContactFormFields): FieldErrors {
   if (name.length < 2 || name.length > 80) {
     e.name = "Indtast dit navn (2–80 tegn).";
   }
-  const phoneDigits = v.phone.replace(/\D/g, "");
-  if (phoneDigits.length < 8) {
+  const phone = v.phone.trim();
+  if (!phone) {
     e.phone = "Indtast et gyldigt telefonnummer.";
+  } else if (!isValidPhoneNumber(phone)) {
+    e.phone = "Ugyldigt telefonnummer.";
   }
   const email = v.email.trim();
   if (!email) {
