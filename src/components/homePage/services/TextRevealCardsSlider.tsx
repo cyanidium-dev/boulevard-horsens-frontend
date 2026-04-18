@@ -26,7 +26,6 @@ export default function TextRevealCardsSlider({
 
   return (
     <SwiperWrapper
-      loop
       breakpoints={{
         0: {
           spaceBetween: 20,
