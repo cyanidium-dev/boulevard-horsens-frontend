@@ -27,9 +27,6 @@ export function validateContactForm(v: ContactFormFields): FieldErrors {
     e.email = "Ugyldig e-mail – tjek venligst formatet.";
   }
   const message = v.message.trim();
-  if (message.length < 3) {
-    e.message = "Besked er påkrævet (min. 3 tegn).";
-  }
   if (message.length > 3500) {
     e.message = "Beskeden er for lang – forkort den venligst.";
   }

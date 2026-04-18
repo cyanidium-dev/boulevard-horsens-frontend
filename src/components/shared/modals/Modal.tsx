@@ -40,7 +40,7 @@ export default function Modal({
             : "pointer-events-none opacity-0 scale-60"
         } fixed left-1/2 bottom-0 z-[100] flex max-h-dvh -translate-x-1/2 transform transition duration-[600ms] ease-out`,
         isLight
-          ? "rounded-t-[12px] border border-[var(--color-modal-border)] bg-[var(--color-modal-surface)] text-black shadow-[0_12px_48px_rgba(21,16,13,0.12)] md:rounded-[12px]"
+          ? "rounded-t-[12px] border border-[var(--color-modal-border)] bg-beige text-black shadow-[0_12px_48px_rgba(21,16,13,0.12)] md:rounded-[12px]"
           : "bg-black text-beige shadow-md md:rounded-[12px]",
         className,
       )}

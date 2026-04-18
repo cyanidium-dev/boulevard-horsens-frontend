@@ -43,17 +43,17 @@ export default function ContactFormModal({
         isModalShown={isModalShown}
         setIsModalShown={setIsModalShown}
         variant="light"
-        className="flex min-w-[328px] w-full max-w-[90vw] flex-col rounded-[12px] md:max-w-[600px]"
+        className="flex min-w-[328px] w-full max-w-[90vw] flex-col rounded-[12px] md:max-w-[779px]"
         closeButtonClassName="top-4 right-4 lg:top-8 lg:right-8"
       >
         <div
           className="relative z-10 flex max-h-[min(90dvh,900px)] flex-1 flex-col overflow-y-auto rounded-[12px] px-5 pb-8 pt-14 sm:px-7 sm:pb-10 sm:pt-16 md:px-8 popup-scroll"
           onClick={(e) => e.stopPropagation()}
         >
-          <h2 className="mb-5 font-evolenta text-[24px] font-normal uppercase leading-[120%] text-black sm:mb-6 lg:text-[40px] xl:text-[48px]">
+          <h2 className="mb-5 font-evolenta text-[40px] font-normal uppercase leading-[120%] text-black sm:mb-6 lg:text-[64px]">
             Kontakt os
           </h2>
-          <p className="mb-7 w-full font-montserrat text-[14px] font-light leading-[140%] text-black/75 sm:mb-8 md:text-[16px] lg:leading-[150%]">
+          <p className="mb-7 w-full font-montserrat text-[12px] font-light leading-[140%] sm:mb-8 lg:text-[14px] lg:leading-[120%]">
             Har du spørgsmål eller brug for en konsultation? Skriv til os
             nedenfor, så kontakter vi dig hurtigt.
           </p>

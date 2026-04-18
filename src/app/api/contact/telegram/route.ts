@@ -18,7 +18,7 @@ function buildPlainText(data: ContactTelegramBody): string {
     data.address ? `Adresse: ${data.address.trim()}` : null,
     "",
     "Besked:",
-    data.message.trim(),
+    data.message.trim() || "(ingen besked)",
   ].filter((line): line is string => line != null);
 
   let text = lines.join("\n");
@@ -53,19 +53,22 @@ export async function POST(request: Request) {
   const data = body as Record<string, unknown>;
   const name = data.name;
   const email = data.email;
-  const message = data.message;
+  const messageRaw = data.message;
 
-  if (!isNonEmptyString(name) || !isNonEmptyString(email) || !isNonEmptyString(message)) {
+  if (!isNonEmptyString(name) || !isNonEmptyString(email)) {
     return NextResponse.json(
-      { error: "Navn, e-mail og besked er påkrævet." },
+      { error: "Navn og e-mail er påkrævet." },
       { status: 400 },
     );
   }
 
+  const messageStr =
+    typeof messageRaw === "string" ? messageRaw.trim() : "";
+
   const payload: ContactTelegramBody = {
     name: String(name).trim(),
     email: String(email).trim(),
-    message: String(message).trim(),
+    message: messageStr,
     phone: isNonEmptyString(data.phone) ? String(data.phone).trim() : undefined,
     address: isNonEmptyString(data.address) ? String(data.address).trim() : undefined,
     source: isNonEmptyString(data.source) ? String(data.source).trim() : undefined,
