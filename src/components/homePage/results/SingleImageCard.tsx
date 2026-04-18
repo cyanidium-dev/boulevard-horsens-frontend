@@ -4,6 +4,7 @@ import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 
 interface SingleImageCardProps {
   card: Extract<ResultsCard, { _type: "resultsImageCard" }>;
+  onImageClick?: () => void;
 }
 
 const RESULTS_SLIDE_HEIGHT_PX = 300;
@@ -24,7 +25,10 @@ function getDisplayWidthPx(
   return Math.round(fixedHeight * (4 / 3));
 }
 
-export default function SingleImageCard({ card }: SingleImageCardProps) {
+export default function SingleImageCard({
+  card,
+  onImageClick,
+}: SingleImageCardProps) {
   const heightPx = RESULTS_SLIDE_HEIGHT_PX;
   const widthPx = getDisplayWidthPx(heightPx, card.image.dimensions);
 
@@ -34,21 +38,45 @@ export default function SingleImageCard({ card }: SingleImageCardProps) {
     .fit("max")
     .url();
 
+  const inner = (
+    <div
+      className="relative shrink-0 overflow-hidden rounded-[8px] bg-beige-light"
+      style={{ width: widthPx, height: heightPx }}
+    >
+      <Image
+        src={src}
+        alt={card.image.alt ?? "Result"}
+        width={widthPx}
+        height={heightPx}
+        className="h-full w-full object-cover"
+        sizes={`${widthPx}px`}
+      />
+    </div>
+  );
+
   return (
     <div className="flex h-full min-h-0 w-max max-w-full items-center justify-center">
-      <div
-        className="relative shrink-0 overflow-hidden rounded-[8px] bg-beige-light"
-        style={{ width: widthPx, height: heightPx }}
-      >
-        <Image
-          src={src}
-          alt={card.image.alt ?? "Result"}
-          width={widthPx}
-          height={heightPx}
-          className="h-full w-full object-cover"
-          sizes={`${widthPx}px`}
-        />
-      </div>
+      {onImageClick ? (
+        <div
+          role="button"
+          tabIndex={0}
+          className="swiper-no-swiping relative cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-beige"
+          onClick={(e) => {
+            e.stopPropagation();
+            onImageClick();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onImageClick();
+            }
+          }}
+        >
+          {inner}
+        </div>
+      ) : (
+        inner
+      )}
     </div>
   );
 }
