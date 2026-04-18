@@ -5,12 +5,14 @@ import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
 import Services from "@/components/homePage/services/Services";
 import {
   HOME_FAQ_QUERY,
+  RESULTS_QUERY,
   SERVICES_QUERY,
   TEAM_MEMBERS_QUERY,
 } from "@/lib/queries";
 import { Service } from "@/types/service";
 import type { TeamMember } from "@/types/team";
 import type { HomeFaq } from "@/types/faq";
+import type { ResultsData } from "@/types/results";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import { getWorkingHours } from "@/utils/getWorkingHours";
 import Course from "@/components/homePage/course/Course";
@@ -27,6 +29,7 @@ export default async function HomePage() {
   const workingHours = await getWorkingHours();
   const teamMembers = await fetchSanityData<TeamMember[]>(TEAM_MEMBERS_QUERY);
   const homeFaq = await fetchSanityData<HomeFaq>(HOME_FAQ_QUERY);
+  const results = await fetchSanityData<ResultsData | null>(RESULTS_QUERY);
 
   return (
     <>
@@ -34,7 +37,7 @@ export default async function HomePage() {
       <Suspense fallback={<Loader className="h-[680px]" />}>
         <Services services={services} />
       </Suspense>
-      <Results />
+      <Results data={results} />
       <MarqueeLine variant="black" className="mb-14" />
       <Course />
       <Suspense fallback={<Loader className="h-[780px] lg:h-[425px]" />}>

@@ -20,7 +20,7 @@ export default function Services({ services }: ServicesProps) {
     }));
 
   return (
-    <section id="services" className="pb-20 lg:pb-[116px]">
+    <section id="services" className="pb-20 lg:pb-[116px] scroll-mt-30">
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:justify-between md:items-start mb-9 lg:mb-[65px]">
           <motion.h2

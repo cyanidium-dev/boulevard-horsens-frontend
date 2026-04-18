@@ -11,6 +11,8 @@ import {
   HeroGalleryImage,
   SMALL_HERO_SLIDER_IMAGES,
 } from "@/components/homePage/hero/heroImages";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 interface SmallHeroSliderProps {
   images?: HeroGalleryImage[];
@@ -48,7 +50,17 @@ export default function SmallHeroSlider({
   };
 
   return (
-    <div
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      exit="exit"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={fadeInAnimation({
+        delay: 0.2,
+        x: 70,
+        opacity: 0.01,
+        duration: 1.5,
+      })}
       className={twMerge(
         "absolute bottom-[-360px] left-5 xs:left-auto sm:bottom-[-127px] xs:right-5 lg:right-6 z-20 w-[calc(100%-40px)] xs:w-[222px] min-h-[326px] rounded-[18px] overflow-visible",
         lightboxOpen && "no-doc-scroll",
@@ -109,6 +121,6 @@ export default function SmallHeroSlider({
         onClose={() => setLightboxOpen(false)}
         onIndexChange={setLightboxIndex}
       />
-    </div>
+    </motion.div>
   );
 }
