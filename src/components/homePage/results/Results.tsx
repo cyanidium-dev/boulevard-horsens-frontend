@@ -15,7 +15,14 @@ export default function Results({ data }: ResultsProps) {
   return (
     <section className="mb-[54px]">
       <Container>
-        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between mb-8 lg:mb-[50px]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInAnimation({ x: -50, delay: 0.3, duration: 1.3 })}
+          className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between mb-8 lg:mb-[50px]"
+        >
           <Image
             src="/images/homePage/results/decor.webp"
             alt="Results"
@@ -25,7 +32,7 @@ export default function Results({ data }: ResultsProps) {
           <h2 className="md:max-w-[380px] lg:max-w-[600px] xl:max-w-[825px] font-evolenta text-[26px] lg:text-[48px] leading-[120%] font-light text-right uppercase text-black">
             Se resultater fra vores kunder før og efter behandlinger
           </h2>
-        </div>
+        </motion.div>
 
         {cards.length > 0 ? (
           <motion.div
