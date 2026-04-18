@@ -1,4 +1,4 @@
-/** Payload til /api/contact/telegram */
+/** Payload — formatteres til HTML i sendContactToTelegram og sendes til /api/telegram */
 export type ContactTelegramBody = {
   name: string;
   phone?: string;
