@@ -8,7 +8,7 @@
   --breakpoint-xs: 27rem;
 
   --color-beige: #ffefe2;
-  --color-beige-light: #FFF4EB;
+  --color-beige-light: #fff4eb;
   --color-black: #15100d;
   --color-brown: #906059;
   --color-white: #ffffff;
@@ -66,8 +66,14 @@
 
   /* Swiper */
 
+  .swiper-slide {
+    height: auto !important;
+    min-height: 100%;
+  }
+
   .swiper.text-reveal-cards-slider,
-  .swiper.team-members-cards-slider {
+  .swiper.team-members-cards-slider,
+  .swiper.recommended-posts-slider {
     padding: 12px 0px 24px 0px !important;
 
     @media screen and (min-width: 1024px) {
