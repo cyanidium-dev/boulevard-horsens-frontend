@@ -29,6 +29,28 @@ export const WORKING_HOURS_QUERY = `*[_type == "workingHours"][0]{
   to
 }`;
 
+export const RESULTS_QUERY = `*[_type == "results"][0]{
+  _id,
+  title,
+  cards[]{
+    _type,
+    _key,
+    image{
+      ...,
+      "alt": alt,
+      "dimensions": asset->metadata.dimensions
+    },
+    beforeImage{
+      ...,
+      "alt": alt
+    },
+    afterImage{
+      ...,
+      "alt": alt
+    }
+  }
+}`;
+
 export const TEAM_MEMBERS_QUERY = `*[_type == "teamMember"] | order(order asc){
   _id,
   order,

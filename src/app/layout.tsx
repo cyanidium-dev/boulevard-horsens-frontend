@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
