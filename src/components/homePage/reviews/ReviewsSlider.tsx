@@ -10,12 +10,14 @@ interface ReviewsSliderProps {
   uniqueKey?: string;
 }
 
-export default function ReviewsSlider({ reviews, uniqueKey }: ReviewsSliderProps) {
+export default function ReviewsSlider({
+  reviews,
+  uniqueKey,
+}: ReviewsSliderProps) {
   if (!reviews?.length) return null;
 
   return (
     <SwiperWrapper
-      loop
       breakpoints={{
         0: {
           slidesPerView: 1,

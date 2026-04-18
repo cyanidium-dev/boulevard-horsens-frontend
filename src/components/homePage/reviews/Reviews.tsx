@@ -3,6 +3,7 @@ import Image from "next/image";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import ReviewsSlider from "./ReviewsSlider";
+import StarIcon from "@/components/shared/icons/StarIcon";
 import { reviewsData } from "./reviewsData";
 
 export default function Reviews() {
@@ -55,9 +56,10 @@ export default function Reviews() {
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ delay: 0.6, duration: 1, y: 30 })}
-          className="w-screen max-w-[1455px]"
+          className="relative w-screen max-w-[1455px]"
         >
           <ReviewsSlider reviews={reviewsData} uniqueKey="home-reviews" />
+          <StarIcon className="hidden lg:block absolute z-10 bottom-[54px] left-[338px] size-[67px] rotate-45" />
         </motion.div>
       </Container>
     </section>
