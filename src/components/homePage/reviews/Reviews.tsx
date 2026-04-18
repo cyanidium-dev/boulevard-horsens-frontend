@@ -2,11 +2,14 @@ import Container from "@/components/shared/container/Container";
 import Image from "next/image";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import ReviewsSlider from "./ReviewsSlider";
+import StarIcon from "@/components/shared/icons/StarIcon";
+import { reviewsData } from "./reviewsData";
 
 export default function Reviews() {
   return (
     <section className="pb-[54px] lg:pb-15">
-      <Container className="relative py-9">
+      <Container className="relative py-9 mb-7 lg:mb-8">
         <Image
           src="/images/homePage/reviews/image-mob.webp"
           alt="Reviews"
@@ -44,6 +47,20 @@ export default function Reviews() {
             </p>
           </motion.div>
         </div>
+      </Container>
+
+      <Container>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ delay: 0.6, duration: 1, y: 30 })}
+          className="relative w-screen max-w-[1455px]"
+        >
+          <ReviewsSlider reviews={reviewsData} uniqueKey="home-reviews" />
+          <StarIcon className="hidden lg:block absolute z-10 bottom-[54px] left-[338px] size-[67px] rotate-45" />
+        </motion.div>
       </Container>
     </section>
   );
