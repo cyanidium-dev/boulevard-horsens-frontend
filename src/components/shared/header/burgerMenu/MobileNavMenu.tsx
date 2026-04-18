@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { navMenuList } from "../NavMenu";
+import { handleHomeHashAnchorClick } from "@/utils/homeHashLink";
 
 interface MobileNavMenuProps {
   setIsOpenBurgerMenu: Dispatch<SetStateAction<boolean>>;
@@ -12,6 +14,7 @@ interface MobileNavMenuProps {
 export default function MobileNavMenu({
   setIsOpenBurgerMenu,
 }: MobileNavMenuProps) {
+  const pathname = usePathname();
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const solutionsItem = navMenuList[2];
 
@@ -25,7 +28,10 @@ export default function MobileNavMenu({
             <li key={item.title}>
               <Link
                 href={item.slug}
-                onClick={closeBurger}
+                onClick={(e) => {
+                  closeBurger();
+                  handleHomeHashAnchorClick(e, pathname);
+                }}
                 className="block py-[18px] text-[16px] font-light leading-[120%] uppercase hover:opacity-80 transition-opacity"
               >
                 {item.title}
@@ -79,7 +85,10 @@ export default function MobileNavMenu({
                         <li key={sub.slug}>
                           <Link
                             href={sub.slug}
-                            onClick={closeBurger}
+                            onClick={(e) => {
+                              closeBurger();
+                              handleHomeHashAnchorClick(e, pathname);
+                            }}
                             className="block text-[20px] font-medium leading-[120%] uppercase hover:opacity-80 transition-opacity"
                           >
                             {sub.title}

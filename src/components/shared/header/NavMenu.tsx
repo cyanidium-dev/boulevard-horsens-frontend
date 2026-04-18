@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
+import { handleHomeHashAnchorClick } from "@/utils/homeHashLink";
+
 /**
  * Next.js інколи змінює hash без події hashchange. Додатково слухаємо popstate
  * і після кліку по посиланню з # перечитуємо hash у наступному кадрі.
@@ -150,7 +152,10 @@ export default function NavMenu() {
             {item.slug ? (
               <Link
                 href={item.slug}
-                onClick={() => setSolutionsOpen(false)}
+                onClick={(e) => {
+                  setSolutionsOpen(false);
+                  handleHomeHashAnchorClick(e, pathname);
+                }}
                 aria-current={pillActiveIndex === i ? "page" : undefined}
                 className={`relative z-10 px-4.5 py-3 rounded-full font-montserrat text-[14px] font-normal leading-[120%] outline-none border border-transparent transition-[color,border,background-color] duration-300 ease-out focus:outline-none focus-visible:border-beige xl:hover:border-beige ${pillActiveIndex === i ? "bg-beige text-black" : "bg-transparent text-beige xl:hover:brightness-125"}`}
               >
@@ -197,6 +202,10 @@ export default function NavMenu() {
                       <li key={sub.slug}>
                         <Link
                           href={sub.slug}
+                          onClick={(e) => {
+                            setSolutionsOpen(false);
+                            handleHomeHashAnchorClick(e, pathname);
+                          }}
                           className="block px-5 py-2.5 text-sm font-medium transition-colors xl:hover:brightness-125 xl:hover:bg-black/5"
                         >
                           {sub.title}
