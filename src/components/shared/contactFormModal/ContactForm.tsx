@@ -18,6 +18,8 @@ interface ContactFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsModalShown?: Dispatch<SetStateAction<boolean>>;
+  /** Vises som «Kilde» i Telegram — typisk knappens tekst */
+  source?: string;
 }
 
 const initial: ContactFormFields = {
@@ -56,6 +58,7 @@ export default function ContactForm({
   setIsError,
   setIsNotificationShown,
   setIsModalShown,
+  source = "Kontakt os",
 }: ContactFormProps) {
   const [values, setValues] = useState<ContactFormFields>(initial);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -92,7 +95,7 @@ export default function ContactForm({
       setIsLoading(true);
       const tel = phoneForTelegram(values.phone);
       await sendContactToTelegram({
-        source: "Kontakt os",
+        source: source.trim() || "Kontakt os",
         name: values.name.trim(),
         email: values.email.trim(),
         phone: tel || undefined,

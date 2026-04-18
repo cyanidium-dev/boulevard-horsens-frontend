@@ -19,11 +19,14 @@ const emptySubscribe = () => () => {};
 interface ContactFormModalProps {
   isModalShown: boolean;
   setIsModalShown: Dispatch<SetStateAction<boolean>>;
+  /** Knappetekst / åbningskontekst — sendes som «Kilde» til Telegram */
+  source?: string;
 }
 
 export default function ContactFormModal({
   isModalShown,
   setIsModalShown,
+  source = "Kontakt os",
 }: ContactFormModalProps) {
   const [isNotificationShown, setIsNotificationShown] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -59,6 +62,7 @@ export default function ContactFormModal({
           </p>
           <div className="w-full">
             <ContactForm
+              source={source}
               setIsModalShown={setIsModalShown}
               setIsError={setIsError}
               setIsNotificationShown={setIsNotificationShown}

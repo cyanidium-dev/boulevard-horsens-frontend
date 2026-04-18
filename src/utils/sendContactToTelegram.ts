@@ -11,25 +11,49 @@ function escapeHtml(text: string): string {
     .replace(/>/g, "&gt;");
 }
 
-/** HTML-besked som i efedra CallBackForm — sendes som JSON-streng til /api/telegram */
+/** Bevarer linjeskift i brugerens besked */
+function escapeHtmlMultiline(text: string): string {
+  return text.split("\n").map((line) => escapeHtml(line)).join("\n");
+}
+
+/**
+ * Stram, læsbar HTML til Telegram — få udsmykninger, ingen emojis.
+ */
 function buildContactHtml(data: ContactTelegramBody): string {
-  const parts: string[] = [`<b>Kontakt os</b>`];
-  if (data.source?.trim()) {
-    parts.push(`<b>Kilde:</b> ${escapeHtml(data.source.trim())}`);
-  }
-  parts.push(`<b>Navn:</b> ${escapeHtml(data.name.trim())}`);
+  const blocks: string[] = [];
+
+  blocks.push(`<i>Kilde</i>`);
+  blocks.push(escapeHtml(data.source?.trim() || "—"));
+
+  blocks.push("");
+  blocks.push(`<b>Navn</b>`);
+  blocks.push(escapeHtml(data.name.trim()));
+
   if (data.phone?.trim()) {
-    parts.push(`<b>Telefon:</b> ${escapeHtml(data.phone.trim())}`);
+    blocks.push("");
+    blocks.push(`<b>Telefon</b>`);
+    blocks.push(escapeHtml(data.phone.trim()));
   }
-  parts.push(`<b>E-mail:</b> ${escapeHtml(data.email.trim())}`);
+
+  blocks.push("");
+  blocks.push(`<b>E-mail</b>`);
+  blocks.push(escapeHtml(data.email.trim()));
+
   if (data.address?.trim()) {
-    parts.push(`<b>Adresse:</b> ${escapeHtml(data.address.trim())}`);
+    blocks.push("");
+    blocks.push(`<b>Adresse</b>`);
+    blocks.push(escapeHtml(data.address.trim()));
   }
-  const body = data.message.trim()
-    ? escapeHtml(data.message.trim())
-    : "<i>(ingen besked)</i>";
-  parts.push("", `<b>Besked:</b>`, body);
-  return parts.join("\n");
+
+  blocks.push("");
+  blocks.push(`<b>Besked</b>`);
+  if (data.message.trim()) {
+    blocks.push(escapeHtmlMultiline(data.message.trim()));
+  } else {
+    blocks.push(`<i>Ingen besked</i>`);
+  }
+
+  return blocks.join("\n");
 }
 
 /**

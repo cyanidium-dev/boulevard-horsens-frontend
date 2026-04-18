@@ -14,6 +14,17 @@ interface FormButtonProps {
   children: ReactNode;
   /** Når true: stopPropagation på wrapper (fx FAQ-accordion klik). */
   faq?: boolean;
+  /**
+   * Tekst til Telegram «Kilde». Udelades: bruges ren tekst fra `children` (hvis muligt).
+   */
+  source?: string;
+}
+
+function telegramSourceFromChildren(children: ReactNode): string {
+  if (typeof children === "string" || typeof children === "number") {
+    return String(children).trim();
+  }
+  return "";
 }
 
 export default function FormButton({
@@ -23,6 +34,7 @@ export default function FormButton({
   animationVariants,
   children,
   faq,
+  source,
 }: FormButtonProps) {
   const [isModalShown, setIsModalShown] = useState(false);
 
@@ -35,6 +47,11 @@ export default function FormButton({
       e.stopPropagation();
     }
   };
+
+  const resolvedSource =
+    source?.trim() ||
+    telegramSourceFromChildren(children) ||
+    "Kontakt os";
 
   const buttonElement = (
     <div onClick={handleButtonClick}>
@@ -67,6 +84,7 @@ export default function FormButton({
       <ContactFormModal
         isModalShown={isModalShown}
         setIsModalShown={setIsModalShown}
+        source={resolvedSource}
       />
     </>
   );
