@@ -74,11 +74,19 @@
   .swiper.text-reveal-cards-slider,
   .swiper.team-members-cards-slider,
   .swiper.recommended-posts-slider,
+  .swiper.reviews-slider,
   .swiper.results-slider {
     padding: 12px 0px 24px 0px !important;
 
     @media screen and (min-width: 1024px) {
       padding: 12px 3px 34px 0px !important;
+    }
+  }
+  .reviews-slider .swiper-slide {
+    max-width: 320px !important;
+
+    @media screen and (min-width: 1024px) {
+      max-width: 373px !important;
     }
   }
 
