@@ -82,12 +82,16 @@
     }
   }
 
-  /* Висота слайда: та сама величина, що RESULTS_SLIDE_HEIGHT_PX у results.constants.ts.
-     Ширина — за контентом (одне фото може бути ширшим за картку до/після). */
+  /* Ширина за контентом; без max-width: 100% — інакше широкі картки стискаються до трека. flex-shrink: 0 — слайд не стискається у flex-рядку. */
   .results-slider .swiper-slide {
     width: auto !important;
-    max-width: 100% !important;
+    max-width: none !important;
     height: 300px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .results-slider img {
+    max-width: none;
   }
 
   .text-reveal-cards-slider .swiper-slide {

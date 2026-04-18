@@ -55,7 +55,7 @@ export default function SingleImageCard({
   );
 
   return (
-    <div className="flex h-full min-h-0 w-max max-w-full items-center justify-center">
+    <div className="flex h-full min-h-0 w-max items-center justify-center">
       {onImageClick ? (
         <div
           role="button"

@@ -37,7 +37,7 @@ export default function BeforeAfterCard({
   const afterUrl = urlForSanityImage(card.afterImage).width(600).url();
 
   return (
-    <div className="flex flex-col gap-1 w-[373px] h-full">
+    <div className="flex h-full w-[373px] shrink-0 flex-col gap-1">
       <div {...openableImageProps(onBeforeClick)}>
         <Image
           src={beforeUrl}

@@ -2,6 +2,7 @@
 
 import { ReactNode, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import type { Swiper as SwiperType } from "swiper";
 import { SwiperSlide } from "swiper/react";
 import SwiperWrapper from "@/components/shared/swper/SwiperWrapper";
 import AppLightbox from "@/components/shared/lightbox/AppLightbox";
@@ -38,7 +39,7 @@ export default function ResultsSlider({
   return (
     <div className={twMerge(lightboxOpen && "no-doc-scroll")}>
       <SwiperWrapper
-        loop
+        loop={false}
         breakpoints={{
           0: {
             spaceBetween: 20,
@@ -54,7 +55,7 @@ export default function ResultsSlider({
       >
         {cards.map((card) => (
           <SwiperSlide key={card._key}>
-            <div className="flex h-full w-max max-w-full items-stretch">
+            <div className="flex h-full w-max items-stretch">
               <ResultCard
                 card={card}
                 lightboxMeta={metaByKey.get(card._key)!}
