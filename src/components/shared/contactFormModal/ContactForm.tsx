@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useId, useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import { twMerge } from "tailwind-merge";
 
@@ -53,6 +53,11 @@ export default function ContactForm({
   setIsModalShown,
   source = "Kontakt os",
 }: ContactFormProps) {
+  const formId = useId();
+  const nameInputId = `${formId}-name`;
+  const emailInputId = `${formId}-email`;
+  const phoneInputId = `${formId}-phone`;
+  const messageInputId = `${formId}-message`;
   const [values, setValues] = useState<ContactFormFields>(initial);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<
@@ -122,10 +127,11 @@ export default function ContactForm({
     <form onSubmit={handleSubmit} noValidate>
       <div className="mb-6 flex flex-col gap-5 sm:gap-6">
         <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 md:gap-5">
-          <label className={`block min-w-0`}>
+          <label htmlFor={nameInputId} className={`block min-w-0`}>
             <span className="sr-only">Dit navn</span>
             <div className="relative">
               <input
+                id={nameInputId}
                 name="name"
                 autoComplete="name"
                 value={values.name}
@@ -140,10 +146,11 @@ export default function ContactForm({
             </div>
           </label>
 
-          <label className={`block min-w-0`}>
+          <label htmlFor={emailInputId} className={`block min-w-0`}>
             <span className="sr-only">E-mail</span>
             <div className="relative">
               <input
+                id={emailInputId}
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -161,7 +168,9 @@ export default function ContactForm({
         </div>
 
         <div className="relative w-full">
-          <span className="sr-only">Telefonnummer</span>
+          <label htmlFor={phoneInputId} className="sr-only">
+            Telefonnummer
+          </label>
           <PhoneInput
             international
             countryCallingCodeEditable={false}
@@ -170,6 +179,8 @@ export default function ContactForm({
             value={values.phone || undefined}
             onChange={(value) => setField("phone")(value ?? "")}
             numberInputProps={{
+              id: phoneInputId,
+              "aria-label": "Telefonnummer",
               autoComplete: "tel",
               onBlur: () => onBlur("phone"),
             }}
@@ -202,9 +213,12 @@ export default function ContactForm({
 
         <div className={`w-full`}>
           <div className="relative w-full">
-            <label className="block">
-              <span className="sr-only">Besked</span>
+            <label htmlFor={messageInputId} className="sr-only">
+              Besked
+            </label>
+            <div className="block">
               <textarea
+                id={messageInputId}
                 name="message"
                 value={values.message}
                 onChange={(e) => setField("message")(e.target.value)}
@@ -216,7 +230,7 @@ export default function ContactForm({
                   "h-[147px] rounded-[24px] p-4 md:h-[120px]",
                 )}
               />
-            </label>
+            </div>
             {showErr("message") ? (
               <span {...fieldErrorProps}>{showErr("message")}</span>
             ) : null}
