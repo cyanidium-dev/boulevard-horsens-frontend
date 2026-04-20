@@ -84,6 +84,32 @@ export const SERVICES_FAQ_QUERY = `*[_type == "servicesFaq"][0]{
   }
 }`;
 
+export const HOME_PAGE_SEO_QUERY = `*[_type == "homePageSeo"][0]{
+  "seo": seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const SERVICES_PAGE_SEO_QUERY = `*[_type == "servicesPageSeo"][0]{
+  "seo": seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
 export const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(_createdAt desc){
   heroTitle,
   heroDescription,

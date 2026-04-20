@@ -15,8 +15,8 @@ interface GetMetadataFromSanityParams {
 export function getMetadataFromSanity({
   seo,
   path,
-  defaultTitle = "Nbyg",
-  defaultDescription = "Byggeri og renovering med kvalitet og tillid",
+  defaultTitle = "Boulevard Beauty Salon i Horsens | Hudpleje, manicure, pedicure & bryn",
+  defaultDescription = "Boulevard Beauty Salon i Horsens tilbyder professionelle skønhedsbehandlinger: hudpleje, manicure, pedicure, lash lamination og bryn. Book din tid i dag.",
 }: GetMetadataFromSanityParams): Metadata {
   const canonicalUrl = getCanonicalUrl(path);
   const metaTitle = seo?.metaTitle || defaultTitle;
@@ -71,7 +71,7 @@ export function getMetadataFromSanity({
       ],
       type: "website",
       locale: "da_DK",
-      siteName: "Nbyg",
+      siteName: "Boulevard Beauty Salon",
       url: canonicalUrl,
     },
     twitter: {

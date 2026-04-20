@@ -4,6 +4,7 @@ import About from "@/components/homePage/about/About";
 import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
 import Services from "@/components/homePage/services/Services";
 import {
+  HOME_PAGE_SEO_QUERY,
   HOME_FAQ_QUERY,
   RESULTS_QUERY,
   SERVICES_QUERY,
@@ -24,6 +25,23 @@ import { Suspense } from "react";
 import Faq from "@/components/shared/faq/Faq";
 import Blog from "@/components/homePage/blog/Blog";
 import { getGoogleReviews } from "@/utils/getGoogleReviews";
+import type { Metadata } from "next";
+import { getMetadataFromSanity } from "@/utils/getMetadataFromSanity";
+import type { PageSeo } from "@/types/page";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const pageData = await fetchSanityData<{ seo: PageSeo | null }>(
+    HOME_PAGE_SEO_QUERY,
+  ).catch((error) => {
+    console.error("Failed to fetch home page metadata:", error);
+    return null;
+  });
+
+  return getMetadataFromSanity({
+    seo: pageData?.seo ?? null,
+    path: "/",
+  });
+}
 
 export default async function HomePage() {
   const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
