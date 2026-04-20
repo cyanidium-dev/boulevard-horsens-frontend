@@ -14,30 +14,26 @@ import Loader from "@/components/shared/loader/Loader";
 import Faq from "@/components/shared/faq/Faq";
 import type { Metadata } from "next";
 import { getMetadataFromSanity } from "@/utils/getMetadataFromSanity";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 import type { PageSeo } from "@/types/page";
 
+const SERVICES_DEFAULT_TITLE = "Services | Boulevard Beauty Salon i Horsens";
+const SERVICES_DEFAULT_DESCRIPTION =
+  "Se alle behandlinger hos Boulevard Beauty Salon i Horsens: ansigtsbehandlinger, lash lamination, bryn, manicure, pedicure og voks.";
+
 export async function generateMetadata(): Promise<Metadata> {
-  try {
-    const pageData = await fetchSanityData<{ seo: PageSeo | null }>(
-      SERVICES_PAGE_SEO_QUERY,
-    );
-
-    if (pageData?.seo) {
-      return getMetadataFromSanity({
-        seo: pageData.seo,
-        path: "/services",
-        defaultTitle:
-          "Services | Boulevard Beauty Salon i Horsens",
-        defaultDescription:
-          "Se alle behandlinger hos Boulevard Beauty Salon i Horsens: ansigtsbehandlinger, lash lamination, bryn, manicure, pedicure og voks.",
-      });
-    }
-  } catch (error) {
+  const pageData = await fetchSanityData<{ seo: PageSeo | null }>(
+    SERVICES_PAGE_SEO_QUERY,
+  ).catch((error) => {
     console.error("Failed to fetch services page metadata:", error);
-  }
+    return null;
+  });
 
-  return getDefaultMetadata("/services");
+  return getMetadataFromSanity({
+    seo: pageData?.seo ?? null,
+    path: "/services",
+    defaultTitle: SERVICES_DEFAULT_TITLE,
+    defaultDescription: SERVICES_DEFAULT_DESCRIPTION,
+  });
 }
 
 export default async function ServicesPage() {
