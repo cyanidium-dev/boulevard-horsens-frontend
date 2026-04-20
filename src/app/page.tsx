@@ -33,8 +33,6 @@ export default async function HomePage() {
   const results = await fetchSanityData<ResultsData | null>(RESULTS_QUERY);
   const googleReviews = await getGoogleReviews();
 
-  console.log(googleReviews);
-
   return (
     <>
       <Hero />

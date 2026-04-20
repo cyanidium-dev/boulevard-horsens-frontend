@@ -40,8 +40,7 @@ function mapGoogleReviewToReview(
     name,
     rating,
     text,
-    // Google profile_photo_url часто блокується Next/Image доменами, тому безпечний local fallback.
-    avatarSrc: FALLBACK_AVATAR,
+    avatarSrc: item.authorAttribution?.photoUri || FALLBACK_AVATAR,
   };
 }
 
@@ -60,7 +59,7 @@ export async function getGoogleReviews(): Promise<Review[]> {
       headers: {
         "X-Goog-Api-Key": apiKey,
         "X-Goog-FieldMask":
-          "reviews.name,reviews.rating,reviews.text,reviews.originalText,reviews.publishTime,reviews.authorAttribution.displayName",
+          "reviews.name,reviews.rating,reviews.text,reviews.originalText,reviews.publishTime,reviews.authorAttribution.displayName,reviews.authorAttribution.photoUri",
       },
       next: { revalidate: 60 * 60 },
     });
