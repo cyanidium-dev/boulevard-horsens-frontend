@@ -102,6 +102,16 @@ export default function MobileNavMenu({
             </li>
           ),
         )}
+        <li>
+          <Link
+            href="/blog"
+            onClick={closeBurger}
+            className="block py-[18px] text-[16px] font-light leading-[120%] uppercase hover:opacity-80 transition-opacity"
+          >
+            Blog
+          </Link>
+          <div className="h-[1.5px] bg-[linear-gradient(90deg,_#906059_23.92%,_#15100D_99.51%)]" />
+        </li>
       </ul>
     </nav>
   );
