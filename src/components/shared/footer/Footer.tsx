@@ -81,17 +81,17 @@ export default async function Footer() {
         <div className="flex flex-col lg:flex-row-reverse lg:justify-end gap-[54px] pt-25 lg:pt-[116px] pb-[127px] lg:pb-[227px]">
           <div className="flex flex-col gap-[54px] lg:flex-row ">
             <div className="lg:w-[118px]">
-              <h3 className="text-[14px] leading-[120%] font-light font-evolenta mb-3.5">
+              <h2 className="text-[14px] leading-[120%] font-light font-evolenta mb-3.5">
                 Arbejdsplan
-              </h3>
+              </h2>
               <p className="text-[12px] font-semibold leading-[120%] uppercase">
                 {hoursLine}
               </p>
             </div>
             <div>
-              <h3 className="text-[14px] leading-[120%] font-light font-evolenta mb-3.5">
+              <h2 className="text-[14px] leading-[120%] font-light font-evolenta mb-3.5">
                 Vores adresse
-              </h3>
+              </h2>
               <a
                 rel="noopener noreferrer nofollow"
                 href={ADDRESS_URL}
@@ -104,17 +104,17 @@ export default async function Footer() {
 
             <div className="flex flex-col gap-[54px] lg:gap-[27px]">
               <div>
-                <h3 className="text-[14px] leading-[120%] font-light font-evolenta mb-3.5">
+                <h2 className="text-[14px] leading-[120%] font-light font-evolenta mb-3.5">
                   Cvr-nr.:
-                </h3>
+                </h2>
                 <p className="text-[12px] font-semibold leading-[120%] uppercase">
                   {CVR_NUMBER}
                 </p>
               </div>
               <div>
-                <h3 className="text-[14px] leading-[120%] font-light font-evolenta mb-3.5">
+                <h2 className="text-[14px] leading-[120%] font-light font-evolenta mb-3.5">
                   Eller skriv til os:
-                </h3>
+                </h2>
                 <a
                   rel="noopener noreferrer nofollow"
                   href={`mailto:${EMAIL}`}

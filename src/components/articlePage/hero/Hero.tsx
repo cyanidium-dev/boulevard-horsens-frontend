@@ -58,7 +58,13 @@ export default function Hero({ article }: HeroProps) {
           whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({ scale: 0.85, x: 70, y: 30, delay: 0.4 })}
+          variants={fadeInAnimation({
+            scale: 0.85,
+            x: 70,
+            y: 30,
+            delay: 0.4,
+            opacity: 0.01,
+          })}
           className="max-w-[978px] whitespace-pre-line text-beige"
         >
           {heroDescription}
