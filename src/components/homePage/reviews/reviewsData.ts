@@ -1,11 +1,4 @@
-export type Review = {
-  id: string;
-  name: string;
-  rating: number;
-  text: string;
-  /** Кругле фото з макета — покласти в public або змінити шлях */
-  avatarSrc: string;
-};
+import type { Review } from "@/types/review";
 
 export const reviewsData: Review[] = [
   {

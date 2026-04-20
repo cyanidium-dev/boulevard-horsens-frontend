@@ -23,6 +23,7 @@ import Reviews from "@/components/homePage/reviews/Reviews";
 import { Suspense } from "react";
 import Faq from "@/components/shared/faq/Faq";
 import Blog from "@/components/homePage/blog/Blog";
+import { getGoogleReviews } from "@/utils/getGoogleReviews";
 
 export default async function HomePage() {
   const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
@@ -30,6 +31,9 @@ export default async function HomePage() {
   const teamMembers = await fetchSanityData<TeamMember[]>(TEAM_MEMBERS_QUERY);
   const homeFaq = await fetchSanityData<HomeFaq>(HOME_FAQ_QUERY);
   const results = await fetchSanityData<ResultsData | null>(RESULTS_QUERY);
+  const googleReviews = await getGoogleReviews();
+
+  console.log(googleReviews);
 
   return (
     <>
@@ -47,7 +51,9 @@ export default async function HomePage() {
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Team teamMembers={teamMembers} />
       </Suspense>
-      <Reviews />
+      <Suspense fallback={<Loader className="h-[425px]" />}>
+        <Reviews reviews={googleReviews} />
+      </Suspense>
       <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Faq faq={homeFaq?.faq} />
