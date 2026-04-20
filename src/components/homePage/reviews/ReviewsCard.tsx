@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Rating } from "react-simple-star-rating";
 import ReviewStarEmptyIcon from "@/components/shared/icons/ReviewStarEmptyIcon";
 import ReviewStarFilledIcon from "@/components/shared/icons/ReviewStarFilledIcon";
-import type { Review } from "./reviewsData";
+import type { Review } from "@/types/review";
 
 interface ReviewsCardProps {
   review: Review;

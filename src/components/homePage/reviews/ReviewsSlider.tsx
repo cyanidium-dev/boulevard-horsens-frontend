@@ -3,7 +3,7 @@
 import { SwiperSlide } from "swiper/react";
 import SwiperWrapper from "@/components/shared/swper/SwiperWrapper";
 import ReviewsCard from "./ReviewsCard";
-import type { Review } from "./reviewsData";
+import type { Review } from "@/types/review";
 
 interface ReviewsSliderProps {
   reviews: Review[];

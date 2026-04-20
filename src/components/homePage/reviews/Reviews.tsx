@@ -4,9 +4,15 @@ import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import ReviewsSlider from "./ReviewsSlider";
 import StarIcon from "@/components/shared/icons/StarIcon";
-import { reviewsData } from "./reviewsData";
+import type { Review } from "@/types/review";
 
-export default function Reviews() {
+interface ReviewsProps {
+  reviews: Review[];
+}
+
+export default function Reviews({ reviews }: ReviewsProps) {
+  if (!reviews.length) return null;
+
   return (
     <section className="pb-[54px] lg:pb-15">
       <Container className="relative py-9 mb-7 lg:mb-8">
@@ -58,7 +64,7 @@ export default function Reviews() {
           variants={fadeInAnimation({ delay: 0.6, duration: 1, y: 30 })}
           className="relative w-screen max-w-[1455px]"
         >
-          <ReviewsSlider reviews={reviewsData} uniqueKey="home-reviews" />
+          <ReviewsSlider reviews={reviews} uniqueKey="home-reviews" />
           <StarIcon className="hidden lg:block absolute z-10 bottom-[54px] left-[338px] size-[67px] rotate-45" />
         </motion.div>
       </Container>
