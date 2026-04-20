@@ -27,26 +27,20 @@ import Blog from "@/components/homePage/blog/Blog";
 import { getGoogleReviews } from "@/utils/getGoogleReviews";
 import type { Metadata } from "next";
 import { getMetadataFromSanity } from "@/utils/getMetadataFromSanity";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 import type { PageSeo } from "@/types/page";
 
 export async function generateMetadata(): Promise<Metadata> {
-  try {
-    const pageData = await fetchSanityData<{ seo: PageSeo | null }>(
-      HOME_PAGE_SEO_QUERY,
-    );
-
-    if (pageData?.seo) {
-      return getMetadataFromSanity({
-        seo: pageData.seo,
-        path: "/",
-      });
-    }
-  } catch (error) {
+  const pageData = await fetchSanityData<{ seo: PageSeo | null }>(
+    HOME_PAGE_SEO_QUERY,
+  ).catch((error) => {
     console.error("Failed to fetch home page metadata:", error);
-  }
+    return null;
+  });
 
-  return getDefaultMetadata("/");
+  return getMetadataFromSanity({
+    seo: pageData?.seo ?? null,
+    path: "/",
+  });
 }
 
 export default async function HomePage() {
