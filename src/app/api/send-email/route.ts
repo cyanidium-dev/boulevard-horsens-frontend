@@ -38,7 +38,6 @@ export async function POST(req: Request) {
     const date = formatDate(new Date());
     const customerHtml = await render(
       ContactFormCustomerEmail({
-        source: body.source,
         name: body.name,
         phone: body.phone,
         email: body.email,

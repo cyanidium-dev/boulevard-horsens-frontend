@@ -101,7 +101,15 @@ export default function ContactForm({
         message: values.message.trim(),
       };
 
-      await Promise.all([sendContactToTelegram(payload), sendContactFormEmail(payload)]);
+      await Promise.all([
+        sendContactToTelegram(payload),
+        sendContactFormEmail({
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          message: payload.message,
+        }),
+      ]);
       setValues(initial);
       setErrors({});
       setTouched({});
