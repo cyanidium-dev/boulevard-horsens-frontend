@@ -11,49 +11,61 @@ function escapeHtml(text: string): string {
     .replace(/>/g, "&gt;");
 }
 
-/** Bevarer linjeskift i brugerens besked */
-function escapeHtmlMultiline(text: string): string {
-  return text.split("\n").map((line) => escapeHtml(line)).join("\n");
+/** Indhold i <blockquote> — kun &lt; &gt; &amp; */
+function escapeForBlockquote(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 /**
- * Stram, læsbar HTML til Telegram — få udsmykninger, ingen emojis.
+ * Struktureret Telegram-HTML uden lange linjer.
+ * Få, diskrete emojis som visuelle ankre (Telegram viser dem fint i UTF-8).
  */
 function buildContactHtml(data: ContactTelegramBody): string {
-  const blocks: string[] = [];
+  const name = data.name.trim();
+  const email = data.email.trim();
+  const source = data.source?.trim() || "—";
+  const message = data.message.trim();
+  const phone = data.phone?.trim();
+  const address = data.address?.trim();
 
-  blocks.push(`<i>Kilde</i>`);
-  blocks.push(escapeHtml(data.source?.trim() || "—"));
+  const mailHref = `mailto:${email}`;
+  const telHref = phone ? `tel:${phone.replace(/[^\d+]/g, "")}` : "";
 
-  blocks.push("");
-  blocks.push(`<b>Navn</b>`);
-  blocks.push(escapeHtml(data.name.trim()));
+  const lines: string[] = [];
 
-  if (data.phone?.trim()) {
-    blocks.push("");
-    blocks.push(`<b>Telefon</b>`);
-    blocks.push(escapeHtml(data.phone.trim()));
+  lines.push(`💌 <b>Boulevard</b> <i>· ny henvendelse</i>`);
+  lines.push(`<i>Beauty Salon, Horsens</i>`);
+  lines.push("");
+
+  lines.push(`🏷 <b>Kilde:</b> <i>${escapeHtml(source)}</i>`);
+  lines.push(`👤 <b>Navn:</b> ${escapeHtml(name)}`);
+
+  if (phone) {
+    lines.push(
+      `📞 <b>Telefon:</b> <a href="${escapeHtml(telHref)}">${escapeHtml(phone)}</a>`,
+    );
   }
 
-  blocks.push("");
-  blocks.push(`<b>E-mail</b>`);
-  blocks.push(escapeHtml(data.email.trim()));
+  lines.push(
+    `✉️ <b>E-mail:</b> <a href="${escapeHtml(mailHref)}">${escapeHtml(email)}</a>`,
+  );
 
-  if (data.address?.trim()) {
-    blocks.push("");
-    blocks.push(`<b>Adresse</b>`);
-    blocks.push(escapeHtml(data.address.trim()));
+  if (address) {
+    lines.push(`📍 <b>Adresse:</b> ${escapeHtml(address)}`);
   }
 
-  blocks.push("");
-  blocks.push(`<b>Besked</b>`);
-  if (data.message.trim()) {
-    blocks.push(escapeHtmlMultiline(data.message.trim()));
+  lines.push("");
+  lines.push(`💬 <b>Besked</b>`);
+  if (message) {
+    lines.push(`<blockquote>${escapeForBlockquote(message)}</blockquote>`);
   } else {
-    blocks.push(`<i>Ingen besked</i>`);
+    lines.push(`<i>(ingen besked)</i>`);
   }
 
-  return blocks.join("\n");
+  return lines.join("\n");
 }
 
 /**

@@ -9,6 +9,7 @@ import "react-phone-number-input/style.css";
 import Button from "../buttons/Button";
 import ShevronIcon from "../icons/ShevronIcon";
 import { sendContactToTelegram } from "@/utils/sendContactToTelegram";
+import { sendContactFormEmail } from "@/utils/email";
 import { phoneForTelegram } from "./phoneForTelegram";
 import {
   ContactFormFields,
@@ -92,13 +93,23 @@ export default function ContactForm({
       setIsError(false);
       setIsLoading(true);
       const tel = phoneForTelegram(values.phone);
-      await sendContactToTelegram({
+      const payload = {
         source: source.trim() || "Kontakt os",
         name: values.name.trim(),
         email: values.email.trim(),
         phone: tel || undefined,
         message: values.message.trim(),
-      });
+      };
+
+      await Promise.all([
+        sendContactToTelegram(payload),
+        sendContactFormEmail({
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          message: payload.message,
+        }),
+      ]);
       setValues(initial);
       setErrors({});
       setTouched({});
