@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/footer/Footer";
+import Script from "next/script";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -39,6 +40,13 @@ export default function RootLayout({
       lang="da"
       className={`${montserrat.variable} ${evolenta.variable} antialiased`}
     >
+      <head>
+        <Script
+          id="cookieyes"
+          type="text/javascript"
+          src="https://cdn-cookieyes.com/client_data/5266dfce1791de0e19363075f42147be/script.js"
+        />
+      </head>
       <body className="flex min-h-dvh flex-col text-[14px] lg:text-[16px] font-light leading-[120%]">
         <Header />
         <main className="flex-1">{children}</main>
