@@ -9,7 +9,8 @@ export const EMAIL = "boulevardsalondk@gmail.com";
 export const INSTAGRAM_URL =
   "https://www.instagram.com/boulevard.beauty_salon_/";
 
-export const FACEBOOK_URL = "";
+export const FACEBOOK_URL =
+  "https://www.facebook.com/share/17Fr2f9xsW/?mibextid=wwXIfr";
 
 export const CODE_SITE_URL = "https://www.code-site.art/";
 
