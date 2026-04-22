@@ -9,6 +9,7 @@ import Script from "next/script";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 import { OrganizationSchema } from "@/components/shared/OrganizationSchema";
+import { WebPageSchema } from "@/components/shared/WebPageSchema";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -53,6 +54,7 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-dvh flex-col text-[14px] lg:text-[16px] font-light leading-[120%]">
+        <WebPageSchema />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
