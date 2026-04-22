@@ -42,16 +42,16 @@ export default async function Footer() {
           />
         </div>
 
-        <div className="lg:hidden absolute top-[-71px] right-[68px] w-[186px] h-[259px]">
+        <div className="lg:hidden absolute -z-10 top-[-71px] right-[68px] w-[186px] h-[259px] pointer-events-none">
           <Image
             src="/images/footer/spatulas.webp"
             alt="footer background"
             fill
-            className="-z-10 object-cover"
+            className="object-cover"
           />
         </div>
 
-        <div className="hidden lg:block absolute top-[-71px] right-[-188px] w-[354px] h-[313px]">
+        <div className="hidden lg:block absolute top-[-71px] right-[-188px] w-[354px] h-[313px] pointer-events-none">
           <Image
             src="/images/footer/spatulas-desk.webp"
             alt="footer background"
@@ -60,7 +60,7 @@ export default async function Footer() {
           />
         </div>
 
-        <div className="lg:hidden absolute bottom-0 right-0 w-[341px] h-[418px]">
+        <div className="lg:hidden absolute bottom-0 right-0 w-[341px] h-[418px] pointer-events-none">
           <Image
             src="/images/footer/hand-mob.webp"
             alt="footer background"
@@ -69,7 +69,7 @@ export default async function Footer() {
           />
         </div>
 
-        <div className="hidden lg:block absolute left-[-16px] bottom-3 xl:bottom-0 xl:left-[0px] w-[666px] h-[522px]">
+        <div className="hidden lg:block absolute -z-20 left-[-16px] bottom-3 xl:bottom-0 xl:left-[0px] w-[666px] h-[522px] pointer-events-none">
           <Image
             src="/images/footer/hand.webp"
             alt="footer background"
