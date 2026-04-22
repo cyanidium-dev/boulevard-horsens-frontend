@@ -15,7 +15,7 @@ export default async function BlogPage() {
   return (
     <>
       <Hero />
-      <Breadcrumbs steps={breadcrumbSteps} />
+      <Breadcrumbs steps={breadcrumbSteps} currentPath="/blog" />
       <Suspense fallback={<Loader />}>
         <BlogList blogPosts={blogPosts} />
       </Suspense>

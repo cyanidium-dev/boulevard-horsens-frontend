@@ -2,6 +2,7 @@ import Hero from "@/components/homePage/hero/Hero";
 import Prices from "@/components/homePage/prices/Prices";
 import About from "@/components/homePage/about/About";
 import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs/Breadcrumbs";
 import Services from "@/components/homePage/services/Services";
 import {
   HOME_PAGE_SEO_QUERY,
@@ -44,6 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
+  const breadcrumbSteps = [{ label: "Forside", href: "/" }];
   const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
   const workingHours = await getWorkingHours();
   const teamMembers = await fetchSanityData<TeamMember[]>(TEAM_MEMBERS_QUERY);
@@ -53,6 +55,11 @@ export default async function HomePage() {
 
   return (
     <>
+      <Breadcrumbs
+        steps={breadcrumbSteps}
+        currentPath="/"
+        showNav={false}
+      />
       <Hero />
       <Suspense fallback={<Loader className="h-[680px]" />}>
         <Services services={services} />

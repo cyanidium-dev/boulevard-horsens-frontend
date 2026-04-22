@@ -45,7 +45,7 @@ export default async function ServicesPage() {
   return (
     <>
       <Hero />
-      <Breadcrumbs steps={breadcrumbSteps} />
+      <Breadcrumbs steps={breadcrumbSteps} currentPath="/services" />
       <Suspense fallback={<Loader />}>
         <Services services={services} />
       </Suspense>

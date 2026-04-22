@@ -72,7 +72,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <SchemaJson schemaJson={schemaJson} />
       <Suspense fallback={<Loader />}>
         <Hero article={currentArticle} />
-        <Breadcrumbs steps={breadcrumbSteps} />
+        <Breadcrumbs steps={breadcrumbSteps} currentPath={`/blog/${slug}`} />
         <Container className="lg:flex gap-8 lg:pb-30">
           <div>
             {currentArticle.content && (
