@@ -24,6 +24,7 @@ import Loader from "@/components/shared/loader/Loader";
 import Reviews from "@/components/homePage/reviews/Reviews";
 import { Suspense } from "react";
 import Faq from "@/components/shared/faq/Faq";
+import { FaqSchema } from "@/components/shared/faq/FaqSchema";
 import Blog from "@/components/homePage/blog/Blog";
 import { getGoogleReviews } from "@/utils/getGoogleReviews";
 import type { Metadata } from "next";
@@ -78,6 +79,7 @@ export default async function HomePage() {
         <Reviews reviews={googleReviews} />
       </Suspense>
       <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
+      <FaqSchema faqItems={homeFaq?.faq?.items} id="home-faq-schema" />
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Faq faq={homeFaq?.faq} />
       </Suspense>
