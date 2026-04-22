@@ -14,6 +14,7 @@ import { Metadata } from "next";
 import { getDynamicPageMetadata } from "@/utils/getDynamicPageMetadata";
 import { SchemaJson } from "@/components/shared/SchemaJson";
 import { getDynamicPageSchemaJson } from "@/utils/getDynamicPageSchemaJson";
+import { ArticleSchema } from "@/components/articlePage/ArticleSchema";
 
 interface ArticlePageProps {
   params: Promise<{ article: string }>;
@@ -69,6 +70,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
+      <ArticleSchema article={currentArticle} />
       <SchemaJson schemaJson={schemaJson} />
       <Suspense fallback={<Loader />}>
         <Hero article={currentArticle} />

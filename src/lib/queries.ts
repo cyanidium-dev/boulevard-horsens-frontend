@@ -111,6 +111,8 @@ export const SERVICES_PAGE_SEO_QUERY = `*[_type == "servicesPageSeo"][0]{
 }`;
 
 export const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(_createdAt desc){
+  "createdAt": _createdAt,
+  "updatedAt": _updatedAt,
   heroTitle,
   heroDescription,
   "heroDesktopImage": heroDesktopImage{
@@ -183,6 +185,8 @@ export const BLOG_POST_BY_SLUG_QUERY = `*[
   _type == "blogPost" &&
   slug.current == $slug
 ][0]{
+  "createdAt": _createdAt,
+  "updatedAt": _updatedAt,
   heroTitle,
   heroDescription,
   "heroDesktopImage": heroDesktopImage{

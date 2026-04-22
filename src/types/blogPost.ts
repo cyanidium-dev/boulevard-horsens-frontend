@@ -52,6 +52,8 @@ export type BlogPostContent =
   | BlogPostContentTable;
 
 export type BlogPost = {
+  createdAt?: string;
+  updatedAt?: string;
   heroTitle: string;
   heroDescription: string;
   heroDesktopImage: SanityImage;
