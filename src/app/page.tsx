@@ -2,6 +2,7 @@ import Hero from "@/components/homePage/hero/Hero";
 import Prices from "@/components/homePage/prices/Prices";
 import About from "@/components/homePage/about/About";
 import MarqueeLine from "@/components/shared/marquee/MarqueeLine";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs/Breadcrumbs";
 import Services from "@/components/homePage/services/Services";
 import {
   HOME_PAGE_SEO_QUERY,
@@ -23,6 +24,7 @@ import Loader from "@/components/shared/loader/Loader";
 import Reviews from "@/components/homePage/reviews/Reviews";
 import { Suspense } from "react";
 import Faq from "@/components/shared/faq/Faq";
+import { FaqSchema } from "@/components/shared/faq/FaqSchema";
 import Blog from "@/components/homePage/blog/Blog";
 import { getGoogleReviews } from "@/utils/getGoogleReviews";
 import type { Metadata } from "next";
@@ -44,6 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
+  const breadcrumbSteps = [{ label: "Forside", href: "/" }];
   const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
   const workingHours = await getWorkingHours();
   const teamMembers = await fetchSanityData<TeamMember[]>(TEAM_MEMBERS_QUERY);
@@ -53,6 +56,11 @@ export default async function HomePage() {
 
   return (
     <>
+      <Breadcrumbs
+        steps={breadcrumbSteps}
+        currentPath="/"
+        showNav={false}
+      />
       <Hero />
       <Suspense fallback={<Loader className="h-[680px]" />}>
         <Services services={services} />
@@ -71,6 +79,7 @@ export default async function HomePage() {
         <Reviews reviews={googleReviews} />
       </Suspense>
       <MarqueeLine variant="black" className="mb-9 lg:mb-[116px]" />
+      <FaqSchema faqItems={homeFaq?.faq?.items} id="home-faq-schema" />
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Faq faq={homeFaq?.faq} />
       </Suspense>

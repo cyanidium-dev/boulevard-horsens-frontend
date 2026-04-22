@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { PageSeo } from "@/types/page";
 import { getCanonicalUrl } from "./getCanonicalUrl";
 import { urlForSanityImage } from "./getUrlForSanityImage";
+import { getRobotsMetadata } from "./getRobotsMetadata";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
@@ -51,6 +52,7 @@ export function getMetadataFromSanity({
     title: metaTitle,
     description: metaDescription,
     keywords,
+    robots: getRobotsMetadata(path),
     alternates: {
       canonical: canonicalUrl,
       languages: {

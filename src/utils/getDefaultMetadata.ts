@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getCanonicalUrl } from "./getCanonicalUrl";
+import { getRobotsMetadata } from "./getRobotsMetadata";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -11,6 +12,7 @@ export function getDefaultMetadata(path: string = "/"): Metadata {
       "Boulevard Beauty Salon i Horsens | Hudpleje, manicure, pedicure & bryn",
     description:
       "Boulevard Beauty Salon i Horsens tilbyder professionelle skønhedsbehandlinger: hudpleje, manicure, pedicure, lash lamination og bryn. Book din tid i dag.",
+    robots: getRobotsMetadata(path),
     alternates: {
       canonical: canonicalUrl,
       languages: {

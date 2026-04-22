@@ -12,6 +12,7 @@ import Services from "@/components/servicesPage/services/Services";
 import { Suspense } from "react";
 import Loader from "@/components/shared/loader/Loader";
 import Faq from "@/components/shared/faq/Faq";
+import { FaqSchema } from "@/components/shared/faq/FaqSchema";
 import type { Metadata } from "next";
 import { getMetadataFromSanity } from "@/utils/getMetadataFromSanity";
 import type { PageSeo } from "@/types/page";
@@ -45,10 +46,11 @@ export default async function ServicesPage() {
   return (
     <>
       <Hero />
-      <Breadcrumbs steps={breadcrumbSteps} />
+      <Breadcrumbs steps={breadcrumbSteps} currentPath="/services" />
       <Suspense fallback={<Loader />}>
         <Services services={services} />
       </Suspense>
+      <FaqSchema faqItems={servicesFaq?.faq?.items} id="services-faq-schema" />
       <Suspense fallback={<Loader className="h-[425px]" />}>
         <Faq faq={servicesFaq?.faq} />
       </Suspense>
