@@ -8,6 +8,7 @@ import Footer from "@/components/shared/footer/Footer";
 import Script from "next/script";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { OrganizationSchema } from "@/components/shared/OrganizationSchema";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -43,6 +44,7 @@ export default function RootLayout({
       className={`${montserrat.variable} ${evolenta.variable} antialiased`}
     >
       <head>
+        <OrganizationSchema />
         <GoogleTagManager gtmId={GTM_ID} />
         <Script
           id="cookieyes"
