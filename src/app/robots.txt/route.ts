@@ -32,7 +32,6 @@ export async function GET() {
 
   const robotsTxt = `User-agent: *
 Allow: /
-Allow: /_next/static
 Disallow: /api/
 Disallow: /_next/image
 
