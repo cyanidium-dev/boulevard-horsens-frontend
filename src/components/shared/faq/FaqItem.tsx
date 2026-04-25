@@ -4,7 +4,6 @@ import ThinStarIcon from "@/components/shared/icons/ThinStarIcon";
 
 interface FaqItemProps {
   faqItem: { question: string; answer: string };
-  idx: number;
 }
 
 export default function FaqItem({ faqItem }: FaqItemProps) {
@@ -14,7 +13,7 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
   const { question, answer } = faqItem;
 
   return (
-    <li onClick={toggleShowMore} className={`relative group cursor-pointer`}>
+    <div onClick={toggleShowMore} className={`relative group cursor-pointer`}>
       <div
         className={`relative flex items-center gap-6 justify-between px-8 py-[29px] lg:py-8
             rounded-full bg-white/10 shadow-[inset_0px_4px_12.6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px] xl:group-hover:bg-purple-ultra-light 
@@ -67,6 +66,6 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
           />
         </div>
       </div>
-    </li>
+    </div>
   );
 }
