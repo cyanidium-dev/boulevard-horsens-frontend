@@ -1,5 +1,4 @@
 import Button from "@/components/shared/buttons/Button";
-import FormButton from "@/components/shared/buttons/FormButton";
 import Container from "@/components/shared/container/Container";
 import StarIcon from "@/components/shared/icons/StarIcon";
 import Image from "next/image";
@@ -101,9 +100,13 @@ export default function Course() {
                   Køb et gavekort til enhver behandling i salon Boulevard
                 </h2>
               </div>
-              <FormButton variant="black" className="w-full h-[68px]">
+              <Button
+                href="/gavekort"
+                variant="black"
+                className="w-full h-[68px]"
+              >
                 Bestil gavekort
-              </FormButton>
+              </Button>
             </div>
           </div>
 

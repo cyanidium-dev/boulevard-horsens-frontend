@@ -51,6 +51,7 @@ export type NavMenuItem = {
 export const navMenuList: NavMenuItem[] = [
   { title: "Hjem", slug: "/#hero" },
   { title: "Services", slug: "/services" },
+  { title: "Gavekort", slug: "/gavekort" },
   {
     title: "Åbningstider",
     slug: "/#opening-hours",
@@ -63,11 +64,14 @@ export function getActiveIndex(pathname: string, hash: string): number {
   if (pathname === "/services" || pathname.startsWith("/services/")) {
     return 1;
   }
+  if (pathname === "/gavekort" || pathname.startsWith("/gavekort/")) {
+    return 2;
+  }
   if (pathname === "/" || pathname === "") {
     if (hash === "__PENDING_HASH__") return -1;
     const h = hash && !hash.startsWith("#") ? `#${hash}` : hash;
-    if (h === "#opening-hours") return 2;
-    if (h === "#about") return 3;
+    if (h === "#opening-hours") return 3;
+    if (h === "#about") return 4;
     return 0;
   }
   return 0;

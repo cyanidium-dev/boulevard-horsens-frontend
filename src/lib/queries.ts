@@ -51,6 +51,18 @@ export const RESULTS_QUERY = `*[_type == "results"][0]{
   }
 }`;
 
+export const GIFT_CARDS_QUERY = `*[_type == "giftCard"] | order(order asc){
+  _id,
+  amount,
+  description,
+  gradient,
+  popular,
+  primary,
+  stripeCheckoutUrl,
+  stripePriceId,
+  order
+}`;
+
 export const TEAM_MEMBERS_QUERY = `*[_type == "teamMember"] | order(order asc){
   _id,
   order,
