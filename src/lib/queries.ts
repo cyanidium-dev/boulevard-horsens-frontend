@@ -55,7 +55,10 @@ export const GIFT_CARDS_QUERY = `*[_type == "giftCard"] | order(order asc){
   _id,
   amount,
   description,
-  gradient,
+  "image": image{
+    ...,
+    "alt": alt
+  },
   popular,
   primary,
   stripeCheckoutUrl,

@@ -1,28 +1,39 @@
+import Image from "next/image";
 import Link from "next/link";
-import type { GiftCard, GiftCardGradient } from "@/types/giftCard";
-
-const GRADIENTS: Record<GiftCardGradient, string> = {
-  light: "linear-gradient(150deg, #D4C5B5 0%, #BEA898 60%, #A89080 100%)",
-  caramel: "linear-gradient(150deg, #C8A882 0%, #A8845A 50%, #8C6840 100%)",
-  dark: "linear-gradient(150deg, #3A3530 0%, #28221E 50%, #1A1412 100%)",
-};
+import type { GiftCard } from "@/types/giftCard";
+import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 
 interface GiftCardItemProps {
   card: GiftCard;
 }
 
 export default function GiftCardItem({ card }: GiftCardItemProps) {
-  const gradient = GRADIENTS[card.gradient] ?? GRADIENTS.light;
   const checkoutHref = card.stripeCheckoutUrl || "#";
   const isExternal = Boolean(card.stripeCheckoutUrl);
+  const imageUrl = card.image?.asset
+    ? urlForSanityImage(card.image).width(900).height(500).fit("crop").url()
+    : null;
+
+  const buttonClass = `flex w-full h-12 lg:h-[57px] items-center justify-center rounded-full border border-black uppercase text-[12px] lg:text-[14px] font-normal leading-[120%] tracking-[0.06em] transition-colors duration-500 ease-in-out ${
+    card.primary
+      ? "bg-black text-beige xl:hover:bg-transparent xl:hover:text-black"
+      : "bg-transparent text-black xl:hover:bg-black xl:hover:text-beige"
+  }`;
 
   return (
-    <article className="flex flex-col rounded-2xl border border-[#E2D9CF] bg-white overflow-hidden will-change-transform transition-all duration-700 ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-[0_20px_56px_rgba(26,26,24,0.10)]">
-      <div
-        className="h-[180px] sm:h-[200px] flex items-end px-6 py-5 shrink-0"
-        style={{ background: gradient }}
-      >
-        <span className="font-evolenta italic text-[12px] sm:text-[13px] tracking-[0.1em] text-white/65">
+    <article className="flex flex-col rounded-2xl border border-[#E2D9CF] bg-beige overflow-hidden will-change-transform transition-all duration-700 ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-[0_20px_56px_rgba(26,26,24,0.10)]">
+      <div className="relative h-[180px] sm:h-[200px] shrink-0 bg-[#E8DDD2]">
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={card.image?.alt ?? `Gavekort ${card.amount} kr`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            className="object-cover"
+          />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+        <span className="absolute left-6 bottom-5 font-evolenta italic text-[12px] sm:text-[13px] tracking-[0.1em] text-white/75">
           Gavekort
         </span>
       </div>
@@ -44,23 +55,12 @@ export default function GiftCardItem({ card }: GiftCardItemProps) {
             href={checkoutHref}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex w-full h-12 lg:h-[57px] items-center justify-center rounded-full border border-black uppercase text-[12px] lg:text-[14px] font-normal leading-[120%] tracking-[0.06em] transition-colors duration-500 ease-in-out ${
-              card.primary
-                ? "bg-black text-beige xl:hover:bg-transparent xl:hover:text-black"
-                : "bg-transparent text-black xl:hover:bg-black xl:hover:text-beige"
-            }`}
+            className={buttonClass}
           >
             Køb
           </a>
         ) : (
-          <Link
-            href={checkoutHref}
-            className={`flex w-full h-12 lg:h-[57px] items-center justify-center rounded-full border border-black uppercase text-[12px] lg:text-[14px] font-normal leading-[120%] tracking-[0.06em] transition-colors duration-500 ease-in-out ${
-              card.primary
-                ? "bg-black text-beige xl:hover:bg-transparent xl:hover:text-black"
-                : "bg-transparent text-black xl:hover:bg-black xl:hover:text-beige"
-            }`}
-          >
+          <Link href={checkoutHref} className={buttonClass}>
             Køb
           </Link>
         )}
