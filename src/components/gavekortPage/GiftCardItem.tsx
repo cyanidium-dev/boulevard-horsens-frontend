@@ -11,7 +11,7 @@ export default function GiftCardItem({ card }: GiftCardItemProps) {
   const checkoutHref = card.stripeCheckoutUrl || "#";
   const isExternal = Boolean(card.stripeCheckoutUrl);
   const imageUrl = card.image?.asset
-    ? urlForSanityImage(card.image).width(900).height(500).fit("crop").url()
+    ? urlForSanityImage(card.image).width(1280).fit("max").url()
     : null;
 
   const buttonClass = `flex w-full h-12 lg:h-[57px] items-center justify-center rounded-full border border-black uppercase text-[12px] lg:text-[14px] font-normal leading-[120%] tracking-[0.06em] transition-colors duration-500 ease-in-out ${
@@ -21,8 +21,8 @@ export default function GiftCardItem({ card }: GiftCardItemProps) {
   }`;
 
   return (
-    <article className="flex flex-col rounded-2xl border border-[#E2D9CF] bg-beige overflow-hidden will-change-transform transition-all duration-700 ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-[0_20px_56px_rgba(26,26,24,0.10)]">
-      <div className="relative h-[180px] sm:h-[200px] shrink-0 bg-[#E8DDD2]">
+    <article className="flex flex-col rounded-2xl border border-[#E2D9CF] bg-white overflow-hidden will-change-transform transition-all duration-700 ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-[0_20px_56px_rgba(26,26,24,0.10)]">
+      <div className="relative aspect-[1280/905] w-full shrink-0 bg-[#E8DDD2]">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -32,10 +32,6 @@ export default function GiftCardItem({ card }: GiftCardItemProps) {
             className="object-cover"
           />
         ) : null}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-        <span className="absolute left-6 bottom-5 font-evolenta italic text-[12px] sm:text-[13px] tracking-[0.1em] text-white/75">
-          Gavekort
-        </span>
       </div>
       <div className="flex flex-col flex-1 gap-2 px-7 pt-7 pb-8">
         {card.popular ? (
