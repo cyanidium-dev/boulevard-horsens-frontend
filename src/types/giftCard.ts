@@ -6,11 +6,21 @@ export interface GiftCardImage {
   alt?: string;
 }
 
+export interface GiftCardPdfAsset {
+  url?: string;
+  originalFilename?: string;
+}
+
+export interface GiftCardPdfFile {
+  asset?: GiftCardPdfAsset;
+}
+
 export interface GiftCard {
   _id: string;
   amount: number;
   description: string;
   image?: GiftCardImage;
+  certificatePdf?: GiftCardPdfFile;
   popular?: boolean;
   primary?: boolean;
   stripeCheckoutUrl?: string;
