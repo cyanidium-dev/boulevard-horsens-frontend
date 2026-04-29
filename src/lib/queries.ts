@@ -63,6 +63,12 @@ export const GIFT_CARDS_QUERY = `*[_type == "giftCard"] | order(order asc){
   primary,
   stripeCheckoutUrl,
   stripePriceId,
+  "certificatePdf": certificatePdf{
+    asset->{
+      url,
+      originalFilename
+    }
+  },
   order
 }`;
 
