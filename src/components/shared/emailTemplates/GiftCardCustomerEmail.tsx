@@ -47,8 +47,27 @@ export function GiftCardCustomerEmail({
 
             <Text style={h1}>Tak for dit køb</Text>
             <Text style={lead}>
-              Din betaling er gennemført. Dit gavekort er vedhæftet denne e-mail som
-              PDF.
+              Tak fordi du valgte vores salon til din gave 🎁
+            </Text>
+            <Text style={paragraph}>
+              Dette gavekort er mere end bare en gave - det er en invitation til at
+              slappe af, føle sig selvsikker og nyde et øjeblik med selvpleje. Uanset
+              om det er til en behandling, en skønhedsbehandling eller blot lidt
+              velfortjent "mig-tid", er vi her for at gøre oplevelsen speciel fra
+              start til slut.
+            </Text>
+            <Text style={paragraph}>
+              Hvis du har spørgsmål, er du velkommen til at kontakte os - vi er altid
+              glade for at hjælpe.
+            </Text>
+            <Text style={paragraph}>
+              Vi glæder os til at byde dig velkommen og gøre din oplevelse
+              uforglemmelig.
+            </Text>
+            <Text style={paragraphNoMargin}>
+              Med venlig hilsen,
+              <br />
+              Boulevard Beauty Salon Team
             </Text>
 
             <Section style={infoBox}>
@@ -159,9 +178,27 @@ const h1 = {
 };
 
 const lead = {
-  margin: "0 0 28px 0",
+  margin: "0 0 16px 0",
   fontSize: "15px",
   lineHeight: "160%",
+  fontWeight: 300,
+  color: BLACK,
+  textAlign: "center" as const,
+};
+
+const paragraph = {
+  margin: "0 0 14px 0",
+  fontSize: "14px",
+  lineHeight: "168%",
+  fontWeight: 300,
+  color: BLACK,
+  textAlign: "center" as const,
+};
+
+const paragraphNoMargin = {
+  margin: "0 0 28px 0",
+  fontSize: "14px",
+  lineHeight: "168%",
   fontWeight: 300,
   color: BLACK,
   textAlign: "center" as const,
