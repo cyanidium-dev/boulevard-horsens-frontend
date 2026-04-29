@@ -92,6 +92,31 @@ async function sendTelegramNotification(html: string): Promise<void> {
   });
 }
 
+async function getReceiptUrlFromSession(
+  stripeClient: Stripe,
+  session: Stripe.Checkout.Session,
+): Promise<string | undefined> {
+  const paymentIntentId =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : session.payment_intent?.id;
+
+  if (!paymentIntentId) {
+    return undefined;
+  }
+
+  const paymentIntent = await stripeClient.paymentIntents.retrieve(paymentIntentId, {
+    expand: ["latest_charge"],
+  });
+
+  const latestCharge = paymentIntent.latest_charge;
+  if (!latestCharge || typeof latestCharge === "string") {
+    return undefined;
+  }
+
+  return latestCharge.receipt_url || undefined;
+}
+
 export async function POST(req: Request) {
   if (!stripe || !STRIPE_WEBHOOK_SECRET) {
     return NextResponse.json(
@@ -194,6 +219,7 @@ export async function POST(req: Request) {
     const currency = session.currency || "dkk";
     const amountLabel = formatAmount(paidAmount, currency);
     const date = formatDate(new Date());
+    const receiptUrl = await getReceiptUrlFromSession(stripe, session);
 
     if (!SENDER_EMAIL_ADDRESS) {
       return NextResponse.json(
@@ -208,6 +234,7 @@ export async function POST(req: Request) {
         email: customerEmail,
         amountLabel,
         date,
+        receiptUrl,
       }),
     );
 

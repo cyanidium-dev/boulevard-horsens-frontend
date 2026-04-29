@@ -4,6 +4,7 @@ import {
   Head,
   Html,
   Hr,
+  Link,
   Preview,
   Section,
   Text,
@@ -21,6 +22,7 @@ type GiftCardCustomerEmailProps = {
   email: string;
   amountLabel: string;
   date?: string;
+  receiptUrl?: string;
 };
 
 export function GiftCardCustomerEmail({
@@ -28,6 +30,7 @@ export function GiftCardCustomerEmail({
   email,
   amountLabel,
   date,
+  receiptUrl,
 }: GiftCardCustomerEmailProps) {
   return (
     <Html lang="da">
@@ -69,6 +72,15 @@ export function GiftCardCustomerEmail({
               <br />
               Boulevard Beauty Salon Team
             </Text>
+
+            {receiptUrl ? (
+              <Text style={receiptText}>
+                Kvittering fra Stripe:{" "}
+                <Link href={receiptUrl} style={receiptLink}>
+                  Se kvittering
+                </Link>
+              </Text>
+            ) : null}
 
             <Section style={infoBox}>
               <Text style={infoTitle}>Købsoplysninger</Text>
@@ -202,6 +214,19 @@ const paragraphNoMargin = {
   fontWeight: 300,
   color: BLACK,
   textAlign: "center" as const,
+};
+
+const receiptText = {
+  margin: "0 0 24px 0",
+  fontSize: "14px",
+  lineHeight: "150%",
+  color: BLACK,
+  textAlign: "center" as const,
+};
+
+const receiptLink = {
+  color: BROWN,
+  textDecoration: "underline",
 };
 
 const infoBox = {
