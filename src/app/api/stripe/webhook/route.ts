@@ -18,7 +18,7 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 
 const stripe = STRIPE_SECRET_KEY
   ? new Stripe(STRIPE_SECRET_KEY, {
-      apiVersion: "2025-03-31.basil",
+      apiVersion: "2026-04-22.dahlia",
     })
   : null;
 
