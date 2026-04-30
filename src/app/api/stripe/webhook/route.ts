@@ -16,11 +16,7 @@ const TELEGRAM_BOT_TOKEN =
   process.env.TELEGRAM_BOT_TOKEN || process.env.TELEGRAM_BOT_ID || "";
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 
-const stripe = STRIPE_SECRET_KEY
-  ? new Stripe(STRIPE_SECRET_KEY, {
-      apiVersion: "2026-04-22.dahlia",
-    })
-  : null;
+const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY) : null;
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -78,18 +74,34 @@ async function sendTelegramNotification(html: string): Promise<void> {
     return;
   }
 
-  await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        parse_mode: "HTML",
+        text: html,
+        disable_web_page_preview: true,
+      }),
     },
-    body: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
-      parse_mode: "HTML",
-      text: html,
-      disable_web_page_preview: true,
-    }),
-  });
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Telegram API error: ${response.status} ${errorText}`);
+  }
+}
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Unknown error";
 }
 
 async function getReceiptUrlFromSession(
@@ -119,6 +131,7 @@ async function getReceiptUrlFromSession(
 
 export async function POST(req: Request) {
   if (!stripe || !STRIPE_WEBHOOK_SECRET) {
+    console.error("Stripe webhook is not configured.");
     return NextResponse.json(
       { error: "Stripe webhook is not configured." },
       { status: 500 },
@@ -127,6 +140,7 @@ export async function POST(req: Request) {
 
   const signature = req.headers.get("stripe-signature");
   if (!signature) {
+    console.error("Missing stripe-signature header.");
     return NextResponse.json(
       { error: "Missing stripe-signature header." },
       { status: 400 },
@@ -142,7 +156,8 @@ export async function POST(req: Request) {
       signature,
       STRIPE_WEBHOOK_SECRET,
     );
-  } catch {
+  } catch (error: unknown) {
+    console.error("Invalid webhook signature.", getErrorMessage(error));
     return NextResponse.json({ error: "Invalid webhook signature." }, { status: 400 });
   }
 
@@ -158,6 +173,9 @@ export async function POST(req: Request) {
   const customerEmail =
     session.customer_details?.email || session.customer_email || "";
   if (!customerEmail) {
+    console.error("Customer email is missing in checkout session.", {
+      sessionId: session.id,
+    });
     return NextResponse.json(
       { error: "Customer email is missing in checkout session." },
       { status: 400 },
@@ -183,10 +201,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const giftCards = await client.fetch<GiftCard[]>(GIFT_CARDS_QUERY);
+    const giftCards = await client
+      .withConfig({ useCdn: false })
+      .fetch<GiftCard[]>(GIFT_CARDS_QUERY);
     const giftCard = giftCards.find((card) => card.stripePriceId === priceId);
 
     if (!giftCard) {
+      console.error("Gift card not found for Stripe price ID.", { priceId });
       return NextResponse.json(
         { error: `Gift card not found for price ID: ${priceId}` },
         { status: 404 },
@@ -195,6 +216,7 @@ export async function POST(req: Request) {
 
     const certificateUrl = giftCard.certificatePdf?.asset?.url;
     if (!certificateUrl) {
+      console.error("Certificate PDF is missing for Stripe price ID.", { priceId });
       return NextResponse.json(
         { error: `Certificate PDF is missing for price ID: ${priceId}` },
         { status: 400 },
@@ -203,6 +225,10 @@ export async function POST(req: Request) {
 
     const certificateResponse = await fetch(certificateUrl);
     if (!certificateResponse.ok) {
+      console.error("Failed to fetch certificate PDF from Sanity.", {
+        priceId,
+        status: certificateResponse.status,
+      });
       return NextResponse.json(
         { error: "Failed to fetch certificate PDF from Sanity." },
         { status: 502 },
@@ -222,6 +248,7 @@ export async function POST(req: Request) {
     const receiptUrl = await getReceiptUrlFromSession(stripe, session);
 
     if (!SENDER_EMAIL_ADDRESS) {
+      console.error("SENDER_EMAIL_ADDRESS is not configured.");
       return NextResponse.json(
         { error: "SENDER_EMAIL_ADDRESS is not configured." },
         { status: 500 },
@@ -260,9 +287,11 @@ export async function POST(req: Request) {
     );
 
     return NextResponse.json({ received: true });
-  } catch {
+  } catch (error: unknown) {
+    const message = getErrorMessage(error);
+    console.error("Failed to process Stripe checkout webhook.", message);
     return NextResponse.json(
-      { error: "Failed to process Stripe checkout webhook." },
+      { error: "Failed to process Stripe checkout webhook.", details: message },
       { status: 500 },
     );
   }
