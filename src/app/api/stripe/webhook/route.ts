@@ -104,6 +104,10 @@ function getErrorMessage(error: unknown): string {
   return "Unknown error";
 }
 
+function logWebhookStep(step: string, details?: Record<string, unknown>) {
+  console.info(`[stripe-webhook] ${step}`, details || {});
+}
+
 async function getReceiptUrlFromSession(
   stripeClient: Stripe,
   session: Stripe.Checkout.Session,
@@ -130,6 +134,8 @@ async function getReceiptUrlFromSession(
 }
 
 export async function POST(req: Request) {
+  logWebhookStep("Request received");
+
   if (!stripe || !STRIPE_WEBHOOK_SECRET) {
     console.error("Stripe webhook is not configured.");
     return NextResponse.json(
@@ -161,14 +167,32 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid webhook signature." }, { status: 400 });
   }
 
+  logWebhookStep("Signature verified", {
+    eventId: event.id,
+    eventType: event.type,
+  });
+
   if (event.type !== "checkout.session.completed") {
+    logWebhookStep("Event ignored: unsupported type", {
+      eventType: event.type,
+    });
     return NextResponse.json({ received: true });
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
   if (session.payment_status !== "paid") {
+    logWebhookStep("Event ignored: payment not paid", {
+      sessionId: session.id,
+      paymentStatus: session.payment_status,
+    });
     return NextResponse.json({ received: true });
   }
+
+  logWebhookStep("Paid checkout session received", {
+    sessionId: session.id,
+    currency: session.currency,
+    amountTotal: session.amount_total,
+  });
 
   const customerEmail =
     session.customer_details?.email || session.customer_email || "";
@@ -187,6 +211,10 @@ export async function POST(req: Request) {
       limit: 10,
       expand: ["data.price"],
     });
+    logWebhookStep("Line items loaded", {
+      sessionId: session.id,
+      lineItemsCount: lineItems.data.length,
+    });
 
     const firstItem = lineItems.data[0];
     const priceId =
@@ -195,15 +223,21 @@ export async function POST(req: Request) {
         : firstItem?.price?.id || "";
 
     if (!priceId) {
+      logWebhookStep("No price ID in line items", { sessionId: session.id });
       return NextResponse.json(
         { error: "Unable to resolve Stripe price ID from session." },
         { status: 400 },
       );
     }
+    logWebhookStep("Resolved Stripe price ID", { sessionId: session.id, priceId });
 
     const giftCards = await client
       .withConfig({ useCdn: false })
       .fetch<GiftCard[]>(GIFT_CARDS_QUERY);
+    logWebhookStep("Gift cards loaded from Sanity", {
+      count: giftCards.length,
+      priceIds: giftCards.map((card) => card.stripePriceId).filter(Boolean),
+    });
     const giftCard = giftCards.find((card) => card.stripePriceId === priceId);
 
     if (!giftCard) {
@@ -234,6 +268,10 @@ export async function POST(req: Request) {
         { status: 502 },
       );
     }
+    logWebhookStep("Certificate PDF downloaded", {
+      priceId,
+      filename: giftCard.certificatePdf?.asset?.originalFilename || null,
+    });
 
     const certificateBuffer = Buffer.from(await certificateResponse.arrayBuffer());
     const certificateFilename =
@@ -246,6 +284,13 @@ export async function POST(req: Request) {
     const amountLabel = formatAmount(paidAmount, currency);
     const date = formatDate(new Date());
     const receiptUrl = await getReceiptUrlFromSession(stripe, session);
+    logWebhookStep("Prepared email payload", {
+      sessionId: session.id,
+      customerEmail,
+      customerName,
+      amountLabel,
+      hasReceiptUrl: Boolean(receiptUrl),
+    });
 
     if (!SENDER_EMAIL_ADDRESS) {
       console.error("SENDER_EMAIL_ADDRESS is not configured.");
@@ -277,6 +322,10 @@ export async function POST(req: Request) {
         },
       ],
     });
+    logWebhookStep("Customer email sent", {
+      to: customerEmail,
+      subject: "Tak for dit køb af gavekort",
+    });
 
     await sendTelegramNotification(
       buildTelegramMessage({
@@ -285,7 +334,15 @@ export async function POST(req: Request) {
         amountLabel,
       }),
     );
+    logWebhookStep("Telegram notification sent", {
+      hasTelegramToken: Boolean(TELEGRAM_BOT_TOKEN),
+      hasTelegramChatId: Boolean(TELEGRAM_CHAT_ID),
+    });
 
+    logWebhookStep("Webhook handled successfully", {
+      eventId: event.id,
+      sessionId: session.id,
+    });
     return NextResponse.json({ received: true });
   } catch (error: unknown) {
     const message = getErrorMessage(error);
