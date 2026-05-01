@@ -147,7 +147,7 @@ export default function NavMenu() {
         }}
       />
 
-      <ul className="relative z-10 flex items-center gap-3 list-none">
+      <ul className="relative z-10 flex items-center xl:gap-3 list-none">
         {navMenuList.map((item, i) => (
           <li
             key={item.title}
