@@ -78,6 +78,7 @@ export async function GET() {
     const staticPages: SitemapUrl[] = [
       { loc: "/", lastmod: now, changefreq: "weekly", priority: 1.0 },
       { loc: "/services", lastmod: now, changefreq: "monthly", priority: 0.9 },
+      { loc: "/gavekort", lastmod: now, changefreq: "monthly", priority: 0.85 },
       { loc: "/blog", lastmod: now, changefreq: "monthly", priority: 0.8 },
     ];
 
