@@ -65,7 +65,7 @@ export default function About() {
               variant="beige"
               className="w-full sm:w-[238px] h-[68px] mb-[213px] lg:mb-[365px]"
             >
-              Book din tid
+              Kontakt os
             </FormButton>
           </div>
           <MarqueeLine
