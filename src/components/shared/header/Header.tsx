@@ -65,12 +65,8 @@ export default function Header() {
               className={`${isOpenBurgerMenu ? "text-black" : "text-beige"} transition duration-300 ease-in-out size-[21px] lg:size-[37px] `}
             />
             <Button
-              type="button"
+              href="/services"
               className="w-[119px] h-12 lg:w-[200px] lg:h-[57px] shrink-0"
-              onClick={() => {
-                setContactModalSource("Book tid");
-                setIsContactModalOpen(true);
-              }}
             >
               Book tid
             </Button>
