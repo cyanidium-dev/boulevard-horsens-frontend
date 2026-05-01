@@ -60,7 +60,7 @@ export default function SingleImageCard({
         <div
           role="button"
           tabIndex={0}
-          className="swiper-no-swiping relative cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-beige"
+          className="relative cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-beige"
           onClick={(e) => {
             e.stopPropagation();
             onImageClick();
