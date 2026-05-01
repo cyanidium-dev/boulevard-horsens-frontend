@@ -1,15 +1,62 @@
 import type { PortableTextComponents } from "@portabletext/react";
 import SectionTitle from "@/components/shared/titles/SectionTitle";
 import Image from "next/image";
-import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
+import Link from "next/link";
 import Button from "@/components/shared/buttons/Button";
+import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import type {
   BlogPostContentImage,
+  BlogPostContentLinkBlock,
   BlogPostContentTable,
+  BlogPostImageGallery,
 } from "@/types/blogPost";
 import React from "react";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+
+function isExternalHref(href: string): boolean {
+  return (
+    /^https?:\/\//i.test(href) ||
+    href.startsWith("//") ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:")
+  );
+}
+
+function ArticleBodyLink({
+  href,
+  blank,
+  className,
+  children,
+}: {
+  href: string;
+  blank?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const external = isExternalHref(href);
+  const openNewTab = blank === true;
+
+  if (!external && !openNewTab) {
+    return (
+      <Link href={href} className={className}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      className={className}
+      {...(openNewTab
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : { rel: "noopener noreferrer" })}
+    >
+      {children}
+    </a>
+  );
+}
 
 export const getBlogPortableTextComponents = (
   slug: string,
@@ -142,17 +189,16 @@ export const getBlogPortableTextComponents = (
     em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ value, children }) => {
       const href = value?.href || "#";
-      const blank = value?.blank || false;
+      const blank = value?.blank;
 
       return (
-        <Button
+        <ArticleBodyLink
           href={href}
-          linkType={blank ? "external" : "internal"}
-          variant="black"
-          className="inline-flex w-fit min-w-[235px] mb-8 h-12 px-8"
+          blank={blank}
+          className="underline decoration-black/35 underline-offset-4 hover:opacity-80 transition-opacity font-medium"
         >
           {children}
-        </Button>
+        </ArticleBodyLink>
       );
     },
   },
@@ -193,6 +239,109 @@ export const getBlogPortableTextComponents = (
             alt={alt}
             className="block w-auto h-auto max-w-full rounded-[12px]"
           />
+        </motion.div>
+      );
+    },
+    blogPostImageGallery: ({
+      value,
+    }: {
+      value: BlogPostImageGallery;
+    }) => {
+      const images = value?.images ?? [];
+      if (images.length === 0) return null;
+
+      const galleryKey = `${slug}-${value?._key || `gallery-${Math.random()}`}`;
+
+      return (
+        <motion.div
+          key={galleryKey}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 20, delay: 0.2 })}
+          className="w-full my-4 lg:my-6 flex flex-col gap-0 overflow-hidden rounded-[16px] leading-none [&_img]:block"
+        >
+          {images.map((img, index) => {
+            const imageUrl = urlForSanityImage(img).url();
+            const alt = img?.alt || `Blog gallery ${index + 1}`;
+            const itemKey =
+              `${slug}-${img._key || `gallery-${galleryKey}-${index}`}`;
+            const dimensions = (
+              img as BlogPostContentImage & {
+                asset?: {
+                  metadata?: {
+                    dimensions?: {
+                      width?: number;
+                      height?: number;
+                    };
+                  };
+                };
+              }
+            )?.asset?.metadata?.dimensions;
+            const width = dimensions?.width ?? 800;
+            const height = dimensions?.height ?? 600;
+
+            return (
+              <Image
+                key={itemKey}
+                src={imageUrl}
+                width={width}
+                height={height}
+                sizes="100vw"
+                alt={alt}
+                className="w-auto max-w-full h-auto"
+              />
+            );
+          })}
+        </motion.div>
+      );
+    },
+    blogPostContentLink: ({
+      value,
+    }: {
+      value: BlogPostContentLinkBlock;
+    }) => {
+      const href = value.href || "#";
+      const label = value.label || "";
+      const displayAs = value.displayAs ?? "text";
+      const rawVariant = value.buttonVariant;
+      const buttonVariant: "black" | "brown" =
+        rawVariant === "brown" ? "brown" : "black";
+
+      const blank = value.blank;
+      const key = `${slug}-${value?._key || `post-link-${Math.random()}`}`;
+
+      const textClass =
+        "inline-block underline decoration-black/35 underline-offset-4 hover:opacity-80 transition-opacity font-medium not-last:mb-4";
+
+      return (
+        <motion.div
+          key={key}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 10, delay: 0.1 })}
+          className={displayAs === "button" ? "my-6 lg:my-8" : "my-4"}
+        >
+          {displayAs === "button" ? (
+            <Button
+              href={href}
+              variant={buttonVariant}
+              linkType={
+                isExternalHref(href) ? "external" : "internal"
+              }
+              blank={blank}
+              className="inline-flex w-fit min-w-[200px] max-w-full shrink-0 px-8"
+            >
+              {label}
+            </Button>
+          ) : (
+            <ArticleBodyLink href={href} blank={blank} className={textClass}>
+              {label}
+            </ArticleBodyLink>
+          )}
         </motion.div>
       );
     },
