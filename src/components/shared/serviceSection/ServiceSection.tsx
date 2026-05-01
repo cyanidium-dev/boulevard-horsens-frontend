@@ -55,10 +55,7 @@ export default function ServiceSection({
   return (
     <section
       id={service.slug}
-      className={twMerge(
-        "pb-25 scroll-mt-24 lg:pb-[152px] lg:scroll-mt-36",
-        !isFirst && "mt-25 lg:mt-[152px]",
-      )}
+      className={twMerge("pb-25 scroll-mt-24 lg:pb-[152px] lg:scroll-mt-36")}
     >
       <Container>
         <div
