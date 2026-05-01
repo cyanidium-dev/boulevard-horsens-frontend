@@ -16,7 +16,9 @@ const VIEWPORT = { once: true, amount: 0.15 } as const;
 
 function serviceImageUrl(source: SanityImage | undefined) {
   if (!source?.asset) return null;
-  return urlForImage(source as SanityImageSource).quality(100).url();
+  return urlForImage(source as SanityImageSource)
+    .quality(100)
+    .url();
 }
 
 function imageLayoutBox() {
@@ -25,9 +27,14 @@ function imageLayoutBox() {
 
 export interface ServiceSectionProps {
   service: Service;
+  /** Перша секція в списку services — без додаткового margin-top; для інших — відступ між блоками */
+  isFirst?: boolean;
 }
 
-export default function ServiceSection({ service }: ServiceSectionProps) {
+export default function ServiceSection({
+  service,
+  isFirst = false,
+}: ServiceSectionProps) {
   const side = service.desktopImageSide ?? "left";
 
   const mobileRef =
@@ -48,7 +55,10 @@ export default function ServiceSection({ service }: ServiceSectionProps) {
   return (
     <section
       id={service.slug}
-      className="pb-25 scroll-mt-24 lg:pb-[152px] lg:scroll-mt-28"
+      className={twMerge(
+        "pb-25 scroll-mt-24 lg:pb-[152px] lg:scroll-mt-36",
+        !isFirst && "mt-25 lg:mt-[152px]",
+      )}
     >
       <Container>
         <div

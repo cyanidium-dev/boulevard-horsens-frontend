@@ -13,7 +13,6 @@ import ContactFormModal from "../contactFormModal/ContactFormModal";
 export default function Header() {
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [contactModalSource, setContactModalSource] = useState("Book tid");
   const [scrollPosition, setScrollPosition] = useState(0);
   const { scrollY } = useScroll();
 
@@ -65,12 +64,9 @@ export default function Header() {
               className={`${isOpenBurgerMenu ? "text-black" : "text-beige"} transition duration-300 ease-in-out size-[21px] lg:size-[37px] `}
             />
             <Button
-              type="button"
+              href="/services"
               className="w-[119px] h-12 lg:w-[200px] lg:h-[57px] shrink-0"
-              onClick={() => {
-                setContactModalSource("Book tid");
-                setIsContactModalOpen(true);
-              }}
+              onClick={() => setIsOpenBurgerMenu(false)}
             >
               Book tid
             </Button>
@@ -78,17 +74,14 @@ export default function Header() {
           <BurgerMenu
             isOpenBurgerMenu={isOpenBurgerMenu}
             setIsOpenBurgerMenu={setIsOpenBurgerMenu}
-            onContactClick={() => {
-              setContactModalSource("Kontakt os");
-              setIsContactModalOpen(true);
-            }}
+            onContactClick={() => setIsContactModalOpen(true)}
           />
         </div>
       </Container>
       <ContactFormModal
         isModalShown={isContactModalOpen}
         setIsModalShown={setIsContactModalOpen}
-        source={contactModalSource}
+        source="Kontakt os"
       />
     </header>
   );
