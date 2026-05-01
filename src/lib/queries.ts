@@ -92,6 +92,7 @@ export const TEAM_MEMBERS_QUERY = `*[_type == "teamMember"] | order(order asc){
   order,
   name,
   position,
+  link,
   "photo": photo{
     ...,
     "alt": alt

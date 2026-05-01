@@ -5,5 +5,6 @@ export interface TeamMember {
   order: number;
   name: string;
   position: string;
+  link?: string;
   photo: SanityImage;
 }
