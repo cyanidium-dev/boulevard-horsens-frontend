@@ -2,7 +2,6 @@
 
 import { ReactNode, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import type { Swiper as SwiperType } from "swiper";
 import { SwiperSlide } from "swiper/react";
 import SwiperWrapper from "@/components/shared/swper/SwiperWrapper";
 import AppLightbox from "@/components/shared/lightbox/AppLightbox";
@@ -45,6 +44,9 @@ export default function ResultsSlider({
             spaceBetween: 20,
             slidesPerView: "auto",
           },
+        }}
+        additionalOptions={{
+          threshold: 12,
         }}
         uniqueKey={uniqueKey}
         component={component}

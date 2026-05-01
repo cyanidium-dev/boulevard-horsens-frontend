@@ -14,7 +14,7 @@ function openableImageProps(onClick: () => void) {
     role: "button" as const,
     tabIndex: 0 as const,
     className:
-      "swiper-no-swiping relative w-full h-[calc(50%-2px)] overflow-hidden rounded-[8px] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-beige",
+      "relative w-full h-[calc(50%-2px)] overflow-hidden rounded-[8px] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-beige",
     onClick: (e: MouseEvent) => {
       e.stopPropagation();
       onClick();
