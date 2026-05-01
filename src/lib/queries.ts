@@ -184,6 +184,27 @@ export const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(_createdAt d
         cells[]
       }
     },
+    _type == "blogPostImageGallery" => {
+      _key,
+      _type,
+      images[]{
+        _key,
+        _type,
+        asset,
+        crop,
+        hotspot,
+        alt
+      }
+    },
+    _type == "blogPostContentLink" => {
+      _key,
+      _type,
+      label,
+      href,
+      blank,
+      displayAs,
+      buttonVariant
+    },
     markDefs[]{
       ...,
       _type == "link" => {
@@ -257,6 +278,27 @@ export const BLOG_POST_BY_SLUG_QUERY = `*[
       rows[]{
         cells[]
       }
+    },
+    _type == "blogPostImageGallery" => {
+      _key,
+      _type,
+      images[]{
+        _key,
+        _type,
+        asset,
+        crop,
+        hotspot,
+        alt
+      }
+    },
+    _type == "blogPostContentLink" => {
+      _key,
+      _type,
+      label,
+      href,
+      blank,
+      displayAs,
+      buttonVariant
     },
     markDefs[]{
       ...,

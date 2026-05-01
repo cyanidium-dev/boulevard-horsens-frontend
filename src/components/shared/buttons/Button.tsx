@@ -7,6 +7,11 @@ interface ButtonProps {
   type?: "button" | "submit";
   href?: string;
   linkType?: "internal" | "external";
+  /**
+   * Передається з Sanity тощо: `true` — нова вкладка (для будь-якого URL), `false` — поточна.
+   * Якщо не задано, збережено попередню логіку: `linkType="external"` завжди з `target="_blank"`.
+   */
+  blank?: boolean;
   className?: string;
   variant?: "black" | "beige" | "brown";
   disabled?: boolean;
@@ -15,11 +20,21 @@ interface ButtonProps {
   loadingText?: string;
 }
 
+function hrefNeedsNativeAnchor(href: string): boolean {
+  return (
+    /^https?:\/\//i.test(href) ||
+    href.startsWith("//") ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:")
+  );
+}
+
 export default function Button({
   type = "button",
   children,
   href,
   linkType = "internal",
+  blank,
   className,
   variant = "black",
   disabled = false,
@@ -59,14 +74,24 @@ export default function Button({
   );
 
   if (asLink) {
-    if (linkType === "external") {
+    const hrefStr = href!;
+    const useNativeAnchor =
+      blank === true ||
+      hrefNeedsNativeAnchor(hrefStr) ||
+      linkType === "external";
+
+    const openInNewTab =
+      blank === true || (blank !== false && linkType === "external");
+
+    if (useNativeAnchor) {
       return (
         <a
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-          href={href!}
+          href={hrefStr}
           className={mergedClassName}
           onClick={onClick}
+          {...(openInNewTab
+            ? { target: "_blank", rel: "noopener noreferrer nofollow" }
+            : { rel: "noopener noreferrer" })}
         >
           {content}
         </a>
@@ -74,7 +99,7 @@ export default function Button({
     }
 
     return (
-      <Link href={href!} className={mergedClassName} onClick={onClick}>
+      <Link href={hrefStr} className={mergedClassName} onClick={onClick}>
         {content}
       </Link>
     );
