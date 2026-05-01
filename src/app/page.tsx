@@ -8,7 +8,7 @@ import {
   HOME_PAGE_SEO_QUERY,
   HOME_FAQ_QUERY,
   RESULTS_QUERY,
-  SERVICES_QUERY,
+  SERVICES_HOME_QUERY,
   TEAM_MEMBERS_QUERY,
 } from "@/lib/queries";
 import { Service } from "@/types/service";
@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const breadcrumbSteps = [{ label: "Forside", href: "/" }];
-  const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
+  const services = await fetchSanityData<Service[]>(SERVICES_HOME_QUERY);
   const workingHours = await getWorkingHours();
   const teamMembers = await fetchSanityData<TeamMember[]>(TEAM_MEMBERS_QUERY);
   const homeFaq = await fetchSanityData<HomeFaq>(HOME_FAQ_QUERY);

@@ -3,7 +3,7 @@ import { Breadcrumbs } from "@/components/shared/breadcrumbs/Breadcrumbs";
 import {
   SERVICES_FAQ_QUERY,
   SERVICES_PAGE_SEO_QUERY,
-  SERVICES_QUERY,
+  SERVICES_PAGE_QUERY,
 } from "@/lib/queries";
 import { Service } from "@/types/service";
 import type { ServicesFaq } from "@/types/faq";
@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ServicesPage() {
   const breadcrumbSteps = [{ label: `Hjem`, href: `/` }, { label: "Services" }];
 
-  const services = await fetchSanityData<Service[]>(SERVICES_QUERY);
+  const services = await fetchSanityData<Service[]>(SERVICES_PAGE_QUERY);
   const servicesFaq = await fetchSanityData<ServicesFaq>(SERVICES_FAQ_QUERY);
 
   return (

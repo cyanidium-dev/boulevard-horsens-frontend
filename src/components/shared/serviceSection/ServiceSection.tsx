@@ -101,7 +101,7 @@ export default function ServiceSection({
                 />
               </motion.div>
             ) : null}
-            {service.description ? (
+            {service.servicesPageDescription?.trim() ? (
               <motion.p
                 initial="hidden"
                 whileInView="visible"
@@ -110,7 +110,7 @@ export default function ServiceSection({
                 variants={fadeInAnimation({ y: 16, delay: 0.14 })}
                 className="mb-10 whitespace-pre-line lg:mb-9"
               >
-                {service.description}
+                {service.servicesPageDescription}
               </motion.p>
             ) : null}
             {btn?.url && btn.label ? (

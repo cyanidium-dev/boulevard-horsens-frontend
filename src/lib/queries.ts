@@ -1,8 +1,13 @@
-export const SERVICES_QUERY = `*[_type == "service"] | order(_createdAt asc){
+/** Поля документа service (спільна проєкція для home / сторінки послуг) */
+export const SERVICE_DOCUMENT_PROJECTION = `
   _id,
   title,
   "slug": slug.current,
-  description,
+  hideOnHome,
+  homePageDescription,
+  servicesPageDescription,
+  homePageOrder,
+  servicesPageOrder,
   "homePageImage": homePageImage{
     ...,
     "alt": alt
@@ -20,6 +25,16 @@ export const SERVICES_QUERY = `*[_type == "service"] | order(_createdAt asc){
     url
   },
   desktopImageSide
+`;
+
+/** Головна: лише видимі в слайдері, порядок за homePageOrder (asc) */
+export const SERVICES_HOME_QUERY = `*[_type == "service" && hideOnHome != true] | order(coalesce(homePageOrder, 9999) asc) {
+${SERVICE_DOCUMENT_PROJECTION}
+}`;
+
+/** Сторінка /services: усі секції, порядок за servicesPageOrder (asc) */
+export const SERVICES_PAGE_QUERY = `*[_type == "service"] | order(coalesce(servicesPageOrder, 9999) asc) {
+${SERVICE_DOCUMENT_PROJECTION}
 }`;
 
 export const WORKING_HOURS_QUERY = `*[_type == "workingHours"][0]{

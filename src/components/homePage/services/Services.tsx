@@ -10,11 +10,15 @@ interface ServicesProps {
 
 export default function Services({ services }: ServicesProps) {
   const slides = services
-    ?.filter((service) => service.homePageImage && service.description)
+    ?.filter((service) => {
+      if (service.hideOnHome === true) return false;
+      const text = service.homePageDescription?.trim() ?? "";
+      return Boolean(service.homePageImage && text);
+    })
     .map((service) => ({
       _key: service._id,
       title: service.title,
-      description: service.description ?? "",
+      description: service.homePageDescription?.trim() ?? "",
       image: service.homePageImage!,
       link: `/services#${service.slug}`,
     }));
